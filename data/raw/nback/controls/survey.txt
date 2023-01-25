@@ -1,0 +1,46 @@
+page: begin
+
+l: nome
+t: textline
+q: Inserisci in minuscolo le PRIME 2 LETTERE del NOME (es. Mario=ma)
+- {length=2} nome
+
+l: cognome
+t: textline
+q: Inserisci in minuscolo le PRIME 2 LETTERE del COGNOME (es. Rossi=ro)
+- {length=2} cognome
+
+l: anno
+t: textline
+q: Inserisci il tuo ANNO di nascita (4 cifre)
+- {min=1900,max=2020} Anno
+
+l: mese
+t: textline
+q: Inserisci il tuo MESE di nascita (2 cifre) (es. gennaio = 01)
+- {min=01,max=12} Mese
+
+l: giorno
+t: textline
+q: Inserisci il tuo GIORNO di nascita (2 cifre)
+- {min=01,max=31} giorno
+
+l: cellulare
+t: textline
+q: Inserisci le ULTIME 3 CIFRE del tuo NUMERO TELEFONICO
+- {min=000,max=999} {length=3} numero
+
+l: sesso
+t: radio
+b: AVANTI
+q: Indicare il proprio SESSO
+- F
+- M
+
+page: end
+
+l: esperimento
+t: experiment
+q: VAI AL TEST..
+- N_back_eds
+
