@@ -1,0 +1,64 @@
+# COVID-19 news data set: full model with 13 covariates
+
+```{r table13covid, echo=FALSE}
+# full model for the COVID-19 news data set
+fit_ref_covid <- targets::tar_read(fit_reference_covid)
+
+sum_fit_13_covid <- summary(fit_ref_covid)
+summary_fit_13_covid <- rbind(
+  data.frame(sum_fit_13_covid$fixed), data.frame(sum_fit_13_covid$spec_pars) 
+)
+colnames(summary_fit_13_covid) <- 
+  c("mean", "SE", "lower bound", "upper bound", "Rhat", "Bulk_ESS", "Tail_ESS")
+
+summary_fit_13_covid %<>%
+  select(-c(Bulk_ESS, Tail_ESS)) %>% # removing ESS
+  rownames_to_column(var = "parameter")
+
+papaja::apa_table(
+  summary_fit_13_covid,
+  placement = "H",
+  align = c("c", "c", "c", "c", "c", "c"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for each parameter of the full model (13 covariates) predicting COVID-19 news truth discernment.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+\newpage
+
+# COVID-19 news data set: best projection model (ignoring the political news data)
+
+```{r tablebestsubcovid, echo=FALSE}
+# best subset for the COVID-19 news data set
+fit_bestsub_covid <- targets::tar_read(fit_best_subset_covid)
+
+sum_fit_bestsub_covid <- summary(fit_bestsub_covid)
+summary_bestsub_covid <- rbind(
+  data.frame(sum_fit_bestsub_covid$fixed), data.frame(sum_fit_bestsub_covid$spec_pars) 
+)
+colnames(summary_bestsub_covid) <- 
+  c("mean", "SE", "lower bound", "upper bound", "Rhat", "Bulk_ESS", "Tail_ESS")
+
+summary_bestsub_covid %<>%
+  select(-c(Bulk_ESS, Tail_ESS)) %>% # removing ESS
+  rownames_to_column(var = "parameter")
+
+papaja::apa_table(
+  summary_bestsub_covid,
+  placement = "H",
+  align = c("c", "c", "c", "c", "c", "c"),
+  caption = "Posterior mean, standard error, 95\\% credible interval and $\\hat{R}$
+    statistic for each parameter of the best projection model predicting COVID-19 news truth discernment.",
+  note = NULL,
+  small = TRUE,
+  digits = 3,
+  escape = FALSE
+)
+```
+
+
+

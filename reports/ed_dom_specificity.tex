@@ -1,0 +1,401 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man,floatsintext]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{keywords\newline\indent Word count: X}
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Symptom-related information changes the decision-making policy in eating disorders},
+  pdfauthor={Corrado Caudek1 \& Ernst-August Doelle1,2},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Symptom-related information changes the decision-making policy in eating disorders}
+\author{Corrado Caudek\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\date{}
+
+
+\shorttitle{Title}
+
+\authornote{
+
+Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+Enter author note here.
+
+The authors made the following contributions. Corrado Caudek: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Ernst-August Doelle: Writing - Review \& Editing, Supervision.
+
+Correspondence concerning this article should be addressed to Corrado Caudek, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Wilhelm-Wundt-University\\\textsuperscript{2} Konstanz Business School}
+
+\abstract{%
+One or two sentences providing a \textbf{basic introduction} to the field, comprehensible to a scientist in any discipline.
+
+Two to three sentences of \textbf{more detailed background}, comprehensible to scientists in related disciplines.
+
+One sentence clearly stating the \textbf{general problem} being addressed by this particular study.
+
+One sentence summarizing the main result (with the words ``\textbf{here we show}'' or their equivalent).
+
+Two or three sentences explaining what the \textbf{main result} reveals in direct comparison to what was thought to be the case previously, or how the main result adds to previous knowledge.
+
+One or two sentences to put the results into a more \textbf{general context}.
+
+Two or three sentences to provide a \textbf{broader perspective}, readily comprehensible to a scientist in any discipline.
+}
+
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Eating disorders (EDs) are severe psychiatric disorders that are frequent in adolescents and young adults (up to 15\% of young women and 5\% of young men), which substantially impair physical health and disrupt psychosocial functioning. EDs are associated with a roughly five-to-six-fold risk of suicide attempts relative to those without EDs (Udo, Bitley, \& Grilo, 2019) and show an increased mortality rate which, in the case of anorexia nervosa (AN), can be as high as 5--20\% (Qian et al., 2022). Because EDs are extremely difficult to treat (Chang, Delgadillo, \& Waller, 2021), it is urgent to reach a better comprehension about the basic mechanisms underlying this disorder.
+
+Dysfunctional executive processes have often been proposed as a putative risk and maintaining factor for the disease (cognitive inflexibility impairments: Wu et al., 2014; decision-making impairments: Guillaume et al., 2015; inhibitory-control impairments: Bartholdy, Dalton, O'Daly, Campbell, \& Schmidt, 2016). Among the possible aberrant executive processes in EDs, cognitive inflexibility has been studied the most, especially in terms of a reinforcement learning (RL) paradigm. Although the hypothesis of maladaptive associative learning is theoretically appealing -- given that it would suggest a viable route of clinical interventions -- the supporting evidence has been mixed (for a recent discussion, see Caudek, Sica, Cerea, Colpizzi, \& Stendardi, 2021). The present study intends to contribute to this area of research area by asking whether ED patients can exhibit a maladaptive decision-making strategy in the presence of computationally intact decision-making abilities. Specifically, we will ask whether \emph{task-irrelevant} symptom-related information can distort decision-making in EDs. If confirmed, our hypothesis would show that, at least in some circumstances, disordered eating behavior should not be attributed to a deficit (\emph{i.e.}, to the under-functioning of decision-making abilities), but rather to the effect of extraneous variables (\emph{e.g.}, long term goals, temperamental variables, ecc.) on decision-making behavior. The potential translational impact of this result would be noteworthy, when considering that \ldots{}
+
+\hypertarget{influence-of-outcome-irrilevant-variables-on-rl}{%
+\subsection{Influence of outcome-irrilevant variables on RL}\label{influence-of-outcome-irrilevant-variables-on-rl}}
+
+RL is the ability to infer causal associations between actions and outcomes in a trial-and-error manner. Learning the consequences of past actions is usually studied in the laboratory with a 2-armed bandit task, where a decision maker is given the choice of two responses. One response has a higher win probability. The decision maker needs to learn which response to choose to reap maximum reward.
+
+In the 2-armed bandit task, the optimal policy which maximizes its long-term expected reward \emph{only} depends on the past history of action-outcome contingencies. However, it has been recently shown that human RL learning can be affected by outcome-irrelevant features. For example, Shahar et al. (2019) examined the impact of spatial-motor associations on participants' RL learning. In terms of optimal decision making, the effect of reward should be the same regardless of spatial-motor mapping (\emph{i.e.}, the response-key selection on the previous trial). Instead, Shahar et al. (2019) found a larger effect of reward on the probability of choosing one of two images presented in each trial, when the chosen image was associated with the same response key on both the \(n - 1\) and \(n\) trials. This result shows that, in the general population, the decision-making process can be affected by outcome-irrelevant features (in the study of Shahar et al., 2019, the image/effector response mapping when only the image identity was predictive of the reward; see also Ben-Artzi, Luria, \& Shahar, 2022).
+
+The demonstration of possible effects of outcome-irrelevant features on action value-updating opens the possibility of re-interpreting previously RL findings in EDs. Rather than understanding RL underperformance as due to a deficit, the sub-optimal decision strategy in EDs may be attributed to the influence of outcome-irrelevant features. The presence/absence of such extraneous factors may explain, at least in part, why aberrant decision making has been observed in some EDs studies, but not in others (\emph{e.g.}, Caudek et al., 2021).
+
+We posit that AN patients (given their rigid weight-control behavior and the importance attributed to the long-term goal of thinness) and BN patients (given their impulsivity) should be affected by the interference deriving from the processing of food-related information in a 2-bandit task where they are asked to choose between a food or a non-food item. Therefore, long-term goals (in AN) or temperamental factors (in BN) could lead to an altered decision-making process in EDs, when the food/not food dimension is present in the task, but is outcome-irrelevant, \emph{even in the absence of any decision-making deficit} (see also Haynos, Widge, Anderson, \& Redish, 2022).
+
+We make two predictions concerning the effects of outcome-irrelevant features on PRL performance. First, we expect food information to be processed in a more conservative manner than neutral information, for both ED patients and HCs, consistently with the differences in attention orienting and cognitive control mechanisms for food and non-food information (\emph{e.g.}, Schiff, Testa, Rusconi, Angeli, \& Mapelli, 2021). Second, we predict a decrease in learning-rate with the symptom-induced arousal evoked by disease-specific, but outcome-irrelevant, information (domain-specific policy hypothesis).
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+\hypertarget{material}{%
+\subsection{Material}\label{material}}
+
+\hypertarget{procedure}{%
+\subsection{Procedure}\label{procedure}}
+
+Participants completed a reinforcement learning bandit task in two conditions: neutral (two neutral images on each trial) and symptom-specific (a symptom-specific and a neutral image on each trial). This design allowed us to examine outcome-irrelevant learning associated to a symptom-specific context.
+
+Participants completed a total of 2 blocks of the reinforcement learning task. Each block included a different set of image stimuli and had XX trials. Participants did not received any bonus at the end of the task based on their performance.
+
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{quality-control}{%
+\subsection{Quality Control}\label{quality-control}}
+
+Trials were excluded for extreme RTs (\textless150 ms, \textgreater2500 ms), or if
+the remaining (log transformed) RT exceeded the participant's
+mean ± 3S.D. Participants' datasets were excluded if, in any
+block, there were more than 20 RT outliers, fewer than 24 rich
+or 7 lean rewards, a rich-to-lean reward ratio lower than 2.5, or
+lower than 40\% correct accuracy. In Study 1, 258 depressed adults
+and 36 controls passed the QC criteria. Study 2 data are from participants who passed these QC checks.
+
+\hypertarget{estimating-outcome-irrelevant-learning}{%
+\subsection{Estimating outcome-irrelevant learning}\label{estimating-outcome-irrelevant-learning}}
+
+\hypertarget{spatial-motor-associations}{%
+\subsubsection{Spatial-motor associations}\label{spatial-motor-associations}}
+
+We start by asking whether there is an effect of spatial-motor associations on participants' choices (Ben-Artzi et al., 2022). We found extreme evidence for spatial-motor outcome-irrelevant learning: The difference in `stay' probability between previously rewarded and previously unrewarded response was larger for `same' (.426) than for `flipped' (.219) response/key mapping (posterior \(\beta\) = 0.92, \emph{SE} = 0.07, \(\text{HDI}_{.95}\) = {[}0.79, 1.05{]}; probability of direction (pd) 1.0; 0\% in ROPE (-0.10, 0.10) and Bayes Factor (BF) of \(>\) 100 against the null; Fig. 1). These results replicate those found by Shahar et al. (2019) and Ben-Artzi et al. (2022). There was no group (HC, AN, BN) \(\times\) previous outcome \(\times\) mapping interaction (see Supplementary Materials).
+
+\hypertarget{reinforcement-learning-and-drift-diffusion-modeling}{%
+\subsection{Reinforcement learning and drift diffusion modeling}\label{reinforcement-learning-and-drift-diffusion-modeling}}
+
+To capture the drift towards a two-choice decision (image A and image B) over time, we employed a hierarchical reinforcement learning drift diffusion model (RLDDM; Pedersen et al., 2017; Pedersen and Frank, 2020). The RLDDM was estimated in a hierarchical Bayesian framework using the \(\texttt{HDDMrl}\) module of the \(\texttt{HDDM}\) (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013).
+
+RLDDM has six basic parameters: positive learning rate (\(alpha^+\)), negative learning rate (\(alpha^-\)), drift rate (\(v\)), decision threshold (\(a\)), non-decision time (\(t\)), and starting point bias (\(z\)) parameters. The \(\alpha\) parameter quantifies the learning rate in the Rescorla-Wagner delta learning rule (Rescorla, 1972); a higher learning rate results in rapid adaptation to reward expectations, while a lower learning rate results in slow adaptation. The parameter \(\alpha^+\) is computed from reinforcements, whereas \(\alpha^+\) is computed from punishments. The drift rate \(v\) is the average speed of evidence accumulation toward one decision. The decision boundary is the distance between two decision thresholds; an increase of \(a\) increases the evidence needed to make a decision. The increase of \(a\) leads to a slower but more accurate decision; a decrease in \(a\) results in a faster but error-prone decision. The non-decision time \(t\) is the time spent for stimuli encoding or motor execution (\emph{i.e.}, time not used for evidence accumulation). The starting point parameter \(z\) captures a potential initial bias toward one or the other boundary in absence of any stimulus evidence.
+
+To test the impact of disease-related information on the decision process, we built linear models over each RLDDM parameter. First, we compared models in which we conditioned either none, each or all model's parameters on diagnostic category (group) and image category (neutral, symptom-related). For each model, we computed the Deviance Information Criterion (DIC) and we selected the model with the best trade-off between the fit quality model complexity (\emph{i.e.}, the model with the lowest DIC). The following models were examined. M1: standard RLDDM; M2: adds to model M1 separate learning rates for positive and negative reinforcements; M3: the \(\alpha^+\) and \(\alpha^-\) parameters are conditioned on diagnostic group; M4: the \(\alpha^+\) and \(\alpha^-\) parameters of M3 are conditioned on both diagnostic group and image category (both images neutral or one neutral image and one symptom-related image); M5: all the parameters of M4 and the \(a\) parameter is conditioned on both diagnostic group and image category; M6: all the parameters of M5 and the \(v\) parameter is conditioned on both diagnostic group and image category; M7: all the parameters of M6 and the \(t\) parameter is conditioned on both diagnostic group and image category; M8: all the parameters of M7 and estimate a possible bias of the \(z\) parameter. All models were estimated with Bayesian methods using weakly informative priors. The winning RLDDM is M7. The winning RLDDM (with lowest DIC), M7, had all its six parameters conditioned on both diagnostic group and image category.
+
+\begin{longtable}[]{@{}cc@{}}
+\toprule()
+Model & DIC \\
+\midrule()
+\endhead
+M1 & 103209.264 \\
+M2 & 101590.157 \\
+M3 & 101613.877 \\
+M4 & 99133.675 \\
+M5 & 96150.581 \\
+M6 & 95434.070 \\
+M7 & 92808.856 \\
+M8 & 93157.611 \\
+\bottomrule()
+\end{longtable}
+
+Convergence of Bayesian model parameters was assessed via the Gelman-Rubin statistic; all parameters had \(\hat{R}\) below 1.1 (max = 1.076, mean = 1.002), which does not suggest convergence issues.
+
+To quantify the impact of outcome-irrelevant image category on decision-making, we examined, within each diagnostic group, the difference between of the posterior estimates of the RLDDM parameters in the neutral and symptom-related image conditions. As expected from the policy hypotheses H1, evidence threshold (\(a\)) was higher for food information, relative to neutral information, for the HC group (\(\Delta a_{\text{food-neutral}}\) = 0.9, \(CI_{95}\) = {[}0.5, 1.5{]}), for the AN group (), and for the BN group (). Consistent with the policy hypotheses H2, learning rate from rewards (\(\alpha^+\)) was lower for food information, relative to neutral information, for the AN group (\(\Delta \alpha^+_{\text{food-neutral}}\) = -2.7, \(CI_{95}\) = {[}-5.2, -0.5{]}), but not for the BN group (), nor for the HC group ().
+
+We found that -- relative to neutral outcome-irrelevant information --, decision-making concerning food information increased the posterior estimate of the \(a\) parameter
+
+evidence threshold and accumulation rate, we computed the difference between music conditions (averaged over task, for threshold). While the main prediction of the timing hypothesis (H1) was to observe increasingly higher evidence- accumulation rates with faster music, relative to silence (without changes in evidence threshold), the main prediction of the policy hypotheses was either a tempo-dependent (H2a) or tempo-independent (H2b) reduction of the evidence threshold --which indexes the decision policy-, relative to silence (without changes in the accumulation rate)
+
+\hypertarget{biased-choices}{%
+\subsubsection{Biased Choices}\label{biased-choices}}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2632}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3684}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3684}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Food/neutral image pairs
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Two-neutral image pairs
+\end{minipage} \\
+\midrule()
+\endhead
+AN & 1.417, 95\% CI (1.339, 1.491) & 1.260, 95\% CI (1.182, 1.336) \\
+Recovering anorexics & 1.340, 95\% CI (1.186, 1.488) & 1.311, 95\% CI (1.167, 1.449) \\
+BN & 1.440, 95\% CI (1.304, 1.570) & 1.230, 95\% CI (1.087, 1.365) \\
+Recovering bulimics & 1.367, 95\% CI (1.157, 1.561) & 1.289, 95\% CI (1.085, 1.482) \\
+HC & 1.340, 95\% CI (1.308, 1.373) & 1.258, 95\% CI (1.225, 1.291) \\
+At Risk & 1.325, 95\% CI (1.236, 1.412) & 1.233, 95\% CI (1.136, 1.328) \\
+\bottomrule()
+\end{longtable}
+
+To determine whether the domain-specific under-performance of AN patients in the RL task was due to a bias towards not-food choices, regardless of previous action-outcome history, we examined the frequencies of food choices in the PRL block pairing a food image with a neutral image. There was an overall tendency towards the neutral image: proportion of food choices = 0.484, 95\% CI {[}0.477, 0.492{]}. However, we found no differential bias in the three groups, as indicated by the following three contrasts: AN - HC: prop = -0.00126, 95\% CI {[}-0.0277, 0.0267{]}; BN - HC: prop = 0.01537, 95\% CI {[}-0.0278, 0.0587{]}; BN - AN: prop = 0.01668, 95\% CI {[}-0.0323, 0.0661{]}.
+
+\hypertarget{discussion}{%
+\section{Discussion}\label{discussion}}
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-bartholdy2016systematic}{}}%
+Bartholdy, S., Dalton, B., O'Daly, O. G., Campbell, I. C., \& Schmidt, U. (2016). A systematic review of the relationship between eating, weight and inhibitory control using the stop signal task. \emph{Neuroscience \& Biobehavioral Reviews}, \emph{64}, 35--62.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ben2022working}{}}%
+Ben-Artzi, I., Luria, R., \& Shahar, N. (2022). Working memory capacity estimates moderate value learning for outcome-irrelevant features. \emph{Scientific Reports}, \emph{12}(1), 1--10.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caudek2021susceptibility}{}}%
+Caudek, C., Sica, C., Cerea, S., Colpizzi, I., \& Stendardi, D. (2021). Susceptibility to eating disorders is associated with cognitive inflexibility in female university students. \emph{Journal of Behavioral and Cognitive Therapy}, \emph{31}(4), 317--328.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chang2021early}{}}%
+Chang, P. G., Delgadillo, J., \& Waller, G. (2021). Early response to psychological treatment for eating disorders: A systematic review and meta-analysis. \emph{Clinical Psychology Review}, \emph{86}, 102032.
+
+\leavevmode\vadjust pre{\hypertarget{ref-guillaume2015impaired}{}}%
+Guillaume, S., Gorwood, P., Jollant, F., Van den Eynde, F., Courtet, P., \& Richard-Devantoy, S. (2015). Impaired decision-making in symptomatic anorexia and bulimia nervosa patients: A meta-analysis. \emph{Psychological Medicine}, \emph{45}(16), 3377--3391.
+
+\leavevmode\vadjust pre{\hypertarget{ref-haynos2022beyond}{}}%
+Haynos, A. F., Widge, A. S., Anderson, L. M., \& Redish, A. D. (2022). Beyond description and deficits: How computational psychiatry can enhance an understanding of decision-making in anorexia nervosa. \emph{Current Psychiatry Reports}, 1--11.
+
+\leavevmode\vadjust pre{\hypertarget{ref-qian2022update}{}}%
+Qian, J., Wu, Y., Liu, F., Zhu, Y., Jin, H., Zhang, H., \ldots{} Yu, D. (2022). An update on the prevalence of eating disorders in the general population: A systematic review and meta-analysis. \emph{Eating and Weight Disorders-Studies on Anorexia, Bulimia and Obesity}, \emph{27}(2), 415--428.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rescorla1972theory}{}}%
+Rescorla, R. A. (1972). A theory of pavlovian conditioning: Variations in the effectiveness of reinforcement and nonreinforcement. \emph{Current Research and Theory}, 64--99.
+
+\leavevmode\vadjust pre{\hypertarget{ref-schiff2021expectancy}{}}%
+Schiff, S., Testa, G., Rusconi, M. L., Angeli, P., \& Mapelli, D. (2021). Expectancy to eat modulates cognitive control and attention toward irrelevant food and non-food images in healthy starving individuals. A behavioral study. \emph{Frontiers in Psychology}, \emph{11}, 3902.
+
+\leavevmode\vadjust pre{\hypertarget{ref-shahar2019credit}{}}%
+Shahar, N., Moran, R., Hauser, T. U., Kievit, R. A., McNamee, D., Moutoussis, M., \ldots{} Dolan, R. J. (2019). Credit assignment to state-independent task representations and its relationship with model-based decision making. \emph{Proceedings of the National Academy of Sciences}, \emph{116}(32), 15871--15876.
+
+\leavevmode\vadjust pre{\hypertarget{ref-udo2019suicide}{}}%
+Udo, T., Bitley, S., \& Grilo, C. M. (2019). Suicide attempts in US adults with lifetime DSM-5 eating disorders. \emph{BMC Medicine}, \emph{17}(1), 1--13.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wu2014set}{}}%
+Wu, M., Brockmeyer, T., Hartmann, M., Skunde, M., Herzog, W., \& Friederich, H.-C. (2014). Set-shifting ability across the spectrum of eating disorders and in overweight and obesity: A systematic review and meta-analysis. \emph{Psychological Medicine}, \emph{44}(16), 3365--3385.
+
+\end{CSLReferences}
+
+
+\end{document}
