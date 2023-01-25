@@ -1,0 +1,133 @@
+---
+title: "WCST and eating disorders"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Requirements
+library("here")
+library("tidyverse")
+library("brms")
+library("cmdstanr")
+library("report")
+```
+
+The purpose of this notebook is to analyze the descriptive statistics of the WCST data as a function of group (patients, controls). 
+
+```{r}
+patients <- readRDS(
+  here("data", "processed", "wcst", "wcst_descript_patients.rds")
+)
+patients$is_patient <- 1
+
+controls <- readRDS(
+  here("data", "processed", "wcst", "wcst_descript_controls.rds")
+)
+controls$is_patient <- 0
+
+d <- rbind(
+  patients, controls
+)
+```
+
+```{r}
+d %>%
+  group_by(is_patient) %>%
+  report_table()
+```
+
+
+```{r}
+d %>% 
+  group_by(is_patient) %>% 
+  summarise(
+    prop_pers_err = mean(prop_pers_err, na.rm=TRUE),
+    prop_non_pers_err = mean(prop_non_pers_err, na.rm=TRUE),
+    prop_err = mean(prop_err, na.rm=TRUE),
+    prop_cor = mean(prop_cor, na.rm=TRUE),
+    n = n()
+  )
+```
+
+
+```{r}
+d$is_patient <- factor(d$is_patient)
+```
+
+## Perseverative errors
+
+```{r}
+bf1 <- bf(prop_pers_err ~ is_patient)
+
+fit1 <- brm(
+  bf1, 
+  data = d, 
+  family = exgaussian(),
+  chains = 4, cores = 4,
+  backend = "cmdstan"
+)
+
+pp_check(fit1)
+summary(fit1)
+conditional_effects(fit1, "is_patient")
+```
+
+```{r}
+report(fit1)
+```
+
+## Non perseverative errors
+
+```{r}
+bf2 <- bf(prop_non_pers_err ~ is_patient)
+
+fit2 <- brm(
+  bf2, 
+  data = d, 
+  family = exgaussian(),
+  chains = 4, cores = 4,
+  backend = "cmdstan"
+)
+
+pp_check(fit2)
+summary(fit2)
+conditional_effects(fit2, "is_patient")
+```
+
+```{r}
+report(fit2)
+```
+
+## Proportion error
+
+```{r}
+bf3 <- bf(prop_err ~ is_patient)
+
+fit3 <- brm(
+  bf3, 
+  data = d, 
+  family = exgaussian(),
+  chains = 4, cores = 4,
+  backend = "cmdstan"
+)
+
+pp_check(fit3)
+summary(fit3)
+conditional_effects(fit3, "is_patient")
+```
+
+```{r}
+report(fit3)
+```
+
+
+
+## Session info {-}
+
+
+```{r}
+report(sessionInfo())
+```
+

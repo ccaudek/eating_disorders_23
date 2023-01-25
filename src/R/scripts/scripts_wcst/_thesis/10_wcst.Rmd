@@ -1,0 +1,353 @@
+---
+title: "Disturbi alimentari"
+subtitle: "WCST"
+author: "Corrado Caudek"
+date: "Last modified `r format(Sys.time(), '%Y-%m-%d')`"
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+
+```{r, echo=FALSE}
+suppressMessages(library("here"))
+suppressMessages(library("tidyverse"))
+suppressMessages(library("jtools"))
+suppressMessages(library("kableExtra"))
+suppressMessages(library("janitor"))
+suppressMessages(library("rstan"))
+suppressMessages(library("rstanarm"))
+suppressMessages(library("report"))
+suppressMessages(library("papaja"))
+suppressMessages(library("patchwork"))
+suppressMessages(library("corrplot"))
+suppressMessages(library("brms"))
+suppressMessages(library("sjPlot"))
+suppressMessages(library("insight"))
+suppressMessages(library("httr"))
+```
+
+
+```{r, echo=FALSE}
+# read n-back
+nback <- readRDS(
+  here(
+    "data", "processed", "nback", "nback_dprime_final.rds"
+  )
+) %>% 
+  dplyr::rename(
+    subj_name = subj_id
+  )
+
+raven <- readRDS(
+  here(
+    "data", "processed", "raven", "raven_scores_final.rds"
+  )
+) %>% 
+  dplyr::rename(
+    subj_name = subj_id
+  )
+
+aum_params <- readRDS(
+  here(
+    "data", "processed", "wcst", "aum_params_final.rds"
+  )
+)
+
+wcst_descript <- readRDS(
+  here(
+    "data", "processed", "wcst", "wcst_descript.rds"
+  )
+) %>% 
+  dplyr::rename(
+    psytoolkit_code = subj_name
+  )
+
+wcst_params <- left_join(aum_params, wcst_descript, by = "psytoolkit_code") %>% 
+  dplyr::rename(
+    subj_name = subj_id
+  )
+
+eat26 <-  readRDS(
+  here(
+    "data", "processed", "eat_26", "eat_26.rds"
+  )
+) %>% 
+  dplyr::rename(
+    subj_name = subj_code
+  )
+
+# combine wcst_params with eat26
+d <- left_join(wcst_params, eat26, by = "subj_name") 
+
+# add raven
+dd <- left_join(d, raven, by = "subj_name") 
+
+# add 2-back
+ddd <- left_join(dd, nback, by = "subj_name") 
+
+d1 <- ddd[!is.na(ddd$tot), ]
+```
+
+
+# Distribuzione dei punteggi EAT-26 
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+g1 <- d1 %>% 
+  ggplot(aes(oral_control)) +
+  geom_histogram() +
+  theme_apa()
+
+g2 <- d1 %>% 
+  ggplot(aes(dieting)) +
+  geom_histogram() +
+  theme_apa()
+
+g3 <- d1 %>% 
+  ggplot(aes(bulimia)) +
+  geom_histogram() +
+  theme_apa()
+
+g1 + g2 + g3
+```
+
+# Parametri del modello AUM 
+
+Sono qui presentati gli istogrammi con le distribuzioni delle stime dei quattro parametri (r, p, d, i) del modello AUM per ciascun soggetto.
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+g1 <- d1 %>% 
+  ggplot(aes(m5_rpd1_r)) +
+  geom_histogram() +
+  theme_apa()
+
+g2 <- d1 %>% 
+  ggplot(aes(m5_rpd1_p)) +
+  geom_histogram() +
+  theme_apa()
+
+g3 <- d1 %>% 
+  ggplot(aes(m5_rpd1_d)) +
+  geom_histogram() +
+  theme_apa()
+
+g4 <- d1 %>% 
+  ggplot(aes(m5_rpd1_i)) +
+  geom_histogram() +
+  theme_apa()
+
+(g1 + g2) / (g3 + g4)
+```
+
+I parametri del modello AUM sono stati stimati implementando l'algoritmo di Bishra et al (2010) per ciascun soggetto considerato singolarmente. Questo metodo di stima, considerato il numero limitato di prove per ciascun soggetto, produce alle volte dei risultati degenerati. Ciò si nota, nei prcedenti istogrammi, nel fatto che si ottengono troppo spesso delle stime che coincidono con i valori estremi del parametro (0 oppure 1). Un modo possibile per risolvere questo problema è quello di utilizzare un diverso metodo di stima dei parametri del modello AUM, ovvero un metodo Bayesiano gerarchico. Tale procedura, producendo di default una soluzione caratterizzata dalla proprietà dello "shrinkage" (Katahira, 2016), consentirebbe di evitare tali soluzioni 'degenerate'. Tuttavia, implementare una tale procedura di stima gerarchica Bayesiana è complesso e, nel presente lavoro, ci si è limitati all'implementazione del modello AUM basata sulla procedura di massima verosimiglianza.
+
+Citazione:
+
+Katahira, K. (2016). How hierarchical models improve point estimates of model parameters at the individual level. Journal of Mathematical Psychology, 73, 37-58.
+
+
+## Correlazioni tra i parametri del modello AUM
+
+- 1: r
+- 2: p
+- 3: d
+- 4: i
+
+```{r, echo=FALSE}
+M <- cor(
+  cbind(d1$m5_rpd1_r, d1$m5_rpd1_p, d1$m5_rpd1_d, d1$m5_rpd1_i), 
+  use = "complete.obs"
+)
+round(M, 2)
+```
+
+```{r, echo=FALSE}
+corrplot(M, method="pie")
+```
+
+```{r, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE}
+ds <- data.frame(
+  o = as.numeric(scale(d1$oral_control)),
+  b = as.numeric(scale(d1$bulimia)),
+  d = as.numeric(scale(d1$dieting)),
+  pr = as.numeric(scale(d1$m5_rpd1_r)),
+  pp = as.numeric(scale(d1$m5_rpd1_p)),
+  pd = as.numeric(scale(d1$m5_rpd1_d)),
+  pi = as.numeric(scale(d1$m5_rpd1_i)),
+  ep = d1$prop_pers_err,
+  enp = d1$prop_non_pers_err,
+  c = car::logit(d1$prop_cor),
+  rav = as.numeric(scale(d1$raven_score)),
+  dprime = d1$dprime
+) %>% 
+  drop_na()
+```
+
+
+# Associazioni tra i parametri AUM e le scale EAT-26
+
+## Reward
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+m <- stan_glm(
+  pr ~ o + d + b, 
+  data = ds
+)
+```
+
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+\
+
+__Traduzione__
+
+Abbiamo adattato un modello lineare bayesiano (stimato utilizzando il campionamento MCMC con 4 catene di 2000 iterazioni e un warm-up di 1000) per prevedere i parametro r con Oral control, Dieting e Bulimia (formula: pr ~ o + d + b). Per le distribuzioni a priori sui parametri sono state utilizzate delle distribuzioni normale (media = 0.00, SD = 2.5). Il potere esplicativo del modello è moderato ($R^2$ = 0,15, IC 89% [9,26e-03, 0,29], adj. $R^2$ = -0,15). L'intercetta del modello (avendo standardizzato i valori delle sotto-scale EAT-26), corrispondente a Oral control = 0, Dieting = 0 e Bulimia = 0, è a 0.04 (95% CI [-0.33, 0.41]). All'interno di questo modello:
+
+- L'effetto di Oral control (Mediana = -0.31, 95% CI [-0.68, 0.07]) ha una probabilità pari a 93.92% di essere negativo e del 90.30% di essere significativo (< -0.05).  La probabilità che l'effetto di Oral control sia grande (< -0.31) è pari al 50.08%. La procedura di stima ha ottenuto con successo la convergenza (Rhat = 1.000) e dunque i coefficienti stimati possono essere ritenuti affidabili (ESS = 2390).
+
+   - L'effetto di Dieting (Mediana = 0.11, IC 95% [-0.50, 0.69]) ha una probabilità del 64.38% di essere positivo (> 0), una probabilità del 58.00% di essere significativo (> 0.05). La probabilità che l'effetto di Dieting sia di grandi dimensioni (> 0.31) è pari al 25.87%. La procedura di stima ha ottenuto con successo la convergenza (Rhat = 1.000) e dunque i coefficienti stimati possono essere ritenuti affidabili (ESS = 2312).
+
+   - L'effetto di Bulimia (Mediana = 0.02, IC 95% [-0.56, 0.59]) ha una probabilità del 53.12% di essere positivo (> 0) e ha una probabilità del  45.42% di essere significativo (> 0.05). La probabilità che l'effetto di Bulimia sia di grandi dimensioni (> 0.31) è pari al 16.90%. La procedura di stima ha ottenuto con successo la convergenza (Rhat = 1.000) e dunque i coefficienti stimati possono essere ritenuti affidabili (ESS = 3349).
+   
+
+## Punishment
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+m <- stan_glm(
+  pp ~ o + d + b, 
+  data = ds
+)
+```
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+
+
+## Consistency
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+m <- stan_glm(
+  pd ~ o + d + b, 
+  data = ds
+)
+```
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+
+## Focus
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+m <- stan_glm(
+  pi ~ o + d + b, 
+  data = ds
+)
+```
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+
+# Analisi svolta sulle statistiche descrittive
+
+## Errori perseverativi
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+ds$logit_ep <- car::logit(ds$ep)
+m <- stan_glm(
+  logit_ep ~ o + d + b, 
+  data = ds
+)
+```
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+
+## Errori non perseverativi
+
+```{r, message=FALSE, warning=FALSE, results='hide', errors=FALSE}
+ds$logit_enp <- car::logit(ds$enp)
+m <- stan_glm(
+  logit_enp ~ o + d + b, 
+  data = ds
+)
+```
+
+```{r, echo=FALSE}
+plot_model(
+  m, 
+  type = "std", 
+  sort.est = TRUE
+)
+```
+
+\
+
+```{r, echo=FALSE}
+report(m)
+```
+
+

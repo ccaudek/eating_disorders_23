@@ -1,0 +1,203 @@
+---
+title: "WCST and eating disorders"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+# Requirements
+library("here")
+library("tidyverse")
+library("brms")
+library("report")
+```
+
+The purpose of this notebook is to analyze the parameters' estimates of the wP-RL model of Steinke et al. (2020) for the data of the WCST as a function of group (patients, controls). 
+The description of the parameters is provided in Table 4 of Steinke et al. (2020).
+
+```{r}
+all_params_imp <- readRDS(
+  here::here("data", "processed", "wcst", "all_params_imp.RDS")
+)
+```
+
+```{r}
+report(all_params_imp)
+```
+
+Scale numerical variables.
+
+```{r}
+scale_this <- function(x) as.vector(scale(x))
+
+all_params_imp <- all_params_imp %>%
+  as_tibble() %>%
+  mutate(across(where(is.numeric), scale_this))
+```
+
+```{r}
+fit1 <- brm(
+  bf(mu_MB_Arew ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit1)
+
+summary(fit1)
+conditional_effects(fit1) 
+```
+
+```{r}
+report(fit1)
+```
+
+
+```{r}
+fit2 <- brm(
+  bf(mu_MB_Apun ~ is_patient), 
+  data = all_params_imp,
+  family = student(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit2)
+
+summary(fit2)
+conditional_effects(fit2) 
+```
+
+```{r}
+report(fit2)
+```
+
+```{r}
+fit3 <- brm(
+  bf(mu_MB_gamma ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit3)
+
+summary(fit3)
+conditional_effects(fit3) 
+```
+
+```{r}
+report(fit3)
+```
+
+```{r}
+fit4 <- brm(
+  bf(mu_MF_Arew ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit4)
+
+summary(fit4)
+conditional_effects(fit4) 
+```
+
+```{r}
+report(fit4)
+```
+
+```{r}
+fit5 <- brm(
+  bf(mu_MF_Apun ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit5)
+
+summary(fit5)
+conditional_effects(fit5) 
+```
+
+```{r}
+report(fit5)
+```
+
+```{r}
+fit6 <- brm(
+  bf(mu_MF_gamma ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit6)
+
+summary(fit6)
+conditional_effects(fit6) 
+```
+
+```{r}
+report(fit6)
+```
+
+```{r}
+fit7 <- brm(
+  bf(mu_temp ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit7)
+
+summary(fit7)
+conditional_effects(fit7) 
+```
+
+```{r}
+report(fit7)
+```
+
+```{r}
+fit8 <- brm(
+  bf(mu_w ~ is_patient), 
+  data = all_params_imp,
+  family = asym_laplace(),
+  iter = 4000,
+  chains = 4, cores = 4,
+  refresh = 0,
+  backend = "cmdstan"
+)
+pp_check(fit8)
+
+summary(fit8)
+conditional_effects(fit8) 
+```
+
+```{r}
+report(fit8)
+```
+
+```{r}
+report(sessionInfo())
+```
+
