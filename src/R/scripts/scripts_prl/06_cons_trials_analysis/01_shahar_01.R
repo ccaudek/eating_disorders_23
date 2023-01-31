@@ -3,7 +3,7 @@
 # Script purpose: consecutive trial analysis
 # @author: Corrado Caudek <corrado.caudek@unifi.it>
 # Date Created: Fri Dec  2 06:14:18 2022
-# Last Modified Date: Sab 17 Dic 2022 09:28:14 CET
+# Last Modified Date: Mon Jan 30 15:10:49 2023
 #
 # 👉 Replicate the consecutive trial analysis of Shahar et al. (2019).
 
@@ -26,16 +26,28 @@ options(max.print = .Machine$integer.max)
 source(here::here("src", "R", "functions", "funs_prl.R"))
 source(here::here("src", "R", "functions", "funs_consecutive_trial_analysis.R"))
 
+# get subj_codes of the final set of 296 subjects.
+source(here::here("data", "processed", "prl", "subj_codes_296.R"))
+
 
 # Read list of subjects used in the hDDMrl analysis.
 lookup_tbl <- rio::import(
-  here::here("data", "processed", "prl", "hddm_look_up_table_v3.csv")
+  here::here(
+    "data", "processed", "prl", "input_for_hddmrl", 
+    "hddm_look_up_table_v3.csv"
+  )
 )
 
 # Read complete raw data.
 d1 <- gen_data_for_consecutive_trial_analysis()
 
-d <- d1 |>
+# Select only 296 subjects.
+
+d2 <- d1[d1$subj_name %in% subj_codes_296, ]
+length(unique(d2$subj_name))
+# [1] 296
+
+d <- d2 |>
   dplyr::rename(
     subj_code = subj_name
   )
@@ -47,19 +59,23 @@ setdiff(unique(d$subj_code), unique(lookup_tbl$subj_code))
 # Recode feedback
 table(d$feedback)
 #     0     1 
-# 40484 48316 
+# 39636 47244 
+
+d$diag_cat <- recode_factor(
+  d$diag_cat,
+  "AN_R" = "RI",
+  "BN_R" = "RI"
+)
 
 d |> 
   group_by(diag_cat) |> 
   summarize(
     n_distinct(subj_code)
   )
-# 1 AN                            37
-# 2 AN_R                          10
+# 1 RI                            35
+# 2 AN                            37
 # 3 BN                            12
-# 4 BN_R                           5
-# 5 HC                           212
-# 6 RI                            26
+# 4 HC                           212
 
 
 # Add lead variables ------------------------------------------------------
@@ -191,21 +207,24 @@ bysubj_ed <- bysubj_df[bysubj_df$diag_cat %in% c("AN", "HC", "BN"), ]
 # bysubj_ed$diag_cat <- factor(bysubj_ed$diag_cat)
 # summary(bysubj_ed$diag_cat)
 
+# all 4 categories
+bysubj_ed <- bysubj_df
+
 bysubj_ed %>%
   group_by(is_mapping_same, prev_feedback) %>%
   summarise(
     m = mean(stay)
   )
 #   is_mapping_same prev_feedback     m
-# 1               0             0 0.471
+# 1               0             0 0.472
 # 2               0             1 0.690
-# 3               1             0 0.369
-# 4               1             1 0.795
+# 3               1             0 0.370
+# 4               1             1 0.797
 
-0.690 - 0.471
-# [1] 0.219
-0.795 - 0.369
-# [1] 0.426
+0.690 - 0.472
+# [1] 0.218
+0.797 - 0.370
+# [1] 0.427
 
 # Rename and recode variables.
 bysubj_ed <- bysubj_ed |> 
@@ -269,19 +288,23 @@ mod_0 <- add_criterion(mod_0, "loo")
 
 pp_check(mod_0)
 summary(mod_0)
-#                                        Estimate Est.Error l-95% CI u-95% CI Rhat
-# Intercept                                 -0.13      0.04    -0.21    -0.05 1.00
-# mappingsame                               -0.42      0.06    -0.53    -0.31 1.00
-# feedbackreward                             1.02      0.09     0.85     1.19 1.00
-# diagnosisAN                                0.06      0.09    -0.11     0.23 1.00
-# diagnosisBN                                0.06      0.12    -0.17     0.29 1.00
-# mappingsame:feedbackreward                 0.90      0.07     0.77     1.03 1.00
-# mappingsame:diagnosisAN                   -0.06      0.11    -0.29     0.16 1.00
-# mappingsame:diagnosisBN                   -0.04      0.15    -0.35     0.26 1.00
-# feedbackreward:diagnosisAN                -0.16      0.16    -0.50     0.13 1.00
-# feedbackreward:diagnosisBN                 0.04      0.19    -0.31     0.43 1.00
-# mappingsame:feedbackreward:diagnosisAN     0.14      0.13    -0.10     0.41 1.00
-# mappingsame:feedbackreward:diagnosisBN     0.03      0.17    -0.29     0.36 1.00
+#                                        Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS
+# Intercept                                 -0.12      0.04    -0.20    -0.05 1.00     1923
+# mappingsame                               -0.42      0.05    -0.53    -0.32 1.00     2155
+# feedbackreward                             1.01      0.08     0.86     1.17 1.00     1822
+# diagnosisRI                                0.03      0.08    -0.14     0.19 1.00     2971
+# diagnosisAN                                0.06      0.09    -0.10     0.23 1.00     2663
+# diagnosisBN                                0.06      0.12    -0.17     0.29 1.00     3438
+# mappingsame:feedbackreward                 0.91      0.07     0.78     1.04 1.00     2638
+# mappingsame:diagnosisRI                   -0.01      0.11    -0.23     0.21 1.00     2950
+# mappingsame:diagnosisAN                   -0.06      0.11    -0.28     0.15 1.00     2960
+# mappingsame:diagnosisBN                   -0.04      0.15    -0.34     0.25 1.00     4073
+# feedbackreward:diagnosisRI                 0.02      0.15    -0.27     0.32 1.00     3435
+# feedbackreward:diagnosisAN                -0.16      0.16    -0.49     0.14 1.00     2629
+# feedbackreward:diagnosisBN                 0.03      0.18    -0.32     0.41 1.00     4643
+# mappingsame:feedbackreward:diagnosisRI     0.08      0.13    -0.16     0.34 1.00     4595
+# mappingsame:feedbackreward:diagnosisAN     0.14      0.13    -0.11     0.40 1.00     4677
+# mappingsame:feedbackreward:diagnosisBN     0.03      0.16    -0.29     0.36 1.00     6585
 
 dcat <- make_conditions(mod_0, "diagnosis")
 me <- conditional_effects(mod_0, "mapping:feedback", conditions = dcat)
@@ -352,20 +375,20 @@ ggsave("shahar_02.pdf", width = 9.5, height = 11, units = "cm")
 
 summary(mod_1)
 #                            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-# Intercept                     -0.12      0.04    -0.20    -0.04 1.00     2098     2444
-# mappingsame                   -0.43      0.05    -0.53    -0.33 1.00     2595     3097
-# feedbackreward                 1.00      0.08     0.84     1.15 1.00     2124     2504
-# mappingsame:feedbackreward     0.92      0.07     0.79     1.05 1.00     3471     3095
+# Intercept                     -0.11      0.04    -0.19    -0.04 1.00     1986     2575
+# mappingsame                   -0.43      0.05    -0.53    -0.33 1.00     2285     2656
+# feedbackreward                 0.99      0.08     0.84     1.14 1.00     1852     2570
+# mappingsame:feedbackreward     0.93      0.06     0.81     1.06 1.00     2730     2821
 
 # Bayes Factor.
 mod_bf = bayestestR::bayesfactor_parameters(mod_1)
 mod_bf
 # Parameter                  |       BF
 # -------------------------------------
-# (Intercept)                |    14.10
-# mappingsame                | 9.88e+06
-# feedbackreward             | 5.97e+12
-# mappingsame:feedbackreward | 7.97e+14
+# (Intercept)                |    12.87
+# mappingsame                | 5.60e+07
+# feedbackreward             | 3.22e+11
+# mappingsame:feedbackreward | 2.10e+15
 plot(mod_bf)
 
 plot(bayesfactor_models(mod_1)) +
@@ -373,51 +396,52 @@ plot(bayesfactor_models(mod_1)) +
 
 # Interaction term:
 effectsize::interpret_bf(mod_bf$log_BF[4], include_value = TRUE)
-# [1] "extreme evidence (BF = 7.97e+14) in favour of"
+# [1] "very strong evidence (BF = 35.28) in favour of"
 # (Rules: jeffreys1961)
 
 rope = bayestestR::bayesfactor_parameters(mod_1, null = c(-0.0132, 0.0132))
 rope
 # Parameter                  |       BF
 # -------------------------------------
-# (Intercept)                |    12.75
-# mappingsame                | 1.06e+07
-# feedbackreward             | 6.89e+12
-# mappingsame:feedbackreward | 7.95e+14
+# (Intercept)                |    12.22
+# mappingsame                | 5.40e+07
+# feedbackreward             | 2.98e+11
+# mappingsame:feedbackreward | 2.01e+15
 plot(rope)
 effectsize::interpret_bf(exp(mod_bf$log_BF[4]), include_value = TRUE)
-# [1] "extreme evidence (BF = 7.99e+14) in favour of"
+# [1] "extreme evidence (BF = 2.10e+15) in favour of"
+# (Rules: jeffreys1961)
 
 bayes_R2(mod_1)
-#    Estimate  Est.Error     Q2.5     Q97.5
-# R2 0.713901 0.01001142 0.693518 0.7324759
+#     Estimate  Est.Error     Q2.5     Q97.5
+# R2 0.7106001 0.009645577 0.6919191 0.7290299 
 
 bayestestR::hdi(mod_1)
 # Parameter                  |        95% HDI
 # -------------------------------------------
-# (Intercept)                | [-0.19, -0.04]
-# mappingsame                | [-0.54, -0.32]
-# feedbackreward             | [ 0.84,  1.15]
-# mappingsame:feedbackreward | [ 0.79,  1.05]
+# (Intercept)                | [-0.18, -0.04]
+# mappingsame                | [-0.54, -0.34]
+# feedbackreward             | [ 0.84,  1.14]
+# mappingsame:feedbackreward | [ 0.81,  1.06]
 
 hypothesis(mod_1, "mappingsame:feedbackreward > 0")
-#                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob
-# 1 (mappingsame:feed... > 0     0.92      0.07     0.81     1.03        Inf         1
+#                 Hypothesis Estimate Est.Error CI.Lower CI.Upper Evid.Ratio Post.Prob Star
+# 1 (mappingsame:feed... > 0     0.93      0.06     0.83     1.04        Inf         1    *
 
 bayestestR::describe_posterior(mod_1)
 # Parameter                  | Median |         95% CI |     pd |          ROPE | % in ROPE |  Rhat |     ESS
 # -----------------------------------------------------------------------------------------------------------
-# (Intercept)                |  -0.12 | [-0.20, -0.04] | 99.88% | [-0.10, 0.10] |    32.74% | 1.000 | 2036.00
-# mappingsame                |  -0.43 | [-0.54, -0.32] |   100% | [-0.10, 0.10] |        0% | 1.001 | 2485.00
-# feedbackreward             |   0.99 | [ 0.84,  1.15] |   100% | [-0.10, 0.10] |        0% | 1.002 | 1839.00
-# mappingsame:feedbackreward |   0.92 | [ 0.79,  1.05] |   100% | [-0.10, 0.10] |        0% | 1.001 | 2801.00
+# (Intercept)                |  -0.11 | [-0.19, -0.04] | 99.88% | [-0.10, 0.10] |    35.18% | 1.003 | 1995.00
+# mappingsame                |  -0.43 | [-0.53, -0.33] |   100% | [-0.10, 0.10] |        0% | 1.003 | 2271.00
+# feedbackreward             |   0.99 | [ 0.84,  1.14] |   100% | [-0.10, 0.10] |        0% | 1.003 | 1840.00
+# mappingsame:feedbackreward |   0.93 | [ 0.81,  1.06] |   100% | [-0.10, 0.10] |        0% | 1.002 | 2703.00
 
 # Model comparison --------------------------------------------------------
 
 loo_compare(mod_0, mod_1, criterion = "loo")
 #     elpd_diff se_diff
-# mod_0   0.0       0.0  
-# mod_1 -35.3      25.6  
+#    mod_1  0.0     0.0   
+#    mod_0 -4.5     2.8   
 
 
 
