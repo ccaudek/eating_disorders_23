@@ -1,0 +1,1211 @@
+---
+title: "Symptom-related information changes decision-making policy in anorexia nervosa"
+author: "Supplementary Materials"
+output:
+  pdf_document:
+      toc: true
+      toc_depth: 2
+csl: apa7.csl
+bibliography: ed.bib
+fontsize: 12pt
+linestretch: 1.1
+---
+
+```{r setup, message = FALSE, warning = FALSE, include = FALSE, results = "hide"}
+library("tidyverse")
+library("shinystan")
+library("emojifont")
+library("patchwork")
+library("ggridges")
+library("viridis")
+library("ellipse")
+library("papaja")
+library("phonR")
+library("broom")
+library("lme4")
+library("brms")
+library("texreg")
+library("here")
+library("tidyverse")
+library("stringr")
+library("broom.mixed")
+library("kableExtra")
+library("cowplot")
+
+# set rstan options
+rstan::rstan_options(auto_write = TRUE)
+options(mc.cores = parallel::detectCores() )
+
+# enables / disables caching for all chunks of code
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+```{r set-options_sm, echo = FALSE, cache = FALSE}
+knitr::opts_chunk$set(fig.retina = 2.5)
+options(width = 100)
+```
+
+\pagebreak
+
+# Demographic and psychopathology measures
+
+## Age
+
+In our initial statistical analysis, we investigated if there were any differences in age among the groups (AN = Anorexia Nervosa, BN = Bulimia Nervosa, HC = Healthy Controls, RI = participants who were at risk of developing eating disorders but had not received a formal diagnosis).
+
+The mean age and standard devitation by group is shown below.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+quest_param_df <- readr::read_csv(
+  here::here("data", "processed", "quest", "quest.csv")
+)
+
+quest_param_df <- quest_param_df |> 
+  dplyr::rename("group" = "diag_cat")
+
+quest_param_df$group <- factor(quest_param_df$group)
+quest_param_df$group <- relevel(quest_param_df$group, ref = "HC")
+# contrasts(quest_param_df$group)
+```
+
+```{r, echo=FALSE}
+quest_param_df |> 
+  group_by(group) |> 
+  summarize(
+    Age = mean(age),
+    SD = sd(age)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+We used a Bayesian regression model to examine the age differences among groups.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m1 <- brm(
+  age ~ group,
+  data = quest_param_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m1) +
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m1, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in age between each group and the HC baseline included zero, indicating that there were no credible differences in age among the groups.
+
+### Predicted effect of group on age
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m1, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "Age (years)",
+    x = "Group") +
+  theme_cowplot() + 
+  coord_flip()
+```
+
+\pagebreak
+
+## Body Mass Index (BMI)
+
+\vspace{5mm}
+
+The average Body Mass Index (BMI) values and standard deviations for each group are reported below.
+
+```{r, message = FALSE, warning = FALSE, include = FALSE}
+quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+
+quest_param_df[quest_param_df$group == "AN", ]$bmi |> sort()
+
+ano <- quest_param_df[quest_param_df$group == "AN", ]
+ano_df <- distinct(ano, subj_code, .keep_all = TRUE)
+foo <- ano_df |> 
+  dplyr::select(subj_code, height, present_weight, bmi)
+
+foo |> as.data.frame()
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "cr_pa_1969_04_12_179_f",
+  40.2, quest_param_df$present_weight
+) 
+
+quest_param_df$present_weight <- ifelse(
+  (quest_param_df$bmi > 19) & (quest_param_df$group == "AN"), 
+  quest_param_df$present_weight - 10, quest_param_df$present_weight
+)
+
+quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+
+quest_param_df |> 
+  group_by(group) |> 
+  summarize(
+    avg_bmi = mean(bmi),
+    std_bmi = sd(bmi)
+  )
+
+bul <- quest_param_df[quest_param_df$group == "BN", ]
+bul_df <- distinct(bul, subj_code, .keep_all = TRUE)
+foo <- bul_df |> 
+  dplyr::select(subj_code, height, present_weight, bmi)
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "ga_gi_2003_02_09_229_f",
+  82, quest_param_df$present_weight
+) 
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "ma_ba_1995_05_25_321_f",
+  89, quest_param_df$present_weight
+) 
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "an_am_1996_05_12_176_f",
+  79, quest_param_df$present_weight
+)
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "gr_de_2002_09_21_426_f",
+  77, quest_param_df$present_weight
+)
+
+quest_param_df$present_weight <- ifelse(
+  quest_param_df$subj_code == "gi_to_1996_02_02_043_f",
+  82, quest_param_df$present_weight
+) 
+
+quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+```
+
+\vspace{5mm}
+
+```{r, echo=FALSE}
+quest_param_df |> 
+  group_by(group) |> 
+  summarize(
+    BMI = mean(bmi),
+    SD = sd(bmi)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+We used a Bayesian regression model to examine the BMI differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m2 <- brm(
+  bmi ~ group,
+  data = quest_param_df, 
+  family = skew_normal(),
+  iter = 4000,
+  cores = 4,
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m2) +
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m2, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in age between each group and the HC baseline do not include zero, indicating credible BMI differences between the AN and the HC groups, and between the BN and the HC groups. The at-risk and HC groups did not differ in terms of their average BMI values.
+
+### Predicted effect of group on BMI
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m2, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "BMI",
+    x = "Group")  +
+  theme_cowplot() + 
+  coord_flip()
+```
+
+\vspace{5mm}
+
+## Rosenberg scale
+
+\vspace{5mm}
+
+The average score of the Rosenberg scale as a function of group is shown below.
+
+```{r, echo=FALSE}
+ros_df <- quest_param_df |> 
+  dplyr::select(
+    ros_tot, group, subj_code
+  )
+ros_df <- distinct(ros_df, subj_code, .keep_all = TRUE)
+
+ros_df |> 
+  group_by(group) |> 
+  summarize(
+    Rosenberg = mean(ros_tot),
+    SD = sd(ros_tot)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+We used a Bayesian regression model to examine the differences in Rosenberg self-esteem scores among groups.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m3 <- brm(
+  ros_tot ~ group,
+  data = ros_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m3) +
+  theme_cowplot() 
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m3, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the Rosenberg self-esteem scores between each group and the HC baseline do not include zero, indicating credible differences in the Rosenberg self-esteem scores between the HC and the other groups.
+
+### Predicted effect of group on the Rosenberg self-esteem scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m3, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "Rosenberg self-esteem scale",
+    x = "Group") +
+  theme_cowplot() +
+  coord_flip()
+```
+
+## Body Shape Questionnaire-14 (BSQ-14)
+
+The average Body Shape Questionnaire-14 score as a function of group is shown below.
+
+\vspace{5mm}
+
+```{r, echo=FALSE}
+bsq_df <- quest_param_df |> 
+  dplyr::select(
+    bsq14_tot, group, subj_code
+  )
+bsq_df <- distinct(bsq_df, subj_code, .keep_all = TRUE)
+
+bsq_df$bsq14 <- bsq_df$bsq14_tot * 34/14
+
+bsq_df |> 
+  group_by(group) |> 
+  summarize(
+    BSQ_14 = mean(bsq14),
+    SD = sd(bsq14)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+We used a Bayesian regression model to examine the BSQ-14 differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m4 <- brm(
+  ros_tot ~ group,
+  data = ros_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m4) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m4, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the BSQ-14 scores between each group and the HC baseline do not include zero, indicating credible differences in the BSQ-14 scores between the HC and the other groups.
+
+### Predicted effect of group on the BSQ-14 scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m4, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "BSQ-14",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip() 
+```
+
+\pagebreak
+
+## Depression Anxiety Stress Scale-21 (DASS-21)
+
+```{r, echo=FALSE}
+temp <- quest_param_df %>% 
+  dplyr:: select(subj_code, group, starts_with("dass_"), "dass21_s", "dass21_a", 
+                 "dass21_d")
+
+dass_df <- distinct(temp, subj_code, .keep_all = TRUE)
+```
+
+Average values of the scores on the Stress, Anxiety, and Depression of the DASS-21 scale are shown below.
+
+```{r, echo=FALSE}
+dass_df |> 
+  group_by(group) |> 
+  summarize(
+    Stress = mean(dass21_s),
+    Anxiety = mean(dass21_a),
+    Depression = mean(dass21_d)
+  ) |> 
+   kable(digits = 2)
+```
+
+Standard deviations of the scores on the Stress, Anxiety, and Depression sub-scales are shown below.
+
+\vspace{5mm}
+
+```{r, echo=FALSE}
+dass_df |> 
+  group_by(group) |> 
+  summarize(
+    SD_stress = mean(dass21_s),
+    SD_anxiety = mean(dass21_a),
+    SD_depression = mean(dass21_d)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+### Stress
+
+We used a Bayesian regression model to examine the DASS-21 Stress differences among groups.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m5_s <- brm(
+  dass21_s ~ group,
+  data = dass_df, 
+  family = gaussian(),
+  iter = 4000,
+  cores = 4,
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m5_s) +
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m5_s, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the DASS-21 Stress scores between the AN and RI groups, on the one side, and the HC baseline, on the other, do not include zero, indicating credible differences in the DASS-21 Stress between the HC and the other two groups. We found no credible difference in the average DASS-21 Stress score between the HC and BC groups.
+
+### Predicted effect of group on the DASS-21 Stress scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m5_s, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "DASS-21 Stress",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Anxiety
+
+We used a Bayesian regression model to examine the DASS-21 Anxiety differences among groups.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m5_a <- brm(
+  dass21_a ~ group,
+  data = dass_df, 
+  family = skew_normal(),
+  iter = 4000,
+  cores = 4,
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m5_a) + 
+  theme_cowplot() 
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m5_a, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the DASS-21 Anxiety scores between the AN and the HC baseline do not include zero, indicating credible differences in the DASS-21 Anxiety between the two groups. We found no credible difference in the average DASS-21 Anxiety score between the HC and BC groups, nor between the HC and the RI groups.
+
+### Predicted effect of group on the DASS-21 Anxiety scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m5_a, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "DASS-21 Anxiety",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Depression
+
+We used a Bayesian regression model to examine the DASS-21 Depression differences among groups.
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m5_d <- brm(
+  dass21_d ~ group,
+  data = dass_df, 
+  family = skew_normal(),
+  iter = 4000,
+  cores = 4,
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m5_d) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m5_d, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the DASS-21 Depression scores between the AN, BN, and RI groups, on the one side, and the HC baseline, on the other, do not include zero, indicating credible differences in the DASS-21 Anxiety between the baseline group and the other groups. 
+
+### Predicted effect of group on the DASS-21 Depression scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m5_d, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "DASS-21 Depression",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+\pagebreak
+
+## Social Interaction Anxiety Scale (SIAS)
+
+```{r, echo=FALSE}
+temp <- quest_param_df %>% 
+  dplyr:: select(subj_code, group, starts_with("sias_"))
+
+sias_df <- distinct(temp, subj_code, .keep_all = TRUE)
+```
+
+```{r, echo=FALSE}
+sias_df |> 
+  group_by(group) |> 
+  summarize(
+    SIAS = mean(sias_tot),
+    SD = sd(sias_tot)
+  ) |> 
+   kable(digits = 2)
+```
+
+\vspace{5mm}
+
+We used a Bayesian regression model to examine the SIAS score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m6 <- brm(
+  sias_tot ~ group,
+  data = sias_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m6) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m6, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the SIAS scores between the AN and RI groups, on the one side, and the HC baseline, on the other do not include zero, indicating credible differences in the SIAS scores between the HC and these two groups. We found no credible difference in the average SIAS scores between the BN and the HC groups.
+
+### Predicted effect of group on the SIAS scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m6, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "SIAS",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+\pagebreak
+
+## Multidimensional Perfectionism Scale (MPS)
+
+The average scores on the sub-scales of Concerns over Mistakes and Doubts (CMD), Parental Expectations and Criticism (PEC), Personal Standards (PS), and Organization (O) of the MPS as a function of group are shown below.
+
+```{r, echo=FALSE}
+temp <- quest_param_df %>% 
+  dplyr:: select(subj_code, group, starts_with("mps_"))
+
+mps_df <- distinct(temp, subj_code, .keep_all = TRUE)
+
+mps_df |> 
+  group_by(group) |> 
+  summarize(
+    MPS_cmd = mean(mps_cmd),
+    MPS_ps = mean(mps_ps),
+    MPS_pepc = mean(mps_pepc),
+    MPS_or = mean(mps_or)
+  ) |> 
+   kable(digits = 2)
+```
+
+The standard deviations on the sub-scales of Concerns over Mistakes and Doubts (CMD), Parental Expectations and Criticism (PEC), Personal Standards (PS), and Organization (O) of the MPS as a function of group are shown below.
+
+```{r, echo=FALSE}
+mps_df |> 
+  group_by(group) |> 
+  summarize(
+    SD_cmd = sd(mps_cmd),
+    SD_ps = sd(mps_ps),
+    SD_pepc = sd(mps_pepc),
+    SD_or = sd(mps_or)
+  ) |> 
+   kable(digits = 2)
+```
+
+### Concerns over Mistakes and Doubts
+
+We used a Bayesian regression model to examine the MPS CMD score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m7_cmd <- brm(
+  mps_cmd ~ group,
+  data = mps_df,
+  family = gaussian(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m7_cmd) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m7_cmd, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the SIAS scores between the HC and the other groups do not include zero, indicating credible differences in the MPS-CMD  scores between the HC and the other groups.
+
+### Predicted effect of group on the MPS Concerns over Mistakes and Doubts
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m7_cmd, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "MPS Concerns over Mistakes and Doubts",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Parental Expectations and Criticism
+
+We used a Bayesian regression model to examine the MPS PEC score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m7_pec <- brm(
+  mps_pepc ~ group,
+  data = mps_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m7_pec) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m7_pec, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the MPS-PEC scores between the HC and the RI group do not include zero, indicating credible differences in Parental Expectations and Criticism between these two groups. We found no credible difference in MPS-PEC between the HC group, on the one side, and the AN and BN groups, on the other.
+
+### Predicted effect of group on the MPS Parental Expectations and Criticism
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m7_pec, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "MPS Parental Expectations and Criticism",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Personal Standards
+
+We used a Bayesian regression model to examine the MPS PS score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m7_ps <- brm(
+  mps_ps ~ group,
+  data = mps_df,
+  family = gaussian(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m7_ps) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m7_ps, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the MPS-PS scores between the HC group, on the one side, and the AN and RI groups, on the other, do not include zero, indicating credible differences in Personal standards between these groups. We found no credible difference in MPS-PS between the HC group and the BN groups.
+
+### Predicted effect of group on the MPS Personal Standards scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m7_ps, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "MPS Personal Standards",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Organization
+
+We used a Bayesian regression model to examine the MPS-O score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m7_or <- brm(
+  mps_or ~ group,
+  data = mps_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m7_or) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m7_or, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the MPS-O scores between the HC group, on the one side, and the AN, BN, and RI groups, on the other, do include zero, indicating that there are no credible differences in Organization between these groups.
+
+### Predicted effect of group on the MPS Organization scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m7_or, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "MPS Organization",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+\pagebreak
+
+## Eating Attitude Test-26 (EAT-26)
+
+The average scores on the Dieting Scale, the Bulimia and Food Preoccupation Scale, and the Oral Control Scale as a function of group are shown below. The average scores of each sub-scale and of the EAT-26 total score, as a function of group, are show below together with the standard deviations.
+
+```{r, echo=FALSE}
+temp <- quest_param_df %>% 
+  dplyr:: select(subj_code, group, starts_with("eat26_"))
+
+eat26_df <- distinct(temp, subj_code, .keep_all = TRUE)
+
+eat26_df$dieting <- with(
+  eat26_df,
+  eat26_1 + eat26_6 + eat26_7 + eat26_10 + eat26_11 + eat26_12 + eat26_14 + 
+  eat26_16 + eat26_17 + eat26_22 + eat26_23 + eat26_24 + eat26_26
+)
+
+eat26_df$bulimia <- with(
+  eat26_df,
+  eat26_3 + eat26_4 + eat26_9 + eat26_18 + eat26_21 + eat26_25
+)
+
+eat26_df$oral_control <- with(
+  eat26_df,
+  eat26_2 + eat26_5 + eat26_8 + eat26_13 + eat26_15 + eat26_19 + eat26_20
+)
+
+eat26_df$eat26tot <- with(
+  eat26_df,
+  eat26_1 + eat26_6 + eat26_7 + eat26_10 + eat26_11 + eat26_12 + eat26_14 + 
+  eat26_16 + eat26_17 + eat26_22 + eat26_23 + eat26_24 + eat26_26 +
+    eat26_3 + eat26_4 + eat26_9 + eat26_18 + eat26_21 + eat26_25 +
+    eat26_2 + eat26_5 + eat26_8 + eat26_13 + eat26_15 + eat26_19 + eat26_20
+)
+
+eat26_df |> 
+  group_by(group) |> 
+  summarize(
+    EAT26_dieting = mean(dieting),
+    EAT26_bulimia = mean(bulimia),
+    EAT26_oralcontrol = mean(oral_control),
+    EAT26_tot = mean(eat26tot)
+  ) |> 
+   kable(digits = 2)
+```
+
+```{r, echo=FALSE}
+eat26_df |> 
+  group_by(group) |> 
+  summarize(
+    SD_dieting = sd(dieting),
+    SD_bulimia = sd(bulimia),
+    SD_oralcontrol = sd(oral_control),
+    SD_tot = sd(eat26tot)
+  ) |> 
+   kable(digits = 2)
+```
+
+### Dieting
+
+We used a Bayesian regression model to examine the EAT-26 Dieting score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m8_d <- brm(
+  dieting ~ group,
+  data = eat26_df,
+  family = hurdle_lognormal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m8_d) + xlim(0, 75) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m8_d, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the EAT-26 Dieting scores between the HC group, on the one side, and the AN, BN, and RI groups, on the other, do not include zero, indicating a credible elevation in the EAT-26 Dieting scores of the AN, BN, and RI groups with respect to the HC group.
+
+### Predicted effect of group on the EAT-26 Dieting scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m8_d, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "EAT-26 Dieting",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+### Bulimia and Food Preoccupation 
+
+We used a Bayesian regression model to examine the EAT-26 Bulimia and Food Preoccupation score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m8_b <- brm(
+  bulimia ~ group,
+  data = eat26_df,
+  family = hurdle_lognormal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m8_b) + xlim(0, 20) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m8_b, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the EAT-26 Bulimia and Food Preoccupation scores between the HC group, on the one side, and the AN, BN, and RI groups, on the other, do not include zero, indicating a credible elevation in the EAT-26 Bulimia and Food Preoccupation scores of the clinical and at-risk groups with respect to the HC group.
+
+### Predicted effect of group on the EAT-26 Dieting scores
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m8_b, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "EAT-26 Dieting",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+
+### Oral Control 
+
+We used a Bayesian regression model to examine the EAT-26 Oral Control score differences among groups.
+
+\vspace{5mm}
+
+```{r, message=FALSE, warning=FALSE, cache=TRUE}
+m8_oc <- brm(
+  oral_control ~ group,
+  data = eat26_df,
+  family = hurdle_lognormal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+### Posterior predictive check
+
+```{r, echo=FALSE}
+pp_check(m8_oc) + xlim(0, 20) + 
+  theme_cowplot()
+```
+
+\vspace{5mm}
+
+### Model's coefficients
+
+The estimations obtained for the model are summarized in Table below, which includes the mean, the standard error, and the lower and upper bounds of the 95% credible interval of the posterior distribution for each parameter. 
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE}
+tidy(m8_oc, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
+  dplyr::select("term", "estimate", "std.error", "conf.low", "conf.high") |>
+   kable(digits = 3)
+```
+
+\vspace{5mm}
+
+The 95% credibility intervals for the difference in the EAT-26 Oral Control scores between the HC group, on the one side, and the AN, BN, and RI groups, on the other, do not include zero, indicating a credible elevation in the EAT-26 Oral Control scores of the clinical and at-risk groups with respect to the HC group.
+
+### Predicted effect of group on the EAT-26 Oral Control
+
+```{r, echo=FALSE}
+c_eff <- conditional_effects(m8_oc, "group")
+plot(c_eff, plot = FALSE)[[1]] + 
+  labs(
+    y = "EAT-26 Oral Control",
+    x = "Group") + 
+  theme_cowplot() +
+  coord_flip()
+```
+
+\pagebreak
+
+## Participants Sample Size
+
+
+
+\pagebreak
+
+## Data Analysis of the Probabilistic Reversal Learning Task
+
+Tasks were programmed in MATLAB (MathWorks) using Psychtoolbox extensions (Brainard, 1997). Task structure is detailed in the main text methods. For all tasks, trials were interleaved by an inter-trial interval (ITI) drawn from a uniform distribution ITI  uniform (0.7s, 1s). During the ITI a fixation cross was displayed (.65o visual angle) to draw attention to the center of the screen. Next, stimuli were displayed on screen until a response was made or until a time deadline (3 seconds, learnt by the participant during practice trials) was reached. Overall, only 583 trials were lost due to time-outs (~0.58% of the total database). TODO
+
+## Decision Process (RLDDM)
+
+We utilized a reinforcement learning drift diffusion model [RLDDM; @pedersen2020simultaneous] to investigate the impact of illness-related information, which was irrelevant to the outcome, on decision-making. The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations, and the other describes how an agent uses these expectations to arrive at a decision. The first component describes the learning process in terms of the delta learning rule [@rescorla1972theory]: 
+
+$$
+Q_{a, i} = Q_{a, i-1} + \alpha (I_{a, i-1} - Q_{a, i-1}).
+$$
+
+Here, $Q$ refers to the expected values for option $a$ on trial $i$, $I$ represents the reward (with values 1 or 0), and $\alpha$ is the leaning rate, which scales the difference between the expected and actual rewards.
+
+The second component describes the selection rule for reinforced options. Typically, a softmax function is used, where the probability of selecting option $a$ depends on its expected value relative to other options $n$, scaled by the inverse temperature parameter $\beta$:
+
+$$
+p_{a,i} = \frac{e^{\beta Q_{a,i}}}{\sum_{j=1}^n e^{\beta Q_{j,i}}}.
+$$
+
+In the RLDDM, instead, this second component of decision-making is replaced by a Drift-Diffusion Model [DDM; @ratcliff2008diffusion] which assumes a stochastic accumulation of evidence on each trial. A drift rate parameter ($v$) describes the rate of (noisy) evidence accumulation; a decision threshold parameter ($a$) represents the amount of evidence needed to make a decision; a non-decision time parameter ($t$) accounts for the time devoted to sensory processing, motor preparation, and motor output, and a starting point parameter ($z$) accounts for any predispositions in the initial decision variable towards either boundary.
+
+We analyzed the data using the HDDM Python toolbox [@wiecki2013hddm], which implements the RLDDM and uses a hierarchical Bayesian approach to compute the posterior distribution of group and individual parameters [for a detailed description of the model, see @@pedersen2020simultaneous]. The Bayesian posterior estimations of the RLDDM rely on informative priors obtained from a prior DDM study meta-analysis [@wiecki2013hddm] for the DDM aspect of the model. On the other hand, non-informative broad normal distributions, centered at 0.5 after transformation, are used for the learning rate parameters (positive and negative).
+
+
+\pagebreak
+
+# References
+
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+\setlength{\parskip}{8pt}
+\noindent
+
