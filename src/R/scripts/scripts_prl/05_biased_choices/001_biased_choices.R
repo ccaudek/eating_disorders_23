@@ -39,7 +39,8 @@ source(here::here("src", "R", "functions", "funs_consecutive_trial_analysis.R"))
 
 # Read list of subjects used in the hDDMrl analysis.
 lookup_tbl <- rio::import(
-  here::here("data", "processed", "prl", "hddm_look_up_table_v3.csv")
+  here::here("data", "processed", "prl", "input_for_hddmrl", 
+             "hddm_look_up_table_v3.csv")
 )
 
 # Read complete raw data.
