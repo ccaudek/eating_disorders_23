@@ -7,7 +7,7 @@ output:
       toc_depth: 2
 csl: apa7.csl
 bibliography: ed.bib
-fontsize: 11pt
+fontsize: 12pt
 linestretch: 1.1
 ---
 
@@ -46,6 +46,30 @@ options(width = 100)
 ```
 
 \pagebreak
+
+# Participants sample size
+
+We conducted a separate study involving two groups: one of $n$ = 29 anorexic patients and one of $n$ = 124 healthy controls (the participants in that separate study were distinct from those in the present study). In a PRL task, each participant completed 160 trials per condition, and the content of the pair of images shown in each trial was manipulated. The effect size of the experimental manipulation on the learning rate parameter (the focus of the present study) was found to be 0.54. To determine the sample size needed to detect a similar effect, we carried out a parameter recovery study following the method outlined by @pedersen2020simultaneous. We simulated the data of two groups of 30 participants with different values of $\alpha$ (lower and higher) with a difference of 0.54. The other parameters of the RLDDM model (i.e., $a$, $t$, $v$) were set to the values estimated from the empirical data of the 29 anorexic patients and 124 healthy controls. For the simulation, we used the `hddm.generate.gen_rand_rlddm_data` function of the `hddm` module with following parameters:
+
+```
+subjects = 30
+trials = 160
+
+data = hddm.generate.gen_rand_rlddm_data(
+    a=1.5,
+    alpha=0.79, # or 0.25
+    scaler=2.25,
+    t=0.25,
+    size=trials,
+    subjs=subjects,
+    p_upper=0.7,
+    p_lower=0.3,
+)
+```
+
+We used the `HDDMrl` function of the `hddm` module to estimate the RLDDM parameters based on the simulated data. We repeated this procedure 100 times, and in each iteration, the parameters for the lower and higher values of $\alpha$ were completely separated. These simulations indicate that our study had enough participants and trials to detect the effect size on $\alpha$ that had been observed in the previous study.
+
+A parameter recovery study and a frequentist power analysis are two distinct approaches. However, since Bayesian methods prioritize estimation over hypothesis testing, it is comforting to see that with the current number of participants and trials, the RLDDM model can detect an effect size similar to the one found in a separate study with a different group of participants but with a similar experimental manipulation.
 
 # Demographic and psychopathology measures
 
