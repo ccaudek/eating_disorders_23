@@ -8,12 +8,15 @@ src/python/PRL/01_get_hddmrl_params/models/*
 reports/Supplementary_materials_cache/*
 reports/Supplementary_materials_files/*
 
-.vscode/*
-
 # Jupyter Notebook
 .ipynb_checkpoints
 
 # IPython
 profile_default/
 ipython_config.py
+
+# Visual Studio / VSCode
+.vs/
+.vscode/*
+.mypy_cache
 
