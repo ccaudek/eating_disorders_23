@@ -58,9 +58,19 @@ df = df.drop("grpstim", axis=1)
 df["subj_idx"] = pd.to_numeric(df["subj_idx"])
 
 # %%
-codes_tbl = pd.read_csv(
-    "/Users/corrado/_repositories/eating_disorders_23/data/processed/prl/input_for_hddmrl/three_groups/ed_prl_data.csv"
+working_directory = "/Users/corrado/_repositories/eating_disorders_23/"
+
+codes_tbl_path = os.path.join(
+    working_directory,
+    "data",
+    "processed",
+    "prl",
+    "input_for_hddmrl",
+    "three_groups",
+    "ed_prl_data.csv",
 )
+
+codes_tbl = pd.read_csv(codes_tbl_path)
 codes_tbl = codes_tbl[["subj_idx", "subj_code"]]
 codes_tbl = codes_tbl.drop_duplicates()
 codes_tbl["subj_idx"] = pd.to_numeric(codes_tbl["subj_idx"])
@@ -76,7 +86,16 @@ merged_df.head()
 mean_df = merged_df.groupby(["par", "diag_cat", "stim"])["val"].mean().reset_index()
 
 # %%
+saved_file_path = os.path.join(
+    working_directory,
+    "data",
+    "processed",
+    "prl",
+    "subj_hddm_params",
+    "subj_code_hddm_params.csv",
+)
+
 merged_df.to_csv(
-    "/Users/corrado/_repositories/eating_disorders_23/data/processed/prl/subj_hddm_params/subj_code_hddm_params.csv",
+    saved_file_path,
     index=False,
 )
