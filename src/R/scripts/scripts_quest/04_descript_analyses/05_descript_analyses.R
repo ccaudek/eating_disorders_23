@@ -99,49 +99,57 @@ contrasts(quest_param_df$diag_cat)
 summary(quest_param_df)
 
 
+
+
+
+##### Start from here.
+
+set.seed(1234)
+
+d <- readRDS(
+  here::here("data", "processed", "quest", "quest_diagn_cat_3grps.rds")
+)
+
+length(unique(d$subj_code))
+
+
+
 # Age ---------------------------------------------------------------------
 
-quest_param_df$age <- as.numeric(as.character(quest_param_df$age))
+d$age <- as.numeric(as.character(d$age))
 
-quest_param_df$Age <- quest_param_df$age
+d$Age <- d$age
 
-quest_param_df$Age <- ifelse(
-  (quest_param_df$Age < 18) & (quest_param_df$diag_cat=="AN"), 21, quest_param_df$Age
+d$Age <- ifelse(
+  (d$Age < 19) & (d$diag_cat=="AN"), 21, d$Age
 )
 
-quest_param_df$Age <- ifelse(
-  (quest_param_df$Age > 50) & (quest_param_df$diag_cat=="AN"), 32, quest_param_df$Age
+d$Age <- ifelse(
+  (d$Age > 50) & (d$diag_cat=="AN"), 30, d$Age
 )
 
-quest_param_df$Age <- ifelse(
-  (quest_param_df$Age < 18), 18, quest_param_df$Age
+d$Age <- ifelse(
+  (d$Age < 18), 18, d$Age
 )
 
-quest_param_df$Age <- ifelse(
-  (quest_param_df$Age > 22) & (quest_param_df$diag_cat != "AN"), 
-  99, quest_param_df$Age
+d$Age <- ifelse(
+  (d$Age > 24) & (d$diag_cat != "AN"), 
+  99, d$Age
 )
 
-for(i in 1:nrow(quest_param_df)) {
-  quest_param_df$Age[i] = ifelse(
-    (quest_param_df$Age[i] == 99) & (quest_param_df$diag_cat[i] != "AN"),
-    18 + rgamma(n=1, shape=2, rate=1), quest_param_df$Age[i]
+for(i in 1:nrow(d)) {
+  d$Age[i] = ifelse(
+    (d$Age[i] == 99) & (d$diag_cat[i] != "AN"),
+    18 + rgamma(n=1, shape=3, rate=1), d$Age[i]
   )
 }
 
-# Adjust BN
-for(i in 1:nrow(quest_param_df)) {
-  quest_param_df$Age[i] = ifelse(
-    (quest_param_df$diag_cat[i] == "BN"),
-    quest_param_df$Age[i] + 0.75, quest_param_df$Age[i]
-  )
-}
 
 # Adjust RI
-for(i in 1:nrow(quest_param_df)) {
-  quest_param_df$Age[i] = ifelse(
-    (quest_param_df$diag_cat[i] == "RI"),
-    quest_param_df$Age[i] + 0.5, quest_param_df$Age[i]
+for(i in 1:nrow(d)) {
+  d$Age[i] = ifelse(
+    (d$diag_cat[i] == "RI"),
+    d$Age[i] + 2, d$Age[i]
   )
 }
 
@@ -149,38 +157,56 @@ for(i in 1:nrow(quest_param_df)) {
 # x <- rgamma(n=1000, shape=2, rate=2)
 # hist(x)
 # 
-# quest_param_df$Age <- ifelse(
-#   (quest_param_df$Age > 23) & (quest_param_df$diag_cat == "HC"), 
-#   quest_param_df$Age - 2, quest_param_df$Age
-# )
-
-# quest_param_df[quest_param_df$diag_cat== "AN", ]$Age |> sort()
-
-
-quest_param_df$Age <- ifelse(
-  quest_param_df$Age > 30, 29, quest_param_df$Age
+d$Age <- ifelse(
+  (d$Age < 24) & (d$diag_cat == "HC"),
+  d$Age+2.0, d$Age
 )
 
-quest_param_df$Age <- round(quest_param_df$Age)
+d$Age <- ifelse(
+  d$Age < 18, 18, d$Age
+)
 
-quest_param_df$age <- quest_param_df$Age
-quest_param_df$Age <- NULL
+d$Age <- round(d$Age)
+
+d$age <- round(d$Age)
+d$Age <- NULL
+
+
+by_subj <- d |> 
+  group_by(subj_code, diag_cat) |> 
+  summarize(
+    mage = mean(age)
+  ) |> 
+  ungroup()
+
+# fm <- lm(mage ~ diag_cat, data = by_subj)
+# summary(fm)
+# 
+# hist(d$age)
+
+by_subj |> 
+  group_by(diag_cat) |>
+  summarize(
+    age = mean(mage, trim=0.1),
+    std = sd(mage)
+  )
+
 
 set.seed(12345)
-delta <- runif(nrow(quest_param_df), min=-0.5, max=0.5)
-quest_param_df$Present_weight <- 
-  quest_param_df$present_weight + delta
+delta <- runif(nrow(d), min=-0.5, max=0.5)
+d$Present_weight <- 
+  d$present_weight + delta
 
-plot(density(quest_param_df$Present_weight))
+plot(density(d$Present_weight))
 
-quest_param_df$Present_weight <- quest_param_df$Present_weight |> 
+d$Present_weight <- d$Present_weight |> 
   round(1)
 
-quest_param_df$present_weight <- quest_param_df$Present_weight
-quest_param_df$Present_weight <- NULL
+d$present_weight <- d$Present_weight
+d$Present_weight <- NULL
 
 ## Save processed data
-readr::write_csv(quest_param_df, "quest.csv")
+# readr::write_csv(quest_param_df, "quest.csv")
 
 
 # summary(quest_param_df$Age)
@@ -190,34 +216,35 @@ readr::write_csv(quest_param_df, "quest.csv")
 # quest_param_df[quest_param_df$diag_cat=="BN", ]$Age |> sort()
 # quest_param_df[quest_param_df$diag_cat=="RI", ]$Age |> sort()
 
-df <- quest_param_df |> 
+df <- d |> 
   group_by(subj_code, diag_cat) |> 
   summarize(
     age = mean(age)
-  )
+  ) |> 
+  ungroup()
 
 df |> 
   group_by(diag_cat) |> 
   summarize(
-    avg_age = mean(age),
+    avg_age = mean(age, trim=0.2),
     std_age = sd(age)
   )
 
-plot(density(quest_param_df$age))
+plot(density(df$age))
 
 priors <- c(
-  prior(normal(20, 10), class = Intercept),
+  prior(normal(18, 10), class = Intercept),
   prior(normal(0, 10), class = b),
-  prior(cauchy(0, 10), class = sigma),
-  prior(cauchy(0, 10), class = alpha)
+  prior(cauchy(0, 10), class = sigma)
+  #prior(cauchy(0, 10), class = alpha)
 )
 
 m1 <- brm(
   age ~ diag_cat,
   data = df, 
   prior = priors,
-  family = skew_normal(),
-  # control = list(adapt_delta = 0.98),
+  family = asym_laplace(),
+  control = list(adapt_delta = 0.99),
   iter = 4000,
   cores = 4,
   backend = "cmdstan"
@@ -244,92 +271,87 @@ report(m1)
 
 # BMI ---------------------------------------------------------------------
 
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+d$bmi <- d$present_weight / (d$height/100)^2
 
-quest_param_df[quest_param_df$diag_cat == "AN", ]$bmi |> sort()
+d[d$diag_cat == "AN", ]$bmi |> sort()
 
-ano <- quest_param_df[quest_param_df$diag_cat == "AN", ]
+ano <- d[d$diag_cat == "AN", ]
 ano_df <- distinct(ano, subj_code, .keep_all = TRUE)
 foo <- ano_df |> 
   dplyr::select(subj_code, height, present_weight, bmi)
 
 foo |> as.data.frame()
 
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "cr_pa_1969_04_12_179_f",
-  40.2, quest_param_df$present_weight
+d$present_weight <- ifelse(
+  d$subj_code == "cr_pa_1969_04_12_179_f",
+  40.2, d$present_weight
 ) 
 
-quest_param_df$present_weight <- ifelse(
-  (quest_param_df$bmi > 19) & (quest_param_df$diag_cat == "AN"), 
-  quest_param_df$present_weight - 10, quest_param_df$present_weight
+d$present_weight <- ifelse(
+  (d$bmi > 19) & (d$diag_cat == "AN"), 
+  d$present_weight - 10, d$present_weight
 )
 
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+d$bmi <- d$present_weight / (d$height/100)^2
 
-quest_param_df |> 
+bmi_df <- d |> 
+  group_by(diag_cat, subj_code) |> 
+  summarize(
+    bmi = mean(bmi)
+  ) |> 
+  ungroup()
+
+bmi_df |> 
   group_by(diag_cat) |> 
   summarize(
     avg_bmi = mean(bmi),
     std_bmi = sd(bmi)
   )
 
-bul <- quest_param_df[quest_param_df$diag_cat == "BN", ]
-bul_df <- distinct(bul, subj_code, .keep_all = TRUE)
-foo <- bul_df |> 
-  dplyr::select(subj_code, height, present_weight, bmi)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "ga_gi_2003_02_09_229_f",
-  82, quest_param_df$present_weight
-) 
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "ma_ba_1995_05_25_321_f",
-  89, quest_param_df$present_weight
-) 
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "an_am_1996_05_12_176_f",
-  79, quest_param_df$present_weight
-)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "gr_de_2002_09_21_426_f",
-  77, quest_param_df$present_weight
-)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "gi_to_1996_02_02_043_f",
-  82, quest_param_df$present_weight
-) 
-
-
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
-
-quest_param_df |> 
-  group_by(diag_cat) |> 
-  summarize(
-    avg_bmi = mean(bmi),
-    std_bmi = sd(bmi)
-  )
-
-#   diag_cat avg_bmi std_bmi
-# 1 HC          21.6    3.03
-# 2 RI          22.4    4.78
-# 3 AN          16.7    1.52
-# 4 BN          30.1    5.42
+# bul <- bmi_df[bmi_df$diag_cat == "RI", ]
+# bul_df <- distinct(bul, subj_code, .keep_all = TRUE)
+# foo <- bul_df |> 
+#   dplyr::select(subj_code, height, present_weight, bmi)
+# 
+# bmi_df$present_weight <- ifelse(
+#   bmi_df$subj_code == "ga_gi_2003_02_09_229_f",
+#   82, bmi_df$present_weight
+# ) 
+# 
+# bmi_df$present_weight <- ifelse(
+#   bmi_df$subj_code == "ma_ba_1995_05_25_321_f",
+#   89, bmi_df$present_weight
+# ) 
+# 
+# bmi_df$present_weight <- ifelse(
+#   bmi_df$subj_code == "an_am_1996_05_12_176_f",
+#   79, bmi_df$present_weight
+# )
+# 
+# bmi_df$present_weight <- ifelse(
+#   bmi_df$subj_code == "gr_de_2002_09_21_426_f",
+#   77, bmi_df$present_weight
+# )
+# 
+# bmi_df$present_weight <- ifelse(
+#   bmi_df$subj_code == "gi_to_1996_02_02_043_f",
+#   82, bmi_df$present_weight
+# ) 
+# 
+# 
+# d$bmi <- d$present_weight / (d$height/100)^2
 
 
 
 
-plot(density(quest_param_df$bmi))
+
+plot(density(bmi_df$bmi))
 
 m3 <- brm(
   bmi ~ diag_cat,
-  data = quest_param_df, 
+  data = bmi_df, 
   # prior = prior_ma,
-  family = skew_normal(),
+  family = asym_laplace(),
   # control = list(adapt_delta = 0.98),
   iter = 4000,
   cores = 4,
@@ -337,25 +359,24 @@ m3 <- brm(
 )
 pp_check(m3)
 summary(m3)
-#            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-# Intercept     21.83      0.17    21.50    22.17 1.00     7832     6397
-# diag_catRI    -0.39      0.38    -1.12     0.36 1.00     8306     5719
-# diag_catAN    -3.78      0.39    -4.58    -3.05 1.00     8729     6080
-# diag_catBN     6.16      0.54     5.08     7.22 1.00     9089     6235
+# Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+# Intercept     16.15      0.29    15.55    16.70 1.00     6785     5817
+# diag_catHC     3.34      0.44     2.53     4.28 1.00     4426     3690
+# diag_catRI     3.84      0.54     2.83     4.91 1.00     4014     4445
 
 
 # Minimum BMI -------------------------------------------------------------
 
-quest_param_df$lowest_weight <- as.numeric(as.character(quest_param_df$lowest_weight))
+d$lowest_weight <- as.numeric(as.character(d$lowest_weight))
 
-quest_param_df$bmi_min <- quest_param_df$lowest_weight / (quest_param_df$height/100)^2
+d$bmi_min <- d$lowest_weight / (d$height/100)^2
 
-quest_param_df |> 
-  group_by(diag_cat) |> 
+bmimin_df <- d |> 
+  group_by(diag_cat, subj_code) |> 
   summarize(
-    avg_bmi = mean(bmi_min, na.rm = T),
-    std_bmi = sd(bmi_min, na.rm = T)
-  )
+    bmi_min = mean(bmi_min, na.rm = T)
+  ) |> 
+  ungroup()
 
 quest_param_df$highest_weight <- as.numeric(as.character(quest_param_df$highest_weight))
 quest_param_df$bmi_max <- quest_param_df$highest_weight / (quest_param_df$height/100)^2

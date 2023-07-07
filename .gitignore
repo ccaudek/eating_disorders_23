@@ -20,3 +20,4 @@ ipython_config.py
 .vscode/*
 .mypy_cache
 
+.Rproj.user

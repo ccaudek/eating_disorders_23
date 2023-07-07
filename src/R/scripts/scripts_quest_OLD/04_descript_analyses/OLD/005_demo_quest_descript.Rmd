@@ -1,0 +1,349 @@
+---
+title: "Eating disorders -- descriptive stats"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r, echo=FALSE}
+suppressPackageStartupMessages({
+  library("here")
+  library("tidyverse")
+  library("brms")
+  library("cmdstanr")
+  library("tidybayes")
+  library("report")
+  library("viridis")
+})
+```
+
+```{r}
+thedat <- readRDS(
+  here::here("data", "processed", "quest", "quest_diagn_data.rds")
+)
+```
+
+```{r}
+table(thedat$diag_cat)
+```
+
+```{r}
+thedat$age <- as.numeric(thedat$age)
+thedat %>% 
+  group_by(diag_cat) %>% 
+  summarise(
+    m_age = mean(age, na.rm = TRUE),
+    se_age = sd(age) / sqrt(n()),
+    n = n()
+  )
+```
+
+
+```{r}
+d <- thedat %>% 
+  dplyr::select(
+    age, sex, is_patient, is_recovered, diagnosis, diag_cat,
+    ws, rws, bmi,
+    bsq14_tot, ros_tot, dass21_s, dass21_a, dass21_d, sias_tot,
+    mps_cmd, mps_ps, mps_pepc, mps_or, orto15_tot, dieting, bulimia, oral_control,
+  ) %>% 
+  dplyr::filter(sex == "Femmina")
+```
+
+```{r}
+d %>%
+  group_by(diag_cat) %>% 
+  summarise(across(where(is.numeric), ~ round(mean(.x, na.rm = TRUE), 2)))
+```
+
+
+```{r}
+d %>%
+  group_by(diag_cat) %>% 
+  summarise(across(where(is.numeric), ~ sd(.x, na.rm = TRUE) / sqrt(n())))
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=bmi, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("BMI") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=ros_tot, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("Rosenberg Scale") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=dass21_s, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("DASS-21-S") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=dass21_a, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("DASS-21-A") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=dass21_d, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("DASS-21-D") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=sias_tot, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("SIAS") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=mps_cmd, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("MPS-CMD") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=mps_ps, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("MPS-PS") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=mps_pepc, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("MPS-PEPC") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=mps_or, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("MPS-OR") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=dieting, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("EAT-26-D") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=bulimia, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("EAT-26-B") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+
+
+```{r}
+d %>% ggplot(aes(x=diag_cat, y=oral_control, fill=diagnosis)) +
+  geom_violin(width=1.4) +
+  geom_boxplot(width=0.1, color="grey", alpha=0.2) +
+  scale_fill_viridis(discrete = TRUE) +
+  theme(
+    legend.position="none",
+    plot.title = element_text(size=11)
+  ) +
+  ggtitle("EAT-26-O") +
+  ylab("") +
+  xlab("Diagnosis")
+```
+
+
+
+```{r}
+patients_only <- d %>% 
+  dplyr::filter(is_patient == 1)
+```
+
+```{r}
+t.test(dieting ~ is_recovered, patients_only)
+```
+
+```{r}
+m1 <- brm(
+  bf(scale(dieting) ~ is_recovered, sigma ~ is_recovered),
+  family = student(),
+  data = d,
+  cores = 4,
+  backend = "cmdstanr",
+  refresh = 0
+)
+```
+
+
+```{r}
+pp_check(m1)
+```
+
+```{r}
+marginal_effects(m1, "is_recovered")
+```
+
+
+```{r}
+summary(m1)
+```
+
+
+```{r}
+report::report_effectsize(m1, effectsize_method = "basic")
+```
+
+```{r}
+bayes_R2(m1)
+```
+
+```{r}
+report(m1)
+```
+
+```{r}
+m2 <- brm(
+  bf(scale(bulimia) ~ is_recovered, sigma ~ is_recovered),
+  family = student(),
+  data = d,
+  cores = 4,
+  backend = "cmdstanr",
+  refresh = 0
+)
+```
+
+```{r}
+report(m2)
+```
+
+```{r}
+m3 <- brm(
+  bf(scale(oral_control) ~ is_recovered, sigma ~ is_recovered),
+  family = student(),
+  data = d,
+  cores = 4,
+  backend = "cmdstanr",
+  refresh = 0
+)
+```
+
+```{r}
+report(m3)
+```
+
+
+```{r}
+m4 <- brm(
+  bf(scale(bmi) ~ is_recovered, sigma ~ is_recovered),
+  family = student(),
+  data = d,
+  cores = 4,
+  backend = "cmdstanr",
+  refresh = 0
+)
+```
+
+```{r}
+report(m4)
+```
+
+
+
+
+

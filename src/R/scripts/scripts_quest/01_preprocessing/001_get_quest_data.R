@@ -95,27 +95,6 @@ saveRDS(
 )
 
 
-# 7.  Add diagnostic categories -------------------------------------------
-
-# Get quest data with demo info.
-all_quest_data <- readRDS(
-  here::here("data", "processed", "quest", "quest_data_and_subj_info.rds")
-)
-
-# Get diagnostic categories -- the last 7 new patient DO NOT have a diagnostic
-# category recorded!!!
-diagn_cat <- rio::import(
-  here::here("data", "raw", "misc", "diagn_cat.xlsx")
-)
-
-quest_diagn_cat <- add_diagn_cat_to_quest(all_quest_data, diagn_cat)
-
-saveRDS(
-  quest_diagn_cat,
-  here::here("data", "processed", "quest", "quest_diagn_data.rds")
-)
-
-
 #---- EOF ----#
 
 
