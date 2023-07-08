@@ -1,5 +1,5 @@
 ---
-title: "Anorexia Nervosa: Symptom-Related Information Alters Decision-Making Policy Despite Outcome Irrelevance"
+title: "When Food Becomes a Distraction: The Impact of Food-Related Information on Reward Learning in Anorexia Nervosa"
 author: "Supplementary Materials"
 output:
   pdf_document:
@@ -13,12 +13,12 @@ linestretch: 1.1
 
 ```{r setup1, message = FALSE, warning = FALSE, include = FALSE, results = "hide"}
 library("tidyverse")
-library("shinystan")
-library("emojifont")
+# library("shinystan")
+# library("emojifont")
 library("patchwork")
 library("ggridges")
-library("viridis")
-library("ellipse")
+# library("viridis")
+# library("ellipse")
 library("papaja")
 library("phonR")
 library("broom")
@@ -31,6 +31,9 @@ library("stringr")
 library("broom.mixed")
 library("kableExtra")
 library("cowplot")
+library("emmeans")
+library("rstanarm")
+library("effectsize")
 
 # set rstan options
 rstan::rstan_options(auto_write = TRUE)
@@ -81,22 +84,28 @@ The mean age and standard devitation by group is shown below.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 quest_param_df <- readr::read_csv(
-  here::here("data", "processed", "quest", "quest.csv")
+  here::here("data", "processed", "quest", "quest3grp.csv")
 )
 
 quest_param_df <- quest_param_df |> 
   dplyr::rename("group" = "diag_cat")
 
 quest_param_df$group <- factor(quest_param_df$group)
-quest_param_df$group <- relevel(quest_param_df$group, ref = "HC")
+quest_param_df$group <- relevel(quest_param_df$group, ref = "AN")
 # contrasts(quest_param_df$group)
 ```
 
-```{r, echo=FALSE}
-quest_param_df |> 
+```{r}
+age_df <- quest_param_df |> 
+  dplyr::select(
+    age, group, subj_code
+  )
+age_df <- distinct(age_df, subj_code, .keep_all = TRUE)
+
+age_df |> 
   group_by(group) |> 
   summarize(
-    Age = mean(age),
+    avg_age = mean(age),
     SD = sd(age)
   ) |> 
    kable(digits = 2)
@@ -109,8 +118,8 @@ We used a Bayesian regression model to examine the age differences among groups.
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m1 <- brm(
   age ~ group,
-  data = quest_param_df,
-  family = skew_normal(),
+  data = age_df,
+  family = asym_laplace(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -154,6 +163,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m1, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m1, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 \pagebreak
 
 ## Body Mass Index (BMI)
@@ -162,74 +199,21 @@ plot(c_eff, plot = FALSE)[[1]] +
 
 The average Body Mass Index (BMI) values and standard deviations for each group are reported below.
 
-```{r, message = FALSE, warning = FALSE, include = FALSE}
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
-
-quest_param_df[quest_param_df$group == "AN", ]$bmi |> sort()
-
-ano <- quest_param_df[quest_param_df$group == "AN", ]
-ano_df <- distinct(ano, subj_code, .keep_all = TRUE)
-foo <- ano_df |> 
-  dplyr::select(subj_code, height, present_weight, bmi)
-
-foo |> as.data.frame()
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "cr_pa_1969_04_12_179_f",
-  40.2, quest_param_df$present_weight
-) 
-
-quest_param_df$present_weight <- ifelse(
-  (quest_param_df$bmi > 19) & (quest_param_df$group == "AN"), 
-  quest_param_df$present_weight - 10, quest_param_df$present_weight
-)
-
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
-
-quest_param_df |> 
-  group_by(group) |> 
-  summarize(
-    avg_bmi = mean(bmi),
-    std_bmi = sd(bmi)
+```{r}
+bmi_df <- quest_param_df |> 
+  dplyr::select(
+    group, subj_code, present_weight, height
   )
+bmi_df <- distinct(bmi_df, subj_code, .keep_all = TRUE)
 
-bul <- quest_param_df[quest_param_df$group == "BN", ]
-bul_df <- distinct(bul, subj_code, .keep_all = TRUE)
-foo <- bul_df |> 
-  dplyr::select(subj_code, height, present_weight, bmi)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "ga_gi_2003_02_09_229_f",
-  82, quest_param_df$present_weight
-) 
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "ma_ba_1995_05_25_321_f",
-  89, quest_param_df$present_weight
-) 
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "an_am_1996_05_12_176_f",
-  79, quest_param_df$present_weight
-)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "gr_de_2002_09_21_426_f",
-  77, quest_param_df$present_weight
-)
-
-quest_param_df$present_weight <- ifelse(
-  quest_param_df$subj_code == "gi_to_1996_02_02_043_f",
-  82, quest_param_df$present_weight
-) 
-
-quest_param_df$bmi <- quest_param_df$present_weight / (quest_param_df$height/100)^2
+bmi_df <- bmi_df |> 
+  mutate(bmi = present_weight / ((height/100)^2))
 ```
 
 \vspace{5mm}
 
 ```{r, echo=FALSE}
-quest_param_df |> 
+bmi_df |> 
   group_by(group) |> 
   summarize(
     BMI = mean(bmi),
@@ -247,8 +231,8 @@ We used a Bayesian regression model to examine the BMI differences among groups.
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m2 <- brm(
   bmi ~ group,
-  data = quest_param_df, 
-  family = skew_normal(),
+  data = bmi_df, 
+  family = asym_laplace(),
   iter = 4000,
   cores = 4,
   backend = "cmdstan",
@@ -292,6 +276,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m2, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m2, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 \vspace{5mm}
 
 ## Rosenberg scale
@@ -324,7 +336,7 @@ We used a Bayesian regression model to examine the differences in Rosenberg self
 m3 <- brm(
   ros_tot ~ group,
   data = ros_df,
-  family = skew_normal(),
+  family = gaussian(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -368,6 +380,36 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m3, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m3, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+\newpage
+
 ## Body Shape Questionnaire-14 (BSQ-14)
 
 The average Body Shape Questionnaire-14 score as a function of group is shown below.
@@ -400,9 +442,9 @@ We used a Bayesian regression model to examine the BSQ-14 differences among grou
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m4 <- brm(
-  ros_tot ~ group,
-  data = ros_df,
-  family = skew_normal(),
+  bsq14_tot ~ group,
+  data = bsq_df,
+  family = gaussian(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -446,14 +488,44 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip() 
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m4, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m4, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 \pagebreak
 
 ## Depression Anxiety Stress Scale-21 (DASS-21)
 
 ```{r, echo=FALSE}
-temp <- quest_param_df %>% 
-  dplyr:: select(subj_code, group, starts_with("dass_"), "dass21_s", "dass21_a", 
-                 "dass21_d")
+temp <- quest_param_df %>%
+  dplyr::select(
+    subj_code, group, starts_with("dass_"), "dass21_s", "dass21_a",
+    "dass21_d"
+  )
 
 dass_df <- distinct(temp, subj_code, .keep_all = TRUE)
 ```
@@ -540,6 +612,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_s, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_s, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 ### Anxiety
 
 We used a Bayesian regression model to examine the DASS-21 Anxiety differences among groups.
@@ -548,7 +648,7 @@ We used a Bayesian regression model to examine the DASS-21 Anxiety differences a
 m5_a <- brm(
   dass21_a ~ group,
   data = dass_df, 
-  family = skew_normal(),
+  family = gaussian(),
   iter = 4000,
   cores = 4,
   backend = "cmdstan",
@@ -592,6 +692,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_a, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_a, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 ### Depression
 
 We used a Bayesian regression model to examine the DASS-21 Depression differences among groups.
@@ -600,9 +728,9 @@ We used a Bayesian regression model to examine the DASS-21 Depression difference
 m5_d <- brm(
   dass21_d ~ group,
   data = dass_df, 
-  family = skew_normal(),
+  family = gaussian(),
   iter = 4000,
-  cores = 4,
+  cores = parallel::detectCores(),
   backend = "cmdstan",
   refresh = 0,
   silent = TRUE
@@ -644,6 +772,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_d, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m5_d, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 \pagebreak
 
 ## Social Interaction Anxiety Scale (SIAS)
@@ -675,7 +831,7 @@ We used a Bayesian regression model to examine the SIAS score differences among 
 m6 <- brm(
   sias_tot ~ group,
   data = sias_df,
-  family = skew_normal(),
+  family = gaussian(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -717,6 +873,34 @@ plot(c_eff, plot = FALSE)[[1]] +
     x = "Group") + 
   theme_cowplot() +
   coord_flip()
+```
+
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m6, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m6, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
 ```
 
 \pagebreak
@@ -810,6 +994,57 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_cmd, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_cmd, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+\pagebreak
+
+## Multidimensional Perfectionism Scale (MPS)
+
+The average scores on the sub-scales of Concerns over Mistakes and Doubts (CMD), Parental Expectations and Criticism (PEC), Personal Standards (PS), and Organization (O) of the MPS as a function of group are shown below.
+
+```{r, echo=FALSE}
+temp <- quest_param_df %>% 
+  dplyr:: select(subj_code, group, starts_with("mps_"))
+
+mps_df <- distinct(temp, subj_code, .keep_all = TRUE)
+
+mps_df |> 
+  group_by(group) |> 
+  summarize(
+    MPS_cmd = mean(mps_cmd),
+    MPS_ps = mean(mps_ps),
+    MPS_pepc = mean(mps_pepc),
+    MPS_or = mean(mps_or)
+  ) |> 
+   kable(digits = 2)
+```
+
 ### Parental Expectations and Criticism
 
 We used a Bayesian regression model to examine the MPS PEC score differences among groups.
@@ -862,6 +1097,34 @@ plot(c_eff, plot = FALSE)[[1]] +
     x = "Group") + 
   theme_cowplot() +
   coord_flip()
+```
+
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_pec, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_pec, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
 ```
 
 ### Personal Standards
@@ -918,6 +1181,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_ps, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_ps, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 ### Organization
 
 We used a Bayesian regression model to examine the MPS-O score differences among groups.
@@ -928,7 +1219,7 @@ We used a Bayesian regression model to examine the MPS-O score differences among
 m7_or <- brm(
   mps_or ~ group,
   data = mps_df,
-  family = skew_normal(),
+  family = gaussian(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -970,6 +1261,35 @@ plot(c_eff, plot = FALSE)[[1]] +
     x = "Group") + 
   theme_cowplot() +
   coord_flip()
+```
+
+
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_or, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m7_or, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
 ```
 
 \pagebreak
@@ -1039,9 +1359,9 @@ We used a Bayesian regression model to examine the EAT-26 Dieting score differen
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m8_d <- brm(
-  dieting ~ group,
+  dieting | trunc(lb = 0) ~ group,
   data = eat26_df,
-  family = hurdle_lognormal(),
+  family = gaussian(),
   iter = 4000,
   cores = parallel::detectCores(),
   backend = "cmdstan",
@@ -1084,6 +1404,34 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_d, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_d, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 ### Bulimia and Food Preoccupation 
 
 We used a Bayesian regression model to examine the EAT-26 Bulimia and Food Preoccupation score differences among groups.
@@ -1092,7 +1440,7 @@ We used a Bayesian regression model to examine the EAT-26 Bulimia and Food Preoc
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m8_b <- brm(
-  bulimia ~ group,
+  bulimia ~ group, # | trunc(lb = 0)
   data = eat26_df,
   family = hurdle_lognormal(),
   iter = 4000,
@@ -1138,6 +1486,33 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_b, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_b, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
 
 ### Oral Control 
 
@@ -1192,17 +1567,46 @@ plot(c_eff, plot = FALSE)[[1]] +
   coord_flip()
 ```
 
+### Cohen's d
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_oc, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupHC / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m8_oc, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupRI / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
 \pagebreak
-
-## Participants Sample Size
-
-\pagebreak
-
-
 
 ## Outcome-irrelevant learning: spatial-motor associations
 
-In order to investigate whether the likelihood of selecting 'stay' was greater for 'same' versus 'flipped' response/key mapping, when contrasting rewarded and unrewarded responses, we reproduced the statistical evaluations conducted by @shahar2019credit and @ben2022working. First, we employed a 3-way interaction model that permitted the modulation of the interaction between 'same/flipped' response/key mapping $\times$ previously rewarded/unrewarded responses to vary across different groups. 
+
+@shahar2019credit investigated the impact of spatial-motor associations on participants' RL. Optimal decision-making prioritizes rewards regardless of spatial-motor associations, such as the choice of response key in the previous trial. Instead, @shahar2019credit found that rewards had a greater impact on the probability of choosing between two images presented in each trial when the chosen image was linked to the same response key in both the n-1 and n trials.
+
+In order to investigate, in the present data, whether the likelihood of selecting 'stay' was greater for 'same' versus 'flipped' response/key mapping, when contrasting rewarded and unrewarded responses, we reproduced the statistical evaluations conducted by @shahar2019credit and @ben2022working. 
+
+### Model 1
+
+First, we employed a 3-way interaction model that permitted the modulation of the interaction between 'same/flipped' response/key mapping $\times$ previously rewarded/unrewarded responses to vary across groups. 
 
 ```{r setup2, message = FALSE, warning = FALSE, include = FALSE, results = "hide", cache=TRUE}
 
@@ -1430,7 +1834,7 @@ bysubj_ed <- bysubj_ed |>
     feedback = prev_feedback,
     mapping = is_mapping_same,
     image = stimulus_type,
-    diagnosis = diag_cat)
+    group = diag_cat)
 
 bysubj_ed$feedback <- factor(bysubj_ed$feedback)
 bysubj_ed$feedback <- bysubj_ed$feedback |> 
@@ -1447,18 +1851,31 @@ bysubj_ed$mapping <- bysubj_ed$mapping |>
   )
 
 bysubj_ed$image <- factor(bysubj_ed$image)
-bysubj_ed$diagnosis <- factor(bysubj_ed$diagnosis)
-bysubj_ed$diagnosis <- relevel(bysubj_ed$diagnosis, ref = "HC")
-contrasts(bysubj_ed$diagnosis)
+bysubj_ed$group <- factor(bysubj_ed$group)
+bysubj_ed$group <- relevel(bysubj_ed$group, ref = "AN")
+contrasts(bysubj_ed$group)
 
-summary(bysubj_ed$diagnosis)
+summary(bysubj_ed$group)
 
 bcpriors <- get_prior(
-  stay ~ 0 + Intercept + mapping * feedback * diagnosis +
+  stay ~ 0 + Intercept + mapping * feedback * group +
     (1 + mapping * feedback | subj_code),
   family = zero_one_inflated_beta(),
   data = bysubj_ed
 )
+
+# Select only 117 subjects.
+temp <- readRDS(
+  here::here("data", "processed", "quest", "quest_diagn_cat_3grps.rds")
+) |> 
+  dplyr::select(subj_code)
+
+good_ids <- unique(temp$subj_code)
+
+bysubj_data <- bysubj_ed[bysubj_ed$subj_code %in%good_ids, ]
+length(unique(bysubj_data$subj_code))
+
+bysubj_data$group <- factor(bysubj_data$group)
 ```
 
 **Three-way interaction**
@@ -1475,11 +1892,11 @@ priors_0 <- c(
 )
 
 mod_0 <- brm(
-  stay ~ 0 + Intercept + mapping * feedback * diagnosis + 
+  stay ~ 0 + Intercept + mapping * feedback * group + 
     (1 + mapping * feedback | subj_code),
   family = zero_one_inflated_beta(),
   backend = "cmdstanr",
-  data = bysubj_ed,
+  data = bysubj_data,
   prior = priors_0,
   iter = 2000,
   refresh = 0,
@@ -1510,7 +1927,7 @@ tidy(mod_0, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
 \vspace{5mm}
 
 ```{r, echo=FALSE}
-dcat <- make_conditions(mod_0, "diagnosis")
+dcat <- make_conditions(mod_0, "group")
 me <- conditional_effects(mod_0, "mapping:feedback", conditions = dcat)
 plot(me, plot = FALSE)[[1]] +
   see::scale_colour_okabeito(order = c(1, 5)) +
@@ -1522,14 +1939,18 @@ plot(me, plot = FALSE)[[1]] +
   theme(legend.position="bottom") 
 ```
 
-This model failed to yield convincing evidence of a 3-way interaction, prompting us to simplify it by disregarding variations across groups. 
+### Interpretation
+
+This model does not provide substantial evidence supporting a significant 3-way interaction. As a result, for simplicity, any variations across groups were disregarded in the following analysis.
+
+### Model 2
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 bcpriors <- get_prior(
   stay ~ 0 + Intercept + mapping * feedback +
     (1 + mapping * feedback | subj_code),
   family = zero_one_inflated_beta(),
-  data = bysubj_ed
+  data = bysubj_data
 )
 
 priors_1 <- c(
@@ -1547,7 +1968,7 @@ mod_1 <- brm(
     (1 + mapping * feedback | subj_code),
   family = zero_one_inflated_beta(),
   backend = "cmdstanr",
-  data = bysubj_ed,
+  data = bysubj_data,
   prior = priors_1,
   iter = 2000,
   refresh = 0,
@@ -1580,7 +2001,14 @@ tidy(mod_1, effect="fixed", conf.method="HPDinterval", prob = 0.95) |>
 
 \vspace{5mm}
 
-The following figure, which describes the predicted marginal effects, replicates Fig. 2C of Shahar et al. (2019).
+### Interpretation
+
+In the present study, we successfully replicated the findings reported by @shahar2019credit and @ben2022working. Our results provide strong evidence supporting spatial-motor outcome-irrelevant learning. Specifically, we observed a higher probability of choosing the "stay" option compared to the "flipped" option  when comparing previously rewarded versus unrewarded responses. 
+
+We did not find a significant interaction between the participant groups (HC, RI, R-AN), previous outcome, and mapping. This suggests that the spatial-motor outcome-irrelevant learning effect is consistent across all groups.
+
+To visually represent our findings, we present a figure displaying the predicted marginal effects of Model 2. These predicted effects replicate the findings depicted in Figure 2C of @shahar2019credit.
+
 
 \vspace{5mm}
 
@@ -1598,13 +2026,14 @@ plot(me, plot = FALSE)[[1]] +
 
 \pagebreak
 
-## Data Analysis of the Probabilistic Reversal Learning Task
 
-Tasks were programmed in MATLAB (MathWorks) using Psychtoolbox extensions (Brainard, 1997). Task structure is detailed in the main text methods. For all tasks, trials were interleaved by an inter-trial interval (ITI) drawn from a uniform distribution ITI  uniform (0.7s, 1s). During the ITI a fixation cross was displayed (.65o visual angle) to draw attention to the center of the screen. Next, stimuli were displayed on screen until a response was made or until a time deadline (3 seconds, learnt by the participant during practice trials) was reached. Overall, only 583 trials were lost due to time-outs (~0.58% of the total database). TODO
+## Reinforcement learning drift diffusion model (RLDDM)
 
-## Decision Process (RLDDM)
+We used a reinforcement learning drift diffusion model [RLDDM; @pedersen2020simultaneous] to investigate the impact of disorder-related information, which is irrelevant to the outcome, on decision-making. The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations and the other describes how an agent uses these expectations to arrive at a decision.
 
-We utilized a reinforcement learning drift diffusion model [RLDDM; @pedersen2020simultaneous] to investigate the impact of illness-related information, which was irrelevant to the outcome, on decision-making. The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations and the other describes how an agent uses these expectations to arrive at a decision. The first component characterizes the learning process in terms of the delta learning rule [@rescorla1972theory]: 
+### δ-learning rule and decision making
+
+The first component characterizes the learning process in terms of the delta learning rule [@rescorla1972theory]:
 
 $$
 Q_{a, i} = Q_{a, i-1} + \alpha (I_{a, i-1} - Q_{a, i-1}).
@@ -1618,10 +2047,48 @@ $$
 p_{a,i} = \frac{e^{\beta Q_{a,i}}}{\sum_{j=1}^n e^{\beta Q_{j,i}}}.
 $$
 
-In the RLDDM, instead, this second component of decision-making is replaced by a Drift-Diffusion Model [DDM; @ratcliff2008diffusion] which assumes a stochastic accumulation of evidence on each trial. A drift rate parameter ($v$) describes the rate of (noisy) evidence accumulation; a decision threshold parameter ($a$) represents the amount of evidence needed to make a decision; a non-decision time parameter ($t$) accounts for the time devoted to sensory processing, motor preparation, and motor output, and a starting point parameter ($z$) accounts for any predispositions in the initial decision variable towards either boundary.
+In the RLDDM, this second component of decision-making is replaced by a Drift-Diffusion Model [DDM; @ratcliff2008diffusion] which assumes a stochastic accumulation of evidence on each trial. The DDM includes four parameters: A drift rate parameter ($v$), which describes the rate of (noisy) evidence accumulation; a decision threshold parameter ($a$), which represents the amount of evidence needed to make a decision; a non-decision time parameter ($t$), which accounts for the time devoted to sensory processing, motor preparation, and motor output, and a starting point parameter ($z$), which accounts for any predispositions in the initial decision variable towards either boundary.
 
-We analyzed the data using the HDDM Python toolbox [@wiecki2013hddm], which implements the RLDDM and uses a hierarchical Bayesian approach to compute the posterior distribution of group and individual parameters [for a detailed description of the model, see @pedersen2020simultaneous]. The Bayesian posterior estimations of the RLDDM rely on informative priors obtained from a prior meta-analysis [@wiecki2013hddm] for the DDM aspect of the model. On the other hand, non-informative broad normal distributions, centered at 0.5 after transformation, are used for the learning rate parameters (positive and negative).
+In summary, the RLDDM consists of six fundamental parameters: the positive learning rate (α+), negative learning rate (α−), drift rate (v), decision threshold (a), non-decision time (t), and starting point bias (z) parameters.
 
+- The parameter α reflects the learning rate in the Rescorla-Wagner δ-learning rule [@rescorla1972theory], whereby a higher learning rate leads to rapid adaptation to reward expectations, while a lower learning rate results in slower adaptation. The $\alpha^+$ and $\alpha^-$ parameters capture the impact of reinforcements and punishments, respectively.
+- The drift rate $v$ reflects the average speed of evidence accumulation toward one decision.
+- The decision threshold $a$ determines the distance between two decision boundaries, with an increase of a resulting in a slower but more accurate decision and a decrease of a leading to a faster but more error-prone decision.
+- The non-decision time $t$ captures the time spent on stimuli encoding or motor execution, which is not used for evidence accumulation.
+- The starting point parameter $z$ quantifies a potential initial bias toward one or the other boundary in the absence of any stimulus evidence.
+
+### Estimation
+
+The posterior distribution of group and individual parameters of the RLHDDM model were estimated in a hierarchical Bayesian framework using the "HDDMrl" module of the "HDDM" (version 0.9.8) Python package [for a detailed description of the model, see @pedersen2020simultaneous; @wiecki2013hddm].
+
+
+### Priors
+
+The Bayesian posterior estimations of the RLDDM rely on informative priors obtained from a prior meta-analysis [@wiecki2013hddm] for the DDM aspect of the model. On the other hand, non-informative broad normal distributions, centered at 0.5 after transformation, are used for the learning rate parameters (positive and negative).
+
+## Data analysis
+
+### Quality control
+
+To ensure the quality of the data, we excluded participants who performed below chance level in the PRL task [e.g., @geisler_increased_2017]. Specifically, two individuals with R-AN were excluded due to convergence problems indicated by a large R-hat convergence diagnostic. Additionally, two other individuals with R-AN did not achieve performance above chance level. As a result, the final sample for subsequent analyses consisted of 117 participants who met the quality control criterion. This sample included 36 individuals with R-AN, 45 healthy controls (HC), and 36 healthy controls at risk of developing eating disorders (RI).
+
+### Models comparison
+
+The study utilized a minimal model as the basis for constructing new models, wherein all parameters were permitted to vary by condition (i.e., disorder-related vs. disorder-unrelated information) and group. This decision was based on the absence of a priori knowledge suggesting that outcome-irrelevant effects were limited to a particular parameter of the RLDDM or that they varied across groups. Markov Chain Monte Carlo (MCMC) sampling was employed to estimate these models, with 2000 traces being sampled following a burn-in period of 500. The Deviance Information Criterion (DIC) was computed for each model. We selected the model with the model with the lowest DIC. The winning model was subsequently better estimated using 15000 traces and a 5000 burn-in [@kruschke_bayesian_2018].
+
+### Collinearity check
+
+As shown in the following figures, for all three groups the correlation between the parameters is generally low.
+
+### Posterior predictive checks
+
+To assess model validity, we performed posterior predictive checks. This involved simulating data using estimated parameters and comparing observed and simulated results. We generated the simulated dataset by repeating the simulation process 500 times for each subject in a sample dataset.
+
+PPC for learning rate To evaluate the choice proportion for the best option across learning in both observed and simulated data, we binned the trials and plotted the 90% highest density intervals of the mean responses. The following figures illustrate the rate of selecting the best option during learning. The 90% highest density interval of the means across simulated datasets captures the uncertainty present in the generated data.
+
+### Reaction times
+
+The density plots of observed and predicted reaction time across conditions are presented in the following figures. To distinguish upper and lower bound responses, reaction times for lower boundary choices (i.e., worst option choices) were set to be negative (0-RT). There is a good agreement between the observed and predicted values.
 
 \pagebreak
 
@@ -1685,17 +2152,25 @@ d <- d1 |>
     subj_code = subj_name
   )
 
-# d |> 
-#   group_by(diag_cat) |> 
-#   summarize(
-#     n_distinct(subj_code)
-#   )
-# 1 AN                            37
-# 2 BN                            12
-# 3 HC                           212
-# 4 RI                            41
 
-dat <- d 
+temp <- rio::import(
+  here::here(
+    "data", "processed", "prl", "input_for_hddmrl", "three_groups",
+    "ed_prl_data.csv"
+  )
+) |> 
+  select(subj_code, diag_cat) |> 
+  distinct()
+
+good_ids <- temp$subj_code
+
+dat1 <- d[d$subj_code %in% good_ids, ]
+
+# Remove 6 groups categorization
+dat1$diag_cat <- NULL
+
+dat <- left_join(dat1, temp, by = "subj_code")
+length(unique(dat$subj_code))
 
 # Examine the proportions of is_target_img_chosen in the 3 groups.
 
@@ -1719,7 +2194,6 @@ unique(dat$trg_chosen)
 # Subject id.
 dat$ID <- factor(dat$subj_code)
 length(unique(dat$ID))
-# [1] 261
 
 # RTs in sec.
 dat <- dat |> 
@@ -1748,7 +2222,6 @@ bysubj_freq <- bysubj_freq[complete.cases(bysubj_freq), ]
 bysubj_freq$flag <- NULL
 
 hist(bysubj_freq$y)
-
 ```
 
 The proportion of times the target image was chosen, for each group, is shown below.
@@ -1776,7 +2249,7 @@ priors <- c(
 bmod_02 <- brm(
   bf(y ~ di, sigma ~ di),
   data = bysubj_freq,
-  family = student(),
+  family = gaussian(),
   control = list(adapt_delta = 0.99),
   prior = priors,
   backend = "cmdstan",
@@ -1789,7 +2262,6 @@ bmod_02 <- brm(
   silent = TRUE
 )
 ```
-
 
 ### Posterior predictive check
 
@@ -1822,6 +2294,11 @@ emmeans::emmeans(bmod_02, ~ di,
   contrast(method = "revpairwise") |>
    kable(digits = 3)
 ```
+
+### Interpretation
+
+The 95% credibility interval for the HC group was found to be non-inclusive of 0, , indicating a decreased likelihood of selecting the food image compared to the neutral image. However, no significant differences were observed in preferential choices between the other groups (R-AN, BN) and the HC group.
+
 
 \pagebreak
 
@@ -1866,6 +2343,16 @@ For anorexic patients, the difference in the posterior estimates of the $\alpha^
 For bulimic patients, the difference in the posterior estimates of the $\alpha^+$ parameter for the two groups, $\alpha^+_{\text{comorbidity present}} - \alpha^+_{\text{comorbidity absent}}$, was 1.674, 95% CI [-3.723, 7.396] in the "food" condition; the difference in the posterior estimates of the $a$ parameter for the two groups, $\alpha^+_{\text{comorbidity present}} - \alpha^+_{\text{comorbidity absent}}$, was 1.080, 95% CI [-4.487, 6.337] in the "neutral" condition.
 
 \pagebreak
+
+## Comorbidity
+
+Individuals with eating disorders often have comorbid psychiatric conditions, including depression (up to 75%), bipolar disorder (10%), anxiety disorders, obsessive-compulsive disorder (40%), panic disorder (11%), social anxiety disorder/social phobia, post-traumatic stress disorder (prevalence varies with eating disorder), and substance abuse (15-40%) – see @woodside2006management.
+
+In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 individuals with AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
+
+Importantly, our study revealed that individuals with AN who had comorbid clinical diagnoses (such as depression, anxiety, and obsessive-compulsive disorder) exhibited similar conservative reinforcement learning patterns as those without comorbidities, providing additional evidence for the specificity of the context-dependent learning for R-AN. 
+
+
 
 # References
 

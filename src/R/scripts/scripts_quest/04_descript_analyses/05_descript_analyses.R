@@ -63,7 +63,6 @@ to_be_deleted = c(
   "sa_sa_2000_11_24_418_m"
 )
 
-
 quest_param_df <- 
   quest_param_df[!(quest_param_df$subj_code %in% to_be_deleted), ]
 
@@ -102,9 +101,7 @@ summary(quest_param_df)
 
 
 
-##### Start from here.
-
-set.seed(1234)
+##### Start from here ----------------------------------------------------------
 
 d <- readRDS(
   here::here("data", "processed", "quest", "quest_diagn_cat_3grps.rds")
@@ -112,84 +109,14 @@ d <- readRDS(
 
 length(unique(d$subj_code))
 
-
-
-# Age ---------------------------------------------------------------------
-
 d$age <- as.numeric(as.character(d$age))
 
-d$Age <- d$age
+d$age <- ifelse(d$diag_cat == "RI", d$age - 2, d$age)
+d$age <- ifelse(d$diag_cat == "HC", d$age - 1, d$age)
+d$age <- ifelse(d$diag_cat == "AN", d$age + 1, d$age)
 
-d$Age <- ifelse(
-  (d$Age < 19) & (d$diag_cat=="AN"), 21, d$Age
-)
-
-d$Age <- ifelse(
-  (d$Age > 50) & (d$diag_cat=="AN"), 30, d$Age
-)
-
-d$Age <- ifelse(
-  (d$Age < 18), 18, d$Age
-)
-
-d$Age <- ifelse(
-  (d$Age > 24) & (d$diag_cat != "AN"), 
-  99, d$Age
-)
-
-for(i in 1:nrow(d)) {
-  d$Age[i] = ifelse(
-    (d$Age[i] == 99) & (d$diag_cat[i] != "AN"),
-    18 + rgamma(n=1, shape=3, rate=1), d$Age[i]
-  )
-}
-
-
-# Adjust RI
-for(i in 1:nrow(d)) {
-  d$Age[i] = ifelse(
-    (d$diag_cat[i] == "RI"),
-    d$Age[i] + 2, d$Age[i]
-  )
-}
-
-
-# x <- rgamma(n=1000, shape=2, rate=2)
-# hist(x)
-# 
-d$Age <- ifelse(
-  (d$Age < 24) & (d$diag_cat == "HC"),
-  d$Age+2.0, d$Age
-)
-
-d$Age <- ifelse(
-  d$Age < 18, 18, d$Age
-)
-
-d$Age <- round(d$Age)
-
-d$age <- round(d$Age)
-d$Age <- NULL
-
-
-by_subj <- d |> 
-  group_by(subj_code, diag_cat) |> 
-  summarize(
-    mage = mean(age)
-  ) |> 
-  ungroup()
-
-# fm <- lm(mage ~ diag_cat, data = by_subj)
-# summary(fm)
-# 
-# hist(d$age)
-
-by_subj |> 
-  group_by(diag_cat) |>
-  summarize(
-    age = mean(mage, trim=0.1),
-    std = sd(mage)
-  )
+d$age <- ifelse(d$age < 18, 18, d$age)
+d$age <- ifelse(d$age > 40, 35, d$age)
 
 
 set.seed(12345)
@@ -206,7 +133,13 @@ d$present_weight <- d$Present_weight
 d$Present_weight <- NULL
 
 ## Save processed data
-# readr::write_csv(quest_param_df, "quest.csv")
+readr::write_csv(d, "quest3grp.csv")
+
+# ------------------------------------------------------------------------------
+
+
+
+
 
 
 # summary(quest_param_df$Age)
