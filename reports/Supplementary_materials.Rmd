@@ -2348,7 +2348,7 @@ For bulimic patients, the difference in the posterior estimates of the $\alpha^+
 
 Individuals with eating disorders often have comorbid psychiatric conditions, including depression (up to 75%), bipolar disorder (10%), anxiety disorders, obsessive-compulsive disorder (40%), panic disorder (11%), social anxiety disorder/social phobia, post-traumatic stress disorder (prevalence varies with eating disorder), and substance abuse (15-40%) – see @woodside2006management.
 
-In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 individuals with AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
+In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 individuals with R-AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
 
 Importantly, our study revealed that individuals with AN who had comorbid clinical diagnoses (such as depression, anxiety, and obsessive-compulsive disorder) exhibited similar conservative reinforcement learning patterns as those without comorbidities, providing additional evidence for the specificity of the context-dependent learning for R-AN. 
 
