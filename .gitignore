@@ -2,6 +2,7 @@
 
 # The traces of the hddmrl models
 src/python/PRL/01_get_hddmrl_params/models/*
+src/python/PRL/01_get_hddmrl_params/ddm/*
 
 # All files used to generate the pdf report
 reports/Supplementary_materials_cache/*
