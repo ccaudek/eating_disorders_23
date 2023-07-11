@@ -46,3 +46,6 @@ FNN
 stringi
 readxl
 marginaleffects
+lubridate
+rstanarm
+effectsize
