@@ -1,7 +1,6 @@
 .DS_Store
 
 # The traces of the hddmrl models
-src/python/PRL/01_get_hddmrl_params/ddm/*
 src/python/PRL/01_get_hddmrl_params/models/*
 
 # All files used to generate the pdf report
