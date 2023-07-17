@@ -171,7 +171,6 @@ To assess the presence of context-dependent learning, we conditioned the model's
 
 ## Demographic and Psychopathology Measures
 
-TODO
 
 Mean age and Body Mass Index (BMI) for each group of participant were as follows: patients with AN, mean age = 21.18 (SD = 2.41), average Body Mass Index (BMI) = 16.88 (SD = 1.55); patients with BN, mean age = 20.39 (SD = 1.88), average BMI = 30.09 (SD = 5.47); HCs, mean age = 19.77 (SD = 1.06), average BMI = 21.62 (SD = 3.03); healthy individuals at risk of developing eating disorders, mean age = 20.36 (SD = 1.44), average BMI = 22.41 (SD = 4.79).
 Bayesian statistical analysis revealed no credible age differences among the four groups (AN, BN, HC, and RI). AN participants displayed a lower mean BMI than HC participants, while BN participants had a higher mean BMI than HC participants. No noteworthy difference in BMI was observed between HC and RI participants. Furthermore, there is credible evidence that the Rosenberg Self-Esteem Scale scores of all three groups (AN, BN, and RI) are smaller than those of the HC group. We also found credible evidence that individuals with AN, BN, and RI exhibited higher levels of dissatisfaction with their body shape, as measured by the BSQ-14 questionnaire, when compared to the HCs.

@@ -1,6 +1,6 @@
 ---
-title: "When Food Becomes a Distraction: The Impact of Food-Related Information on Reward Learning in Anorexia Nervosa"
-author: "Supplementary Materials"
+title: "Supplementary Text, Figures, and Tables"
+# author: "Supplementary Materials"
 output:
   pdf_document:
       toc: true
@@ -50,23 +50,27 @@ options(width = 100)
 
 \pagebreak
 
-# Participants
+# Supplementary Methods
 
-The study recruited a total of 40 individuals meeting criteria for DSM-5 restricting-type AN and 310 healty volunteers. Individuals with R-AN were recruited from three facilities in Italy, namely the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment. Patients received treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components, such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. AN diagnosis was determined by semi-structured interview performed by specialized psychiatrists and psychologists at treatment admission according to the Diagnostic and Statistical Manual of Mental Disorders-5 (DSM-5) criteria. Individuals diagnosed with R-AN (Restrictive Anorexia Nervosa) were included in the study approximately 6 months (± 1 month) after starting treatment for eating disorders at one of the participating facilities. 
+## Participants
 
-To ensure the broader applicability of our findings to the psychiatric population [@woodside2006management], we included individuals with R-AN who also had comorbid psychiatric conditions. The presence of psychiatric co-morbidities was determined by specialized psychiatrists and psychologists at the treatment centers using a semi-structured interview based on the Mini International Neuropsychiatric Interview [MINI; @sheehan1998mini]. Among the 40 individuals with R-AN in our study, comorbidities included anxiety disorder (n=16), OCD (n=8), social phobia (n=1), and DAP (n=1). Eighteen R-AN patients were undertaking medication (anxiolytic antidepressants = 10; Selective Serotonin Reuptake Inhibitors (SSRIs) = 6; benzodiazepines = 1; mood stabilizers (lithium) = 1). 
+The study included 40 individuals diagnosed with Restricting-Type Anorexia Nervosa (R-AN) according to the DSM-5 criteria and 310 healthy volunteers. The participants with R-AN were recruited from three facilities in Italy: the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment, with patients receiving treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. The diagnosis of AN was made by specialized psychiatrists and psychologists through a semi-structured interview based on the DSM-5 criteria, at the start of treatment.
 
-The control group consisted of 310 adolescent or young-adult females recruited through social media or university advertisements. All participants completed the Eating Attitudes Test-26 (EAT-26; Garner et al., 1982) screening tool. Females who scored higher than 20 on the EAT-26 (Dotti & Lazzari, 1998) and did not report any current treatment for eating disorders were classified as "at-risk" for the study's purposes and assigned to the RI (reference/independent) group, resulting in a total of 36 "at-risk" females. From the remaining participants who scored lower than 20 on the EAT-26 and did not report any current treatment for eating disorders, a random sample of 45 females was selected and assigned to the HC group. It was a requirement for both the HC and RI groups that participants have a normal Body Mass Index.
+To ensure the relevance of our findings to the broader psychiatric population, individuals with R-AN who had comorbid psychiatric conditions were included in the study. The presence of comorbidities was determined by specialized psychiatrists and psychologists using a semi-structured interview based on the Mini International Neuropsychiatric Interview (MINI). Among the 40 individuals with R-AN, comorbidities included anxiety disorder (n=16), obsessive-compulsive disorder (OCD) (n=8), social phobia (n=1), and depressive and anxiety disorders (n=1). Some R-AN patients were also taking medication, including anxiolytic antidepressants (n=10), Selective Serotonin Reuptake Inhibitors (SSRIs) (n=6), benzodiazepines (n=1), and mood stabilizers (lithium) (n=1).
 
-To be eligible for participation, individuals needed to demonstrate proficient command over both spoken and written Italian language. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test (Raven et al., 2000). The eligibility criteria for all participants were evaluated through psychologist interviews by trained psychologists. Body mass index (BMI) values were determined in the laboratory. 
+The control group consisted of 310 adolescent or young-adult females recruited through social media or university advertisements. All participants completed the Eating Attitudes Test-26 (EAT-26) screening tool. Females who scored higher than 20 on the EAT-26 and did not report any current treatment for eating disorders were classified as "at-risk" and assigned to the reference/independent (RI) group, resulting in a total of 36 individuals. From the remaining participants who scored lower than 20 on the EAT-26 and did not report any current treatment for eating disorders, a random sample of 45 females was selected and assigned to the healthy control (HC) group. Both the RI and HC groups had participants with a normal Body Mass Index (BMI).
 
-The study included a predominantly Caucasian sample, with 97.7% of the participants identifying as Caucasian. A smaller proportion of participants identified as Asian-Italian (1.7%) and African-Italian (0.6%). Additionally, all selected participants were right-handed and were unaware of the study's specific objectives, ensuring a blind study design.
+To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
+
+The study included a predominantly Caucasian sample, with 97.7% of the participants identifying as Caucasian. A smaller proportion of participants identified as Asian-Italian (1.7%) and African-Italian (0.6%). Additionally, all selected participants were right-handed and were unaware of the specific objectives of the study, ensuring a blind study design.
 
 \pagebreak
 
-# Participants sample size
+# Participants sample 
 
-We conducted a separate study involving two groups: one of $n$ = 29 anorexic patients and one of $n$ = 124 healthy controls (the participants in that separate study were distinct from those in the present study). In a PRL task, each participant completed 160 trials per condition, and the content of the pair of images shown in each trial was manipulated. The effect size of the experimental manipulation on the learning rate parameter (the focus of the present study) was found to be 0.54. To determine the sample size needed to detect a similar effect, we carried out a parameter recovery study following the method outlined by @pedersen2020simultaneous. We simulated the data of two groups of 30 participants with different values of $\alpha$ (lower and higher) with a difference of 0.54. The other parameters of the RLDDM model (i.e., $a$, $t$, $v$) were set to the values estimated from the empirical data of the 29 anorexic patients and 124 healthy controls. For the simulation, we used the `hddm.generate.gen_rand_rlddm_data` function of the `hddm` module with following parameters:
+Before conducting the present study, we carried out a separate study involving two distinct groups. The first group consisted of 29 anorexic patients, while the second group comprised 124 healthy controls (it's important to note that these participants were not the same as those in the current study). In this previous study, each participant completed 160 trials per condition in a PRL task, where the content of the pair of images shown in each trial was manipulated. For the two groups, the learning rate difference (which is the main focus of the current study) was equal to 0.54 (on a logit scale).
+
+To determine the sample size needed to detect a similar effect, we carried out a parameter recovery study following the method outlined by @pedersen2020simultaneous. We simulated the data of two groups of 30 participants with different values of $\alpha$ (lower and higher) with a difference of 0.54. The other parameters of the RLDDM model (i.e., $a$, $t$, $v$) were set to the values estimated from the empirical data of the 29 anorexic patients and 124 healthy controls. For the simulation, we used the `hddm.generate.gen_rand_rlddm_data` function of the `hddm` module with following parameters:
 
 ```
 subjects = 30
@@ -84,7 +88,7 @@ data = hddm.generate.gen_rand_rlddm_data(
 )
 ```
 
-We used the `HDDMrl` function of the `hddm` module to estimate the RLDDM parameters based on the simulated data. We repeated this procedure 100 times, and in each iteration, the parameters for the lower and higher values of $\alpha$ were completely separated. These simulations indicate that our study had enough participants and trials to detect the effect size on $\alpha$ that had been observed in the previous study.
+We used the `HDDMrl` function of the `hddm` module to estimate the RLDDM parameters based on the simulated data. We repeated this procedure 100 times, and in each iteration, the parameters for the lower and higher values of $\alpha$ were completely separated. This simulation suggest that our study had enough participants and trials to detect the effect size on $\alpha$ that had been observed in the previous study.
 
 A parameter recovery study and a frequentist power analysis are two distinct approaches. However, since Bayesian methods prioritize estimation over hypothesis testing, it is comforting to see that with the current number of participants and trials, the RLDDM model can detect an effect size similar to the one found in a separate study with a different group of participants but with a similar experimental manipulation.
 
@@ -92,7 +96,7 @@ A parameter recovery study and a frequentist power analysis are two distinct app
 
 ## Age
 
-In our initial statistical analysis, we investigated if there were any differences in age among the groups (AN = Anorexia Nervosa, BN = Bulimia Nervosa, HC = Healthy Controls, RI = participants who were at risk of developing eating disorders but had not received a formal diagnosis).
+In our initial statistical analysis, we investigated if there were any differences in age among the groups (AN = Anorexia Nervosa, HC = Healthy Controls, RI = participants who were at risk of developing eating disorders but had not received a formal diagnosis).
 
 The mean age and standard devitation by group is shown below.
 
@@ -127,7 +131,7 @@ age_df |>
 
 \vspace{5mm}
 
-We used a Bayesian regression model to examine the age differences among groups.
+We used Bayesian regression to examine the age differences among groups.
 
 ```{r, message=FALSE, warning=FALSE, cache=TRUE}
 m1 <- brm(
@@ -1631,10 +1635,9 @@ quantile(delta_t$delta, c(0.025, 0.5, 0.975))
 
 ## Outcome-irrelevant learning: spatial-motor associations
 
+@shahar2019credit investigated how spatial-motor associations impact reinforcement learning (RL). In RL, optimal decision-making prioritizes rewards, regardless of previous choices. However, @shahar2019credit found that rewards had a greater impact on the probability of choosing between two images when the chosen image was linked to the same response key in both the previous and current trials.
 
-@shahar2019credit investigated the impact of spatial-motor associations on participants' RL. Optimal decision-making prioritizes rewards regardless of spatial-motor associations, such as the choice of response key in the previous trial. Instead, @shahar2019credit found that rewards had a greater impact on the probability of choosing between two images presented in each trial when the chosen image was linked to the same response key in both the n-1 and n trials.
-
-In order to investigate, in the present data, whether the likelihood of selecting 'stay' was greater for 'same' versus 'flipped' response/key mapping, when contrasting rewarded and unrewarded responses, we reproduced the statistical evaluations conducted by @shahar2019credit and @ben2022working. 
+In order to investigate whether this effect was also present in our data, we reproduced the statistical evaluations conducted by by @shahar2019credit and @ben2022working. We found that the likelihood of selecting "stay" was greater for "same" response/key mappings than for "flipped" mappings, both for rewarded and unrewarded responses. 
 
 ### Model 1
 
@@ -2058,24 +2061,21 @@ plot(me, plot = FALSE)[[1]] +
 
 \pagebreak
 
-# Probabilistic Reversal Learning task
+## Task design
 
-The study was presented to participants as an evaluation of cognitive functions through a computer-based "game" accompanied by additional questionnaires. 
+### Additional Task Information
 
-The PRL task comprised four epochs, each consisting of 40 trials where the same image was considered correct. Feedback during the task was probabilistic, with the correct image being rewarded in 70% of the trials, while negative feedback was provided in the remaining 30% of the trials. Both blocks of the task included three rule changes in the form of reversal phases. Participants were informed that stimulus-reward contingencies would change, but not the specifics of how or when this would occur. The objective of the participants was to maximize their earnings, which were displayed at the end of each block. Participants underwent a training block consisting of 20 trials prior to the start of the actual experiment. Participants were instructed to rely on their instincts when uncertain. The Psychtoolbox extensions in MATLAB (MathWorks) were used to program the tasks (Brainard, 1997).
-
+Participants were introduced to the study as a way to evaluate their cognitive functions using a computer-based "game" and additional questionnaires. Their goal in the PRL task was to maximize their earnings, which were shown at the end of each trial block. When participants felt uncertain, they were instructed to rely on their instincts. During the PRL task, feedback was provided in a probabilistic manner. The correct image was rewarded in 70% of the trials, while negative feedback was given in the remaining 30% of the trials. Each block of the task consisted of four epochs, with 40 trials in each epoch where the same image was considered correct. Within each block, there were three rule changes known as reversal phases. Participants were aware that the stimulus-reward contingencies would change, but they were not provided with specific details about when or how these changes would occur. Prior to the actual experiment, participants underwent a training block consisting of 20 trials. The PRL tasks were programmed using the Psychtoolbox extensions in MATLAB (MathWorks) (Brainard, 1997).
 
 \pagebreak
 
+## Computational Models
 
-## Reinforcement learning drift diffusion model (RLDDM)
-
-
-The main objective of this study was to employ computational models of reinforcement learning to analyze and compare the learning outcomes within two distinct contextual conditions: decision-making involving disorder-relevant information and decision-making without disorder-relevant information.
-
-We used a reinforcement learning drift diffusion model [RLDDM; @pedersen2020simultaneous] to investigate the impact of disorder-related information, which is irrelevant to the outcome, on decision-making. The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations and the other describes how an agent uses these expectations to arrive at a decision.
+The main goal of this study was to use computational models of reinforcement learning to compare the learning outcomes of two different decision-making contexts: those involving disorder-relevant information and those that did not. We used a reinforcement learning drift diffusion model [RLDDM; @pedersen2020simultaneous] to investigate the impact of disorder-related information (which is irrelevant to the outcome) on decision-making in individuals with restrictive eating disorders (R-AN).
 
 ## RLDDM
+
+The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations and the other describes how an agent uses these expectations to arrive at a decision.
 
 The model assumes that subjective option values (Q values) are learned through reward prediction errors (PEs), which measure the disparity between expected and obtained outcomes [@sutton2018reinforcement]. The update of subjective option values follows a delta learning rule [@rescorla1972theory]:
 
@@ -2112,21 +2112,21 @@ $$
 
 In the RLDDM, this second component of decision-making is replaced by a Drift-Diffusion Model [DDM; @ratcliff2008diffusion] which assumes a stochastic accumulation of evidence on each trial. The DDM includes four parameters: A drift rate parameter ($v$), which describes the rate of (noisy) evidence accumulation; a decision threshold parameter ($a$), which represents the amount of evidence needed to make a decision; a non-decision time parameter ($t$), which accounts for the time devoted to sensory processing, motor preparation, and motor output, and a starting point parameter ($z$), which accounts for any predispositions in the initial decision variable towards either boundary.
 
-In summary, the RLDDM consists of six fundamental parameters: the positive learning rate (α+), negative learning rate (α−), drift rate (v), decision threshold (a), non-decision time (t), and starting point bias (z) parameters.
+<!-- In summary, the RLDDM consists of six fundamental parameters: the positive learning rate (α+), negative learning rate (α−), drift rate (v), decision threshold (a), non-decision time (t), and starting point bias (z) parameters. -->
 
-- The parameter α reflects the learning rate in the Rescorla-Wagner δ-learning rule [@rescorla1972theory], whereby a higher learning rate leads to rapid adaptation to reward expectations, while a lower learning rate results in slower adaptation. The $\alpha^+$ and $\alpha^-$ parameters capture the impact of reinforcements and punishments, respectively.
-- The drift rate $v$ reflects the average speed of evidence accumulation toward one decision.
-- The decision threshold $a$ determines the distance between two decision boundaries, with an increase of a resulting in a slower but more accurate decision and a decrease of a leading to a faster but more error-prone decision.
-- The non-decision time $t$ captures the time spent on stimuli encoding or motor execution, which is not used for evidence accumulation.
-- The starting point parameter $z$ quantifies a potential initial bias toward one or the other boundary in the absence of any stimulus evidence.
+<!-- - The parameter α reflects the learning rate in the Rescorla-Wagner δ-learning rule [@rescorla1972theory], whereby a higher learning rate leads to rapid adaptation to reward expectations, while a lower learning rate results in slower adaptation. The $\alpha^+$ and $\alpha^-$ parameters capture the impact of reinforcements and punishments, respectively. -->
+<!-- - The drift rate $v$ reflects the average speed of evidence accumulation toward one decision. -->
+<!-- - The decision threshold $a$ determines the distance between two decision boundaries, with an increase of a resulting in a slower but more accurate decision and a decrease of a leading to a faster but more error-prone decision. -->
+<!-- - The non-decision time $t$ captures the time spent on stimuli encoding or motor execution, which is not used for evidence accumulation. -->
+<!-- - The starting point parameter $z$ quantifies a potential initial bias toward one or the other boundary in the absence of any stimulus evidence. -->
 
 ### Estimation
 
-This algorithm represent the state-of-the-art approach for examining performance in the PRL task. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013). Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [e.g., @gershman2016empirical; @van2021hierarchical]. 
+The RLDDM is the most advanced method for analyzing performance in the probabilistic reversal learning (PRL) task. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013). Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [e.g., @gershman2016empirical; @van2021hierarchical]. 
 
 The posterior distribution of group and individual parameters of the RLHDDM model were estimated in a hierarchical Bayesian framework using the "HDDMrl" module of the "HDDM" (version 0.9.8) Python package [for a detailed description of the model, see @pedersen2020simultaneous; @wiecki2013hddm].
 
-We employed a Bayesian approach in our study because estimating RLDDM models is currently limited to Markov Chain Monte Carlo (MCMC) procedures. Moreover, by prioritizing estimation over hypothesis testing, the Bayesian approach overcomes the binary nature of decision-making inherent in null hypothesis significance testing (NHST) [@kruschke_bayesian_2018]. We determined credible effects by examining 95% credible intervals or assessing the proportion of posterior samples (97.5%) indicating the direction of the effect.
+We used a Bayesian approach in our study because estimating RLDDM models is currently only possible using Markov chain Monte Carlo (MCMC) procedures. Additionally, the Bayesian approach prioritizes estimation over hypothesis testing, which helps to overcome the binary nature of decision-making inherent in null hypothesis significance testing (NHST) [@kruschke_bayesian_2018]. We determined credible effects by examining 95% credible intervals or assessing the proportion of posterior samples (97.5%) indicating the direction of the effect.
 
 
 ### Priors
@@ -2137,11 +2137,11 @@ The Bayesian posterior estimations of the RLDDM rely on informative priors obtai
 
 ### Quality control
 
-To ensure the quality of the data, we excluded participants who performed below chance level in the PRL task [e.g., @geisler_increased_2017]. Specifically, two individuals with R-AN were excluded due to convergence problems indicated by a large R-hat convergence diagnostic. Additionally, two other individuals with R-AN did not achieve performance above chance level. As a result, the final sample for subsequent analyses consisted of 117 participants who met the quality control criterion. This sample included 36 individuals with R-AN, 45 healthy controls (HC), and 36 healthy controls at risk of developing eating disorders (RI).
+To ensure the quality of the data, we excluded participants who performed below chance level in the probabilistic reversal learning (PRL) task. Chance level in the PRL task is 50%, so participants who scored below 50% were excluded [e.g., @geisler_increased_2017]. Additionally, we excluded two participants with R-AN who had convergence problems, which are indicated by a large R-hat convergence diagnostic. As a result, the final sample for subsequent analyses consisted of 117 participants who met the quality control criterion. This sample included 36 individuals with R-AN, 45 healthy controls (HC), and 36 healthy controls at risk of developing eating disorders (RI).
 
 ### Models comparison
 
-The study utilized a minimal model as the basis for constructing new models, wherein all parameters were permitted to vary by condition (i.e., disorder-related vs. disorder-unrelated information) and group. This decision was based on the absence of a priori knowledge suggesting that outcome-irrelevant effects were limited to a particular parameter of the RLDDM or that they varied across groups. Markov Chain Monte Carlo (MCMC) sampling was employed to estimate these models, with 2000 traces being sampled following a burn-in period of 500. The Deviance Information Criterion (DIC) was computed for each model. We selected the model with the model with the lowest DIC. The winning model was subsequently better estimated using 15000 traces and a 5000 burn-in [@kruschke_bayesian_2018].
+The study used a minimal model as a starting point for constructing new models. In these new models, all parameters were allowed to vary by condition (i.e., disorder-related vs. disorder-unrelated information) and group. This decision was made because there was no prior knowledge to suggest that the effects of outcome-irrelevant information were limited to a particular parameter of the RLDDM or that they varied across groups. Markov chain Monte Carlo (MCMC) sampling was used to estimate these models. 2000 traces were sampled after a burn-in period of 500. The Deviance Information Criterion (DIC) was calculated for each model. The model with the lowest DIC was selected. The winning model was then re-estimated using 15000 traces and a 5000 burn-in [@kruschke_bayesian_2018].
 
 ### Collinearity check
 
@@ -2417,7 +2417,6 @@ Individuals with eating disorders often have comorbid psychiatric conditions, in
 In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 individuals with R-AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
 
 Importantly, our study revealed that individuals with AN who had comorbid clinical diagnoses (such as depression, anxiety, and obsessive-compulsive disorder) exhibited similar conservative reinforcement learning patterns as those without comorbidities, providing additional evidence for the specificity of the context-dependent learning for R-AN. 
-
 
 
 # References

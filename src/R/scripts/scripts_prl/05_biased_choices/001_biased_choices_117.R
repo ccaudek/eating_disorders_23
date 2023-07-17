@@ -20,15 +20,13 @@ library("see")
 source(here::here("src", "R", "functions", "funs_prl.R"))
 source(here::here("src", "R", "functions", "funs_consecutive_trial_analysis.R"))
 
-
-
 # Read complete raw data, including is_target_img_chosen.
-d1 <- gen_data_for_consecutive_trial_analysis() |>
+d <- readRDS(
+  here::here("data", "processed", "prl", "raw_prl_data", "prl_tot_raw_data.rds")
+  ) |> 
+  dplyr::select(-diag_cat) |> 
   dplyr::rename(
     subj_code = subj_name
-  ) |> 
-  dplyr::select(
-    -diag_cat
   )
 
 # Read list of 117 subjects used in the final analysis, including diag_cat.
@@ -41,10 +39,24 @@ temp <- rio::import(
   select(subj_code, diag_cat) |> 
   distinct()
 
-# Join the two dfs.
 dat <- left_join(temp, d, by = "subj_code")
-length(unique(dat$subj_code))
-# [1] 117
+length(unique(df$subj_code))
+
+
+
+
+
+
+
+d1 <- gen_data_for_consecutive_trial_analysis() |>
+  dplyr::rename(
+    subj_code = subj_name
+  ) |> 
+  dplyr::select(
+    -diag_cat
+  )
+
+
 
 dat |> 
   group_by(diag_cat) |> 
@@ -75,7 +87,7 @@ length(unique(dat$ID))
 # RTs in sec.
 dat <- dat |> 
   mutate(
-    rt = rt1 / 1000
+    rt = rt / 1000
   ) |> 
   dplyr::filter(rt > 0.2 & stimulus_type == "food")
 
@@ -129,7 +141,7 @@ bmod <- brm(
   family = student(),
   control = list(adapt_delta = 0.99),
   prior = priors,
-  backend = "cmdstan",
+  # backend = "cmdstan",
   warmup = 1000,
   iter = 5000,
   cores = parallel::detectCores(),

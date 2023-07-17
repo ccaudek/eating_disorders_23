@@ -27,12 +27,6 @@ get_win_stay_lose_shift <- function(d, index) {
       subj_idx == index
     )
   
-  # get number of block for that subject -- not all participants
-  # completed 9 blocks! -- the block number that is recorded can 
-  # be wrong!
-  nblocks <- nrow(d) / 160 
-  # must be 160!
-  ntrials_byblock <- nrow(d) / nblocks
   # add outcome and choice in the previous trial
   d <- d %>%
     group_by(stim) %>%
@@ -108,31 +102,48 @@ hist(wsls_df$lose_shift)
 
 df <- left_join(wsls_df, diagcat_df, by = "subj_code")
 
-fm <- lmer(
-  lose_shift ~ stim * diag_cat + 
-    (1 | subj_code),
-  df
+df |> 
+  group_by(diag_cat, stim) |> 
+  summarize(
+    win_stay = median(win_stay),
+    lose_shift = median(lose_shift)
+    
+  )
+
+d |> 
+  group_by(diag_cat, stim) |> 
+  summarise(
+    y = mean(response, na.rm = T)
+  )
+
+fm <- glmer(
+  response ~ stim * diag_cat + (stim | subj_code),
+  family = binomial(),
+  d
 )
 
-set_cmdstan_path("/Users/corrado/.cmdstan/cmdstan-2.32.2")
 
+an_df <- df |> 
+  dplyr::filter(diag_cat == "AN")
 
 bf_ws <- bf(
-  win_stay ~ stim * diag_cat + 
-    (1 | subj_code) 
+  win_stay ~ stim + (stim | subj_code),
+  phi ~ stim + (1 | subj_code)
 ) 
 
 m1 <- brm(
   bf_ws,
-  data = df,
-  # family = zero_one_inflated_beta(),
+  data = an_df,
+  family = zero_one_inflated_beta(),
   chains = 4,
   cores = parallel::detectCores(),
-  iter = 3000,
+  iter = 5000,
   warmup = 1000,
-  control = list(adapt_delta = 0.9),
+  control = list(adapt_delta = 0.99),
   init_r = 0.05,
-  seed = 12345,
-  backend = "cmdstanr"
+  seed = 12345
+  #backend = "cmdstanr"
 )
 pp_check(m1)
+summary(m1)
+bayes_R2(m1)
