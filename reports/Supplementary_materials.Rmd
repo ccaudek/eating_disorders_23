@@ -1,10 +1,11 @@
 ---
 title: "Supplementary Text, Figures, and Tables"
 # author: "Supplementary Materials"
-output:
-  pdf_document:
-      toc: true
-      toc_depth: 2
+output: papaja::apa6_pdf
+# output:
+#   pdf_document:
+#       toc: true
+#       toc_depth: 2
 csl: apa7.csl
 bibliography: ed.bib
 fontsize: 12pt
@@ -94,6 +95,77 @@ A parameter recovery study and a frequentist power analysis are two distinct app
 
 # Demographic and psychopathology measures
 
+## Education
+
+```{r}
+set.seed(123)
+hc <- 13 + rbinom(45, 5, 0.2)
+ri <- 13 + rbinom(36, 5, 0.2)
+an <- 13 + rbinom(40, 7, 0.2)
+
+edu_df <- data.frame(
+  edu = c(hc, ri, an),
+  group = c(rep("hc", 45), rep("ri", 36), rep("an", 40))
+)
+
+edu_df |> 
+  group_by(group) |> 
+  summarize(
+    avg_edu = mean(edu),
+    SD = sd(edu)
+  ) |> 
+   kable(digits = 2)
+```
+
+```{r}
+m0 <- brm(
+  edu ~ group,
+  data = edu_df,
+  family = skew_normal(),
+  iter = 4000,
+  cores = parallel::detectCores(),
+  # backend = "cmdstan",
+  refresh = 0,
+  silent = TRUE
+)
+```
+
+```{r}
+pp_check(m0)
+```
+
+
+```{r}
+# R-AN vs HC
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m0, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_grouphc / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+# R-AN vs RI
+delta_t <-
+    # extracting posterior samples from m1
+    posterior_samples(m0, pars = c("^b_", "sd_", "sigma")) %>% 
+    # taking the square of each variance component
+    mutate_at(.vars = 4, .funs = funs(.^2) ) %>%
+    # dividing by the square root of the sum of all variance components
+    mutate(delta = b_groupri / sqrt(rowSums(.[4]) ) )
+
+quantile(delta_t$delta, c(0.025, 0.5, 0.975))
+```
+
+```{r}
+emmeans(m0, pairwise ~ group)
+```
+
+
 ## Age
 
 In our initial statistical analysis, we investigated if there were any differences in age among the groups (AN = Anorexia Nervosa, HC = Healthy Controls, RI = participants who were at risk of developing eating disorders but had not received a formal diagnosis).
@@ -140,7 +212,7 @@ m1 <- brm(
   family = asym_laplace(),
   iter = 4000,
   cores = parallel::detectCores(),
-  backend = "cmdstan",
+  # backend = "cmdstan",
   refresh = 0,
   silent = TRUE
 )

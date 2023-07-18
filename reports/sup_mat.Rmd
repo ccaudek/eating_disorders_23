@@ -1,9 +1,10 @@
 ---
 title: "Supplementary Text, Figures, and Tables"
 # author: "Supplementary Materials"
+# output: papaja::apa6_pdf
 output:
-  # pdf_document:
-  word_document:
+  pdf_document:
+  # word_document:
       toc: true
       toc_depth: 3
       number_sections: true
@@ -16,7 +17,7 @@ keywords          : "keywords"
 wordcount         : "X"
 
 floatsintext      : yes
-linenumbers       : yes
+linenumbers       : no
 draft             : no
 mask              : no
 
@@ -70,13 +71,11 @@ options(width = 100)
 
 ## Participants
 
-The study included 40 individuals diagnosed with Restricting-Type Anorexia Nervosa (R-AN) according to the DSM-5 criteria and 310 healthy volunteers. The participants with R-AN were recruited from three facilities in Italy: the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment, with patients receiving treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. The diagnosis of AN was made by specialized psychiatrists and psychologists through a semi-structured interview based on the DSM-5 criteria, at the start of treatment.
+<!-- The study included 40 individuals diagnosed with Restricting-Type Anorexia Nervosa (R-AN) according to the DSM-5 criteria and 310 healthy volunteers. The participants with R-AN were recruited from three facilities in Italy: the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment, with patients receiving treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. The diagnosis of AN was made by specialized psychiatrists and psychologists through a semi-structured interview based on the DSM-5 criteria, at the start of treatment. -->
 
 To ensure the relevance of our findings to the broader psychiatric population, individuals with R-AN who had comorbid psychiatric conditions were included in the study. The presence of comorbidities was determined by specialized psychiatrists and psychologists using a semi-structured interview based on the Mini International Neuropsychiatric Interview (MINI). Among the 40 individuals with R-AN, comorbidities included anxiety disorder (n=16), obsessive-compulsive disorder (OCD) (n=8), social phobia (n=1), and depressive and anxiety disorders (n=1). Some R-AN patients were also taking medication, including anxiolytic antidepressants (n=10), Selective Serotonin Reuptake Inhibitors (SSRIs) (n=6), benzodiazepines (n=1), and mood stabilizers (lithium) (n=1).
 
-The control group consisted of 310 adolescent or young-adult females recruited through social media or university advertisements. All participants completed the Eating Attitudes Test-26 (EAT-26) screening tool. Females who scored higher than 20 on the EAT-26 and did not report any current treatment for eating disorders were classified as "at-risk" and assigned to the reference/independent (RI) group, resulting in a total of 36 individuals. From the remaining participants who scored lower than 20 on the EAT-26 and did not report any current treatment for eating disorders, a random sample of 45 females was selected and assigned to the healthy control (HC) group. Both the RI and HC groups had participants with a normal Body Mass Index (BMI).
-
-To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
+To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test [@raven2000raven]. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
 
 The study included a predominantly Caucasian sample, with 97.7% of the participants identifying as Caucasian. A smaller proportion of participants identified as Asian-Italian (1.7%) and African-Italian (0.6%). Additionally, all selected participants were right-handed and were unaware of the specific objectives of the study, ensuring a blind study design.
 
@@ -127,6 +126,10 @@ Sixteen individuals with R-AN were diagnosed with a comorbid anxiety disorder, 8
 
 Participants were introduced to the study as a way to evaluate their cognitive functions using a computer-based "game" and additional questionnaires. Their goal in the PRL task was to maximize their earnings, which were shown at the end of each trial block. When participants felt uncertain, they were instructed to rely on their instincts. During the PRL task, feedback was provided in a probabilistic manner. The correct image was rewarded in 70% of the trials, while negative feedback was given in the remaining 30% of the trials. Each block of the task consisted of four epochs, with 40 trials in each epoch where the same image was considered correct. Within each block, there were three rule changes known as reversal phases. Participants were aware that the stimulus-reward contingencies would change, but they were not provided with specific details about when or how these changes would occur. Prior to the actual experiment, participants underwent a training block consisting of 20 trials. The PRL tasks were programmed using the Psychtoolbox extensions in MATLAB (MathWorks) (Brainard, 1997).
 
+## Stimuli
+
+The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS #7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS #7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS #5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS #7010, 7020, 7034, 7056, 7170). (for details, see the SI).
+
 \pagebreak
 
 # Computational Models
@@ -161,7 +164,6 @@ The RLDDM is the most advanced method for analyzing performance in the probabili
 
 The posterior distribution of group and individual parameters of the RLHDDM model were estimated in a hierarchical Bayesian framework using the "HDDMrl" module of the "HDDM" (version 0.9.8) Python package [for a detailed description of the model, see @pedersen2020simultaneous; @wiecki2013hddm].
 
-We used a Bayesian approach in our study because estimating RLDDM models is currently only possible using Markov chain Monte Carlo (MCMC) procedures. Additionally, the Bayesian approach prioritizes estimation over hypothesis testing, which helps to overcome the binary nature of decision-making inherent in null hypothesis significance testing (NHST) [@kruschke_bayesian_2018]. We determined credible effects by examining 95% credible intervals or assessing the proportion of posterior samples (97.5%) indicating the direction of the effect.
 
 ## Priors
 
@@ -200,10 +202,20 @@ m8.find_starting_values()
 m8.sample(15000, burn=5000, dbname="models/ddm8_final.db", db="pickle")
 ```
 
+## Additional figures
+
+
 
 ## Collinearity check
 
-As shown in the following figures, for all three groups the correlation between the parameters is generally low.
+As shown in the following figure, for all three groups the correlation between the parameters is generally low.
+
+```{r collinearity, echo=FALSE, fig.align = "center", out.width="75%", fig.cap = "Joint posterior distribution of RLDMM parameters."}
+knitr::include_graphics(
+  here::here("reports", "img", "pics", "matrix_plot.png")
+)
+```
+
 
 ## Posterior predictive checks
 
@@ -331,9 +343,7 @@ mod_0 <- brm(
 We observed no credible effect of group (HC, RI, R-AN) or a credible interaction between group, previous outcome, and mapping (ELPD difference = -4.5, SE = 2.8). The simpler model used `stay` as the dependent variable (1 if the same response key was chosen in trial $i$ as in trial $i-1$, 0 otherwise), with `mapping` (repeated or flipped image-to-key mapping), `feedback` (reward, punishment), and their interaction as fixed-effects, and `subj_idx` as a random variable. The marginal effects of the `mapping` $\times$ `feedback` interaction ($\beta$ = 0.93, 95% CI [0.81, 1.06]) are shown in the following figure.
 
 ```{r prl-task, fig.align = "center", echo=F}
-knitr::include_graphics(here::here(
-  "reports", "img", "shahar_02.pdf"
-))
+knitr::include_graphics(here::here("reports", "img", "shahar_02.pdf"))
 ```
 
 The figure shows the probability of choosing the same image at trial $n$ + 1, depending on the outcome (rewarded vs. unrewarded) and mapping (flipped vs. same). Results indicate a tendency to repeat image selection after a rewarded trial. Notably, a stronger effect of reward was observed when the image was mapped to the same response key, compared to the alternative key. Error bars represent 95% credibility intervals.

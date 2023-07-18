@@ -1,5 +1,5 @@
 ---
-title             : "Contextual influence of reinforcement learning performance in Anorexia Nervosa"
+title             : "Impact of Contextual Learning on Reinforcement Learning Performance in Anorexia Nervosa"
 shorttitle        : "CONTEXTUAL LEARNING IN AN"
 
 author: 
@@ -30,10 +30,9 @@ authornote: |
   Enter author note here.
 
 abstract: |
-  **Objective:** This study utilized a within-subject design to examine whether individuals with restrictive anorexia nervosa (R-AN; *n* = 40) perform similarly to healthy controls (HCs; *n* = 45) and healthy controls at risk of eating disorders (RI; *n* = 36) in a reinforcement learning (RL) tasks. Specifically, we aimed to determine if RL performance is comparable between groups for disorder-unrelated choices, but significantly impaired for disorder-related choices. **Method:** RL performance was assessed using a Probabilistic Reversal Learning (PRL) task, where participants were asked to perform disorder-related choices or disorder-unrelated choices.  **Results:** R-AN individuals demonstrated lower learning rates for disorder-related decisions, while their performance on neutral decisions was comparable to participants with Bulimia Nervosa, Healthy Controls (HCs), and HCs at risk of eating disorders. Additionally, only AN patients exhibited reduced learning rates for outcome-irrelevant food-related decisions in reward-based learning, as opposed to food-unrelated decisions. **Discussion:** Impaired RL task performance in individuals with AN may be attributed to external factors rather than compromised learning mechanisms. These findings indicate that AN may significantly impact the cognitive processing of food-related information, even when AN patients do not show learning rate disadvantages compared to HCs in decision-making involving food-unrelated information. This study provides valuable insights into the reinforcement learning processes of individuals with AN and emphasizes the need to consider the influence of food-related information on cognitive functioning in this patient population. The findings have potential implications for the development of interventions targeting decision- making processes in individuals with AN
-  
+  **Objective:** This study compared individuals with Restrictive Anorexia Nervosa (R-AN; n = 40) to Healthy Controls (HCs; n = 45) and healthy controls at RIsk of eating disorders (RI; n = 36) in a Probabilistic Reversal Learning (PRL) task. The aim was to investigate whether R-AN individuals perform similarly to HCs and RIs in neutral contexts but show significant impairments in food-related contexts. **Method:** Participants completed a PRL task, making choices related to their disorder or unrelated to it. **Results:** R-AN individuals showed lower learning rates for disorder-related decisions, but their performance on neutral decisions was similar to the HC and RI groups. Additionally, only the R-AN patients exhibited reduced learning rates for food-related decisions compared to food-unrelated decisions. **Discussion:** These findings suggest that contextual cues, like food images, negatively impact Reinforcement Learning (RL) processes in individuals with R-AN. This raises questions about whether the impaired RL performance should be solely attributed to compromised learning mechanisms, especially when RL abilities appear intact in neutral contexts. The study's insights may have implications for developing interventions that target decision-making processes in individuals with R-AN.
 
-keywords          : "keywords"
+keywords          : "anorexia nervosa, reinforcement learning, contextual learning, probabilistic reversal learning"
 wordcount         : "X"
 
 bibliography      : "ed.bib"
@@ -48,8 +47,8 @@ tablelist         : no
 footnotelist      : no
 
 classoption       : "man"
-output            : papaja::apa6_pdf
-# output            : papaja::apa6_docx
+# output            : papaja::apa6_pdf
+output            : papaja::apa6_docx
 header-includes:
    - \usepackage{amsmath, xcolor, hyperref, svg, url, array, tabularx, booktabs, caption, float, resizegather, verbatim,threeparttable, caption, soul, pdflscape, longtable,  setspace, adjustbox, threeparttable, booktabs, longtable, makecell, rotating, afterpage, tabularx}
    - \newcommand{\comm}[1]{\ignorespaces}
@@ -70,7 +69,7 @@ knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 
 Anorexia Nervosa (AN) is one of the most common eating disorders characterized by distorted body perception and pathological weight loss, particularly in its restricting type (R-AN) [@dsm5tr]. Lifetime prevalence for AN has been reported at 1.4% for women and 0.2% for men [@galmiche2019prevalence; @smink2013epidemiology], with a mortality rate that can be as high as 5-20% [@qian2022update]. Treating AN is extremely challenging [@atwood2020systematic; @linardon2017empirical], highlighting the importance of gaining a deeper understanding of its underlying mechanisms [@chang2021early].
 
-Executive functions have gained significant attention in the research on understanding the mechanisms underlying Anorexia Nervosa (AN). Impairments in executive processes, such as cognitive inflexibility, decision-making difficulties, and inhibitory control problems, have been identified as potential risk and perpetuating factors in AN [@wu2014set; @guillaume2015impaired; @bartholdy2016systematic]. Within this domain, Reinforcement Learning (RL) in the context of associative learning has received considerable interest. In fact, the presence of persistent maladaptive eating behaviors, despite experiencing negative consequences, along with evidence suggesting changes in  responsiveness to rewards and punishments, has led researchers to propose that there may be abnormal reward processing and learning in AN [@schaefer2021reward]. Although there is substantial evidence supporting the existence of anomalies in reward sensitivity, our understanding of potential abnormalities specifically related to the learning processes in AN is currently limited.
+Executive functions have gained significant attention in the research on understanding the mechanisms underlying AN. Impairments in executive processes, such as cognitive inflexibility, decision-making difficulties, and inhibitory control problems, have been identified as potential risk and perpetuating factors in AN [@wu2014set; @guillaume2015impaired; @bartholdy2016systematic]. In particular, cognitive inflexibility in AN refers to difficulties adapting thoughts and actions to new information. This rigidity can lead to repetitive behaviors. On the other hand, reinforcement learning is the brain's way of optimizing decision-making based on action outcomes, where positive outcomes encourage repetition and negative outcomes discourage it. In AN, cognitive inflexibility can hinder updating of action-outcome associations, affecting adaptive behavior learning and leading to impaired reinforcement learning processes. This may contribute to difficulties recognizing the negative consequences of restrictive eating behaviors, perpetuating the disorder. While studies have explored reward processing abnormalities, our understanding of learning-related anomalies in AN remains limited [@schaefer2021reward].
 
 In relation to dysfunctions reward responsiveness among individuals with AN, research has revealed that the intense levels of dietary restriction and physical activity typically associated with AN can trigger the activation of reward pathways in the brain [@keating2012reward; @keating2010theoretical; @selby2020positive]. Additionally, individuals with AN may exhibit diminished reward responses specifically towards food-related stimuli [@wierenga2014extremes]. In a broader sense, research has shown that AN is associated with reduced subjective reward sensitivity and decreased neural response to rewarding stimuli. Moreover, individuals with AN may experience disruptions in processing aversive stimuli, leading to heightened harm avoidance, reduced tolerance for uncertainty, increased anxiety, and heightened sensitivity to punishment [@fladung2013role; @jappe2011heightened; @keating2012reward; @o2015reward]. These factors collectively contribute to an altered response to negative feedback and a propensity to actively avoid aversive outcomes [@jonker2022punishment; @matton2013punishment]. Neuroimaging studies have further supported these findings by revealing neural dysfunctions in individuals with AN regarding their response to loss and aversive taste stimuli [@bischoff2013altered; @wagner2007altered; @monteleone2017altered]. 
 
@@ -86,40 +85,38 @@ To examine the proposed hypothesis, we conducted a study using a modified versio
 
 Based on the responses to food stimuli often seen in individuals with AN, which typically exhibit reduced reward, increased aversion, and inhibition [@haynos2020moving], we hypothesized that there would be a more conservative learning rate for disorder-related choices compared to disorder-unrelated choices within a PRL task. Additionally, we anticipated a lower learning rate for disorder-related choices in individuals with AN compared to HCs. Conversely, we expected no learning abnormalities in individuals with AN for choices unrelated to the disorder.
 
-
 # Methods
 
 The study, which adhered to the Declaration of Helsinki, was approved by the University of Florence's Ethical Committee (Prot. n. 0178082). All eligible participants provided informed consent and willingly agreed to participate in the study.
 
 ## Participants
 
-We tested the hypothesized learning asymmetry in PRL performance across three groups: individuals diagnosed with restricting-type anorexia nervosa (R-AN), healthy controls (HCs), and individuals at risk of developing eating disorders (RIs). The demographic and clinical characteristics of the sample are shown in Table 1. Participant selection, inclusion criteria, and sample characteristics are further described in the Supplementary Information (SI).
+The study included 40 individuals diagnosed with Restricting-Type Anorexia Nervosa (R-AN) according to the DSM-5 criteria and 45 healthy volunteers (Table 2). The participants with R-AN were recruited from three facilities in Italy: the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment, with patients receiving treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. The diagnosis of AN was made by specialized psychiatrists and psychologists through a semi-structured interview based on the DSM-5 criteria, at the start of treatment.
+
+The study recruited additional 310 female adolescents or young adults through social media or university advertisements, and they completed the Eating Attitudes Test-26 (EAT-26) screening tool. Those scoring above 20 on the EAT-26 and not receiving current treatment for eating disorders were classified as "at-risk" [RI; @dottiandlazzari1998], resulting in 36 individuals. From the remaining participants scoring below 20 on the EAT-26 and not receiving current treatment for eating disorders, 45 females were randomly selected and assigned to the healthy control (HC) group. Both the RI and HC groups had participants with a normal Body Mass Index (BMI). More details about eligibility criteria and sample characteristics can be found in the Supplementary Information (SI).
 
 ## Procedure
 
-In the initial session, participants underwent a clinical interview to determine their eligibility for the study. Those who met the criteria proceeded to anthropometric measurements and completed a battery of psychometric scales. In a subsequent session, participants completed the PRL task. Participants were told they would be playing a simple computer game with the objective of accumulating as many "virtual euro" as possible. During the PRL task, they were presented with two stimuli simultaneously on a screen and instructed to select one within 2.5 seconds by pressing a key. A euro coin image was displayed as a reward for correct responses, while a strike-through image of a euro coin served as a punishment for incorrect responses.
+In the initial session, participants underwent a clinical interview to determine their eligibility for the study. Those who met the criteria proceeded to anthropometric measurements and completed a battery of psychometric scales: the Eating Attitude Test (EAT-26; @Garner1991), the Body Shape Questionnaire-14 [BSQ-14; @DowsonandHenderson2001], the Social Interaction Anxiety Scale [SIAS; @MattickandClarke1998], the Depression Anxiety Stress Scale-21 [DASS-21; @Lovibond1995], the Rosenberg Self-Esteem Scale [RSES; @Rosenberg1965], and the Multidimensional Perfectionism Scale [MPS-F; @frost1990dimensions]. In a subsequent session, participants completed the PRL task. Participants were told they would be playing a simple computer game with the objective of accumulating as many "virtual euro" as possible (see Figure 1). 
 
-The PRL task consisted of two blocks of 160 trials each (see Figure 1). One block included pairs of food-related and food-unrelated images, while the other block only included food-unrelated images. The stimuli shown in each trial were randomly selected from sets of food-related and food-unrelated images.
+(ref:prl-fig-caption) **Top.** During the PRL task, participants were presented with two images and had to choose the "correct" image based on trial-and-error feedback within 2.5 seconds. A euro coin image was displayed as a reward for correct responses, while a strike-through image of a euro coin served as a punishment for incorrect responses (left or right button press). The PRL task consisted of two blocks of 160 trials each. One block included pairs of food-related and food-unrelated images, while the other block only included food-unrelated images. The figure illustrates a single trial of the PRL task. **Bottom.** The trial-by-trial proportion of choosing the image with the highest probability of reward in the first epoch is shown for all participants. Initially, when participants have limited knowledge of the contingencies, the proportion of positive rewards is at chance level. However, as they engage in trial-and-error learning, their action selection improves, leading to enhanced performance and increased rewards. Following a context switch, there is an abrupt decline in performance, which is then followed by a gradual recovery that eventually levels off. It is worth noting that in this particular experiment, "correct choices" were rewarded positively only 70% of the time, thus establishing an upper limit of 0.7 on the plateau. Each session comprised 160 trials and included three context switches.
 
-(ref:prl-fig-caption) **Top.** The figure illustrates a single trial of the probabilistic reversal-learning task. Subjects were presented with two images and had to choose the "correct" image based on trial-and-error feedback. Feedback was provided in the form of an image of a euro coin or a crossed euro coin, depending on their choice (left or right button press). **Bottom.** The trial-by-trial proportion of choosing the image with the highest probability of reward in the first epoch is shown for all participants. Initially, when participants have limited knowledge of the contingencies, the proportion of positive rewards is at chance level. However, as they engage in trial-and-error learning, their action selection improves, leading to enhanced performance and increased rewards. Following a context switch, there is an abrupt decline in performance, which is then followed by a gradual recovery that eventually levels off. It is worth noting that in this particular experiment, "correct choices" were rewarded positively only 70% of the time, thus establishing an upper limit of 0.7 on the plateau. Each session comprised 160 trials and included three context switches.
-
-```{r prl-task, fig.align = "center", fig.cap = "(ref:prl-fig-caption)"}
+```{r prl-task, fig.align = "center", out.width="85%", fig.cap = "(ref:prl-fig-caption)"}
 knitr::include_graphics(here::here(
-  "reports", "img", "pics", "prl_task.png"
+  "reports", "img", "pics", "prl_task.pdf"
 ))
 ```
 
-
-
-<!-- FIGURE CAPTION. -->
-<!-- Top. The figure illustrates a single trial of the probabilistic reversal-learning task. Subjects were presented with two images and had to choose the "correct" image based on trial-and-error feedback. Feedback was provided in the form of an image of a euro coin or a crossed euro coin, depending on their choice (left or right button press). At the bottom of the figure, the trial-by-trial proportion of choosing the image with the highest probability of reward in the first epoch is shown for all participants. Initially, when participants have limited knowledge of the contingencies, the proportion of positive rewards is at chance level. However, as they engage in trial-and-error learning, their action selection improves, leading to enhanced performance and increased rewards. Following a context switch, there is an abrupt decline in performance, which is then followed by a gradual recovery that eventually levels off. It is worth noting that in this particular experiment, "correct choices" were rewarded positively only 70% of the time, thus establishing an upper limit of 0.7 on the plateau. Each session comprised 160 trials and included three context switches. -->
-
-All images used in the study were obtained from the International Affective Picture System (IAPS) database (Lang et al., 2005). The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS #7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS #7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS #5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS #7010, 7020, 7034, 7056, 7170). (for details, see the SI).
+The stimuli shown in each trial were randomly selected from sets of food-related and food-unrelated images. All images used in the study were obtained from the International Affective Picture System (IAPS) database (Lang et al., 2005) -- for details, see the SI.
 
 
 ## Data analysis
 
-To analyze the temporal dynamics of the two-choice decision-making in the PRL task, we employed a hierarchical reinforcement learning drift diffusion model (RLDDM), as described in @pedersen2017drift and @pedersen2020simultaneous. Cognitive modeling analysis allows us to deconstruct decision-making task performance into its component processes, which can help us identify deviations in the underlying mechanisms that may not be evident in the overall task outcome. The RLDDM consists of two key components. The first component describes how reward feedback is used to update value expectations, using a delta learning rule [@rescorla1972theory]. The second component describes how an agent uses these expectations to arrive at a decision, using a drift-diffusion model [@ratcliff2008diffusion]. The DDM assumes that evidence for each option accumulates stochastically on each trial, until a decision is made (for details, see SI). 
+To analyze the temporal dynamics of the two-choice decision-making in the PRL task, we employed a hierarchical reinforcement learning drift diffusion model (RLDDM), as described in @pedersen2017drift and @pedersen2020simultaneous. Cognitive modeling analysis allows us to deconstruct decision-making task performance into its component processes, which can help us identify deviations in the underlying mechanisms that may not be evident in the overall task outcome. 
+
+We used a Bayesian approach in our study because estimating RLDDM models is currently only possible using Markov chain Monte Carlo (MCMC) procedures. Additionally, the Bayesian approach prioritizes estimation over hypothesis testing, which helps to overcome the binary nature of decision-making inherent in null hypothesis significance testing (NHST) [@kruschke_bayesian_2018]. We determined credible effects by examining 95% credible intervals or assessing the proportion of posterior samples (97.5%) indicating the direction of the effect.
+
+The RLDDM consists of two key components. The first component describes how reward feedback is used to update value expectations, using a delta learning rule [@rescorla1972theory]. The second component describes how an agent uses these expectations to arrive at a decision, using a drift-diffusion model [@ratcliff2008diffusion]. The DDM assumes that evidence for each option accumulates stochastically on each trial, until a decision is made (for details, see SI). 
 
 The RLDDM has six basic parameters:
 
@@ -163,9 +160,9 @@ To investigate the impact of disorder-related versus disorder-unrelated informat
 
 : Posterior Parameter Estimates of DDMRL Model M7 by Group (R-AN, HC, RI) and Context of PRL Choice (disorder-related vs. disorder-unrelated information). The learning rates ($\alpha$) are shown on a logit scale. The probability ($p$) describes the Bayesian test that the posterior estimate of the parameter in the disorder-related context is greater than the posterior estimate of the parameter in the disorder-unrelated context. Standard deviations are provided in parentheses.
 
-Let's first consider the evidence of context-dependent learning from within-group comparisons. We found that individuals in the R-AN group had a reduced learning rate in response to positive prediction errors (PEs) for disorder-related choices, compared to disorder-unrelated choices (Cohen's $d$ = 1.206, $p$ = 0.0098). However, no credible difference was found in the learning rate between disorder-related and disorder-unrelated choices in the HC ($p$ = 0.5544) or RI ($p$ = 0.2247) groups. We found no credible difference in the learning rate from negative prediction errors between disorder-related and disorder-unrelated choices for any of the R-AN ($p$ = 0.2349), HC ($p$ = 0.6993), and RI ($p$ = 0.5101) groups. Moreover, we found that both the R-AN (Cohen's $d$ = 0.802, $p$ = 0.0013) and HC (Cohen's $d$ = 0.474, $p$ = 0.0256) groups showed a higher decision threshold for disorder-related choices compared to disorder-unrelated choices. 
+Let's first consider the evidence of context-dependent learning from within-group comparisons. We found that individuals in the R-AN group had a reduced learning rate from rewards for disorder-related choices, compared to disorder-unrelated choices (Cohen's $d$ = -1.206, $p$ = 0.0098). However, no credible difference was found in the learning rate between disorder-related and disorder-unrelated choices in the HC ($p$ = 0.5544) or RI ($p$ = 0.2247) groups. We found no credible difference in the learning rate from punishments between disorder-related and disorder-unrelated choices for any of the R-AN ($p$ = 0.2349), HC ($p$ = 0.6993), and RI ($p$ = 0.5101) groups. Moreover, we found that individuals with R-AN showed a higher decision threshold for disorder-related choices compared to disorder-unrelated choices (Cohen's $d$ = 0.802, $p$ = 0.0013).
 
-Further evidence of context-dependent learning emerges from between-groups comparisons. When making disorder-related choices, individuals with R-AN displayed a decreased learning rate following positive prediction errors (PEs) compared to both HC and RI. Specifically, the learning rate after positive PEs was lower for R-AN compared to HC, $p$ = 0.0009, Cohen's $d$ = 1.498. Similarly, R-AN exhibited a lower learning rate after positive PEs compared to RI ($p$ = 0.0085, Cohen's $d$ = 1.209). In contrast, no credible difference in the learning rate after positive PEs was found between R-AN and HC ($p$ = 0.4325), as well as between R-AN and RI ($p$ = 0.3232), for choices unrelated to disorder information. Concerning the learning rate after negative PEs, we found that R-AN showed a lower learning rate  compared to HC, but only for disorder-related choices: ($p$ = 0.0274, Cohen's $d$ = 1.144). Individuals with R-AN showed a higher decision threshold for disorder-related choices compared to both HC (Cohen's $d$ = 0.622, $p$ = 0.0068) and RI (Cohen's $d$ = 0.454, $p$ = 0.0118) participants. No credible group differences were found for disorder-unrelated choices. Additionally, we observed that both HC (Cohen's $d$ = 0.520, $p$ = 0.0344) and RI (Cohen's $d$ = 0.529, $p$ = 0.0392) participants exhibited a faster accumulation of evidence and more confident decision-making, as indicated by a higher average drift rate parameter, compared to individuals with R-AN. This difference was only evident for disorder-unrelated choices. Finally, no credible differences were found, for both within-group and between-group comparisons, regarding the non-decision time parameter ($t$).
+Further evidence of context-dependent learning emerges from between-groups comparisons. When making disorder-related choices, individuals with R-AN displayed a decreased learning rate from rewards compared to both HC ($p$ = 0.0009, Cohen's $d$ = 1.498) and RI ($p$ = 0.0085, Cohen's $d$ = 1.209). In contrast, no credible difference in the learning rate from rewards was found between R-AN and HC ($p$ = 0.4325), as well as between R-AN and RI ($p$ = 0.3232), for choices unrelated to disorder information. Individuals with R-AN showed a higher decision threshold for disorder-related choices compared to both HC (Cohen's $d$ = -0.622, $p$ = 0.0068) and RI (Cohen's $d$ = -0.454, $p$ = 0.0118) participants, whereas no credible group differences were found for disorder-unrelated choices. Finally, no credible differences were found, for both within-group and between-group comparisons, regarding the drift rate ($\nu$) and the non-decision time parameters ($t$).
 
 ## Preferential choices
 
@@ -178,15 +175,11 @@ To examine the potential impact of comorbidity and medication status on the pres
 
 ## Discussion
 
-Our findings reveal a context-dependent learning asymmetry in individuals with R-AN specifically in the positive learning rate. This within-group asymmetry is observed when comparing the performance in the PRL task for disorder-related choices versus disorder-unrelated choices. Importantly, no similar difference is found in the two control groups.
+Our study reveal a context-dependent learning asymmetry in individuals with R-AN, specifically in the positive learning rate ($\alpha^+$). This asymmetry is evident when comparing their performance in the PRL task for disorder-related choices versus disorder-unrelated choices. Notably, this difference is not observed in the two control groups.
 
-The presence of context-dependent learning asymmetry is also supported by between-group comparisons. Individuals with R-AN exhibited lower learning rates for both positive and negative prediction errors compared to the HC group, and specifically for positive prediction errors compared to the RI group, but these differences were observed only for disorder-related choices. In contrast, no credible differences in learning rates were found among the three groups for disorder-unrelated choices. 
+The presence of context-dependent learning asymmetry is also supported by between-group comparisons. Individuals with R-AN exhibited lower learning rates ($\alpha^+$) compared to the HC and RI group. However, these differences were observed only for disorder-related choices. In contrast, no credible differences in learning rates were found among the three groups for choices unrelated to the disorder. 
 
-Support for context-dependent learning in R-AN is also provided by the DDM parameters of the hDDMrl model. Specifically, we observed that the R-AN group exhibited a higher decision threshold (parameter "a" in the hDDMrl model) compared to the HC and RI groups, but this difference was only evident in the context of disorder-related choices. This suggests that individuals with R-AN displayed a more cautious or conservative decision-making behavior specifically in relation to disorder-related choices [see also @caudek2021susceptibility; @schiff2021expectancy]. 
-
-Further support of context-related learning in R-AN comes from the result which indicate that both healthy control (HC) and at-risk (RI) participants exhibited a faster accumulation of evidence and displayed more confident decision-making, as reflected by a higher average drift rate parameter, compared to individuals with restrictive anorexia nervosa (R-AN). However, this difference was specifically observed for disorder-unrelated choices. It is noteworthy that individuals with R-AN displayed slower evidence accumulation and less confident decision-making specifically in disorder-unrelated contexts, whereas this group difference was not observed for disorder-related choices. This finding further supports the notion of context-dependent learning in individuals with R-AN, particularly in the context of food-related information.
-
-Further evidence of context-related learning in R-AN comes from the analysis of the drift rate parameter. Individuals with R-AN exhibited slower evidence accumulation and less confident decision-making compared to the control groups, specifically in the context of disorder-unrelated choices. Conversely, no credible group differences were observed for food-related choices. These results suggest that individuals with R-AN may allocate greater cognitive resources to process salient information in the disorder-related context, which leads to similar evidence accumulation rates in decision-making compared to the control groups. In contrast, they exhibit a slower evidence accumulation rate when faced with less salient disorder-unrelated choices.
+Support for context-dependent learning in R-AN is also provided by the DDM parameters of the RLDDM model. Specifically, we observed that the R-AN group exhibited a higher decision threshold (parameter "a" in the RLDDM model) compared to the HC and RI groups, but this difference was only evident in the context of disorder-related choices. Additionally, individuals with R-AN exhibited a higher decision threshold for disorder-related choices compared to disorder-unrelated choices, which was not seen in the HC and RI groups. Overall, these results suggest that individuals with R-AN tended to display a more cautious or conservative decision-making behavior in relation to choices related to the disorder [see also @caudek2021susceptibility; @schiff2021expectancy]. We did not find any credible contextual effects or group differences for the parameters $\nu$ and $t$.
 
 The analysis of preferential choices supports the conclusion that the learning performance asymmetry observed in individuals with R-AN is not due to a preferential selection of the disorder-unrelated image during the learning task. Additionally, our analysis examining the relationship between the model's parameters and the presence of comorbidities indicates that the learning performance asymmetry in individuals with R-AN cannot be attributed to comorbid conditions.
 
@@ -216,10 +209,11 @@ Previous studies have demonstrated that reward and punishment processing in indi
 
 <!-- Two-steps task -->
 
-Other recent studies have focused on investigating context-specific learning in eating disorders. One task specifically designed for this purpose is the two-step Markov decision task, which distinguishes between automatic or habitual (model-free) learning and controlled or goal-directed (model-based) learning. For instance, studies conducted by @foerde2021deficient and @onysk2022effect employed similar experiments using the two-step task paradigm. @foerde2021deficient compared a monetary two-step task and a food-related two-step task, while @onysk2022effect utilized stimuli unrelated to food or body images (i.e., pirate ships and treasure chests) with rewards associated with body image dissatisfaction. The results of these studies consistently demonstrated that individuals with AN tend to exhibit a stronger inclination towards habitual control over goal-directed control across different domains compared to healthy controls. However, no significant differences were observed in learning rates as a function of context, nor between AN patients and healthy controls, according to these findings. In contrast, the present study reveals that, in individuals with R-AN, the learning process *per se* can be influenced by contextual (disorder-related) information, even when such information is not directly relevant to the task outcome.
+Other recent studies have focused on investigating context-specific learning in eating disorders. One task specifically designed for this purpose is the two-step Markov decision task, which distinguishes between automatic or habitual (model-free) learning and controlled or goal-directed (model-based) learning. For instance, studies conducted by @foerde2021deficient and @onysk2022effect employed similar experiments using the two-step task paradigm. @foerde2021deficient compared a monetary two-step task and a food-related two-step task, while @onysk2022effect utilized stimuli unrelated to food or body images (i.e., pirate ships and treasure chests) with rewards associated with body image dissatisfaction. The results of these studies consistently demonstrated that individuals with AN tend to exhibit a stronger inclination towards habitual control over goal-directed control across different domains compared to healthy controls. However, these studies did not identify significant differences in learning rates based on context or between AN patients and healthy controls. In contrast, the present study reveals that, in individuals with R-AN, the learning process *per se* (i.e., the learning rates) can be influenced by contextual (disorder-related) information, even when contextual information is not directly relevant to the task outcome.
 
 <!-- Positive vs negative PEs -->
 
+The finding that individuals with R-AN demonstrated a conservative learning rate specifically for rewards in response to disorder-related context, but not for punishments, supports a neurobiological model suggesting that AN symptoms are maintained by diminished responses to rewarding stimuli and exaggerated responses to aversive stimuli, potentially due to an overreliance on cognitive control brain circuitry [@wierenga2014extremes]. A study by @bernardoni_altered_2018, which used a PRL task with disorder-unrelated stimuli, revealed increased learning rates specifically after punishments in AN. This study suggested that AN individuals, when faced with negative feedback, tend to critically reassess their beliefs more quickly than healthy controls (HCs), leading them to base decisions on more recent experiences. Such inclination may be linked to pre-existing harm-avoidant traits in AN patients, characterized by a reduced tolerance for negative outcomes. Considering these factors, we speculate that the lack of contextual effect on negative learning rates in our study may arise from a trade-off between the conservative learning induced by disorder-related cues and the increased learning rate observed after punishment.
 
 <!-- CRT -->
 
@@ -237,3 +231,96 @@ There are few important limitations and questions for future research. 1) One as
 
 ::: {#refs custom-style="Bibliography"}
 :::
+
+
+\newpage
+
+
+\begin{landscape}
+   
+        \setlength{\LTleft}{0pt}
+        \setlength{\LTright}{0pt}
+        \setlength\LTcapwidth{\linewidth}
+        \setlength\tabcolsep{0pt}
+        \renewcommand{\arraystretch}{0.3}
+        \begin{longtable}{@{\extracolsep{\fill}} cc cc cc cc c}
+        \caption{Summary of Sample's Demographic and Clinical Characteristics.
+        \label{annual_335}   }\\
+            \toprule
+            \makecell{ \\}
+            &   \makecell{R-AN (n = 40) \\ Mean (SD)}  %Spectrum ID.   &
+            &   \makecell{HC (n = 45) \\ Mean (SD)}
+            &   \makecell{RI (n = 36) \\ Mean (SD)}
+            &   \makecell{AN - HC \\ PE (95\% CI)}
+            &   \makecell{AN - RI \\ PE (95\% CI)}
+            &   \makecell{AN - HC \\ Cohen’s d}
+            &   \makecell{AN - RI \\ Cohen’s d} \\
+            \midrule
+            \endfirsthead        
+            \toprule
+            \makecell{ $\lambda_{o}$ } (\AA \space) / Line
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (min)}  %Spectrum ID.   &
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (max)}
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (avg)}
+            & EW (\AA \space)
+            &   \makecell{R$_{max}$    $\pm\ \Delta$R$_{max}$ }
+            &   \makecell{F$_{var}$   $\pm\ \Delta$F$_{var}$ }
+            &   \makecell{$\Delta$T \\ (days)}
+            &  N         \\
+            \midrule
+            \endhead  
+            \midrule    
+            \multicolumn{9}{r}{\small\textit{Continued on the next page}}
+            \endfoot
+            \bottomrule
+            \endlastfoot  
+    &               &               &                   &   \textbf{}               &               &           \\      
+   
+    Age (years)    &   21.11 (4.33)   &   19.49 (2.32)    &   21.31 (4.82)   &   -0.00 (-0.22, 0.18)   &  0.01 (-0.21, 0.25)   &   0.09  &   -0.18 \\  
+   
+    Education (years)    &   14.53 (1.11)   &   14.11 (0.98)   &   13.89 (0.78)  &   0.08 (-0.14, 0.33)   &   0.13 (-0.11, 0.41)    &   -0.08    &   -0.13  \\  
+   
+    BMI ($kg/m^2$)    &   17.79 (2.85)   &   21.78 (3.53)   &   21.64 (4.11)   &   -2.74 (-3.67, -1.79)   &   -3.22 (-4.32, -2.07)    &   2.67    &   3.15  \\  \\  
+                                                                                                     
+    &               &               &                   &   \textbf{}               &               &           \\ \hline
+   
+     \\  
+                                                                                                     
+    &               &               &                   &   \textbf{}               &               &          \\      
+                                                                                                   
+   
+    EAT-26 Total score   &   35.89 (19.46)   &   5.09 (5.10)   &   25.86 (12.44)   &  1.76 (1.32, 2.20)  &   0.18 (-0.25, 0.62)  &  -1.84    &   -0.18 \\  
+   
+    EAT-26 Dieting    &   19.11 (11.24)  &  3.27 (3.96)   &  16.06 (8.00)   &   53.96 (32.78, 80.9)   &   4.38 (-2.46, 12.10)   &   -4.54  &   -0.36 \\  
+   
+    EAT-26 Bulimia  &   7.17 (3.95 )    &  0.76 (1.48)  &   5.78 (3.86)   &   1.36 (0.99, 1.72)  &   0.11 (-0.17, 0.41) &   -2.33  &   -0.18 \\  
+   
+    EAT-26 Oral control   &   9.61 (6.23)    &  1.07 (1.67)   &  4.03 (4.05) &   1.53 (1.12, 1.96)   &    0.81 (0.42, 1.20)    &   -1.95   &   -1.03 \\  
+   
+    BSQ-14 Total score    &   139.78 (35.26)    &   97.47 (32.37)    &   147.94 (37.13)  &    17.50 (11.30, 23.91)   &    -3.40 (-10.10, 3.15)  &  -1.21 &   0.24 \\  
+   
+    RSES Total score    &   22.69 (5.29)  &   28.33 (5.76)   &   22.53 (5.76)    &     -5.601 (-8.12, -3.15)  &   0.192 (-2.31, 2.90)  &  -1.22  &  0.23 \\  
+                                                                                                                   
+    DASS-21 Stress    &   12.86 (4.67)  &   9.13 (3.55)  &   12.17 (3.74)   &   3.73 (1.89, 5.38)  &   0.69 (-1.12, 2.59)  &   -0.94   &   -0.18   \\  
+                                                                                                               
+    DASS-21 Depression    &   10.61 (5.49)  &   6.82 (4.33)   &   11.22 (4.99)   &  3.78 (1.76, 6.14)  &  -0.62 (-2.91, 1.77)   &   -0.77    &  0.12 \\  
+                                                                                       
+    DASS-21 Anxiety    &  8.25 (4.51)  &   5.76 (4.26)    &  7.56 (4.47)  &   2.48 (0.50, 4.33)   &   0.70 (-1.39, 2.64) &   -0.56   &   -0.16   \\  
+                                                                                                               
+    SIAS Total score   &   37.31 (15.45)   &   27.69 (13.01)   &  39.03 (14.87)    &   9.63 (3.12, 15.84)   &   -1.68 (-8.28, 5.07)   &  -0.66    &   0.12    \\  
+                                                                                                                   
+    MPS Cmd    &   45.47 (8.21)   &   40.02 (7.24) &   49.25 (8.17) &   5.46 (2.05, 9.02)  &    -3.73 (-7.47, -0.15)  &  -0.69   &   0.48   \\  
+                                                                                                                   
+    MPS Ps   &  25.33 (5.74)   &   22.00 (4.86)   &   25.67 (6.33)   &   3.33 (0.89, 5.86)      &  -0.32 (-3.07, 2.19)  &   -0.60  &   0.06  \\  
+                                                                                                                   
+    MPS Pepc  &   20.78 (6.64) &   21.02 (5.84) &  25.22 (7.92)  &   -0.63 (-3.49, 2.42)    &   -3.88 (-7.09, -0.90)  &   0.09    &   0.57  \\
+                                                                                                                   
+    MPS Or   &   23.94 (5.11)   &  23.07 (5.16)  &   22.17  (5.55)  &   0.84 (-1.49, 3.17)   &   1.77 (-0.66, 4.26)
+    &   -0.17    &   -0.34   \\  
+                                                                                                     
+    &               &               &                   &   \textbf{}               &               &        \\ \hline\hline
+   
+\end{longtable}
+
+\end{landscape}
+
