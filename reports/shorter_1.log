@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.11)  18 JUL 2023 15:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.20)  20 JUL 2023 11:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -373,7 +373,7 @@ Package: footnote 1997/01/28 1.13 Save footnotes around boxes
 \csllabelwidth=\skip86
 \cslentryspacingunit=\skip87
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/babel/babel.sty
-Package: babel 2023/07/09 v3.91 The Babel package
+Package: babel 2023/07/15 v3.92 The Babel package
 \babel@savecnt=\count298
 \U@D=\dimen188
 \l@unhyphenated=\language4
@@ -381,9 +381,9 @@ Package: babel 2023/07/09 v3.91 The Babel package
 \bbl@readstream=\read2
 \bbl@dirlevel=\count299
 Package babel Info: You haven't specified a language as a class or package
-(babel)             option. I'll load 'nil'. Reported on input line 4274.
+(babel)             option. I'll load 'nil'. Reported on input line 4285.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/generic/babel/nil.ldf
-Language: nil 2023/07/09 v3.91 Nil language
+Language: nil 2023/07/15 v3.92 Nil language
 \l@nil=\language5
 ))
 \everypar=\toks32
@@ -914,12 +914,23 @@ LaTeX Warning: Float too large for page by 27.19743pt on input line 270.
 LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 288.
 (/Users/corrado/Library/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [10{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24]
-Overfull \hbox (650.43001pt too wide) detected at line 572
+) [10{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/Users/corrado/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}] [11] [12]
+<img/pics/alpha_pos_param.pdf, id=113, 845.04686pt x 597.50786pt>
+File: img/pics/alpha_pos_param.pdf Graphic file (type pdf)
+<use img/pics/alpha_pos_param.pdf>
+Package pdftex.def Info: img/pics/alpha_pos_param.pdf  used on input line 381.
+(pdftex.def)             Requested size: 465.06088pt x 328.83092pt.
+<img/pics/a_param.pdf, id=114, 845.04686pt x 597.50786pt>
+File: img/pics/a_param.pdf Graphic file (type pdf)
+<use img/pics/a_param.pdf>
+Package pdftex.def Info: img/pics/a_param.pdf  used on input line 392.
+(pdftex.def)             Requested size: 465.06088pt x 328.83092pt.
+[13 <./img/pics/alpha_pos_param.pdf, page is rotated 90 degrees>] [14 <./img/pics/a_param.pdf, page is rotated 90 degrees>] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24] [25] [26] [27] [28]
+Overfull \hbox (650.43001pt too wide) detected at line 636
 []
  []
 
-[25
+[29
 
 ] AED endfloat: Processing end Figures and Tables (./shorter_1.aux)
  ***********
@@ -928,18 +939,18 @@ L3 programming layer <2020/03/25>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 22644 strings out of 477186
- 387168 string characters out of 5812383
+ 22693 strings out of 477186
+ 388255 string characters out of 5812383
  1942244 words of memory out of 5000000
- 42950 multiletter control sequences out of 15000+600000
- 614765 words of font info for 133 fonts, out of 8000000 for 9000
+ 42971 multiletter control sequences out of 15000+600000
+ 615179 words of font info for 137 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 94i,12n,93p,2505b,589s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on shorter_1.pdf (25 pages, 418017 bytes).
+ 94i,12n,93p,2505b,607s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmr8.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmri12.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmss8.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></Users/corrado/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
+Output written on shorter_1.pdf (29 pages, 949044 bytes).
 PDF statistics:
- 335 PDF objects out of 1000 (max. 8388607)
- 276 compressed objects within 3 object streams
- 103 named destinations out of 1000 (max. 500000)
- 30858 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 399 PDF objects out of 1000 (max. 8388607)
+ 325 compressed objects within 4 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 30868 words of extra memory for PDF output out of 35830 (max. 10000000)
 

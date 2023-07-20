@@ -1,10 +1,10 @@
 ---
-title: "Supplementary Text, Figures, and Tables"
+title: "Supplementary Text and Figures"
 # author: "Supplementary Materials"
 # output: papaja::apa6_pdf
 output:
-  pdf_document:
-  # word_document:
+  # pdf_document:
+  word_document:
       toc: true
       toc_depth: 3
       number_sections: true
@@ -71,8 +71,6 @@ options(width = 100)
 
 ## Participants
 
-<!-- The study included 40 individuals diagnosed with Restricting-Type Anorexia Nervosa (R-AN) according to the DSM-5 criteria and 310 healthy volunteers. The participants with R-AN were recruited from three facilities in Italy: the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment, with patients receiving treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. The diagnosis of AN was made by specialized psychiatrists and psychologists through a semi-structured interview based on the DSM-5 criteria, at the start of treatment. -->
-
 To ensure the relevance of our findings to the broader psychiatric population, individuals with R-AN who had comorbid psychiatric conditions were included in the study. The presence of comorbidities was determined by specialized psychiatrists and psychologists using a semi-structured interview based on the Mini International Neuropsychiatric Interview (MINI). Among the 40 individuals with R-AN, comorbidities included anxiety disorder (n=16), obsessive-compulsive disorder (OCD) (n=8), social phobia (n=1), and depressive and anxiety disorders (n=1). Some R-AN patients were also taking medication, including anxiolytic antidepressants (n=10), Selective Serotonin Reuptake Inhibitors (SSRIs) (n=6), benzodiazepines (n=1), and mood stabilizers (lithium) (n=1).
 
 To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test [@raven2000raven]. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
@@ -110,12 +108,29 @@ A parameter recovery study and a frequentist power analysis are two distinct app
 
 # Demographic and psychopathology measures
 
+## Demographic information
+
 Mean age and Body Mass Index (BMI) for each group of participant were as follows: patients with AN, mean age = 21.18 (SD = 2.41), average Body Mass Index (BMI) = 16.88 (SD = 1.55); patients with BN, mean age = 20.39 (SD = 1.88), average BMI = 30.09 (SD = 5.47); HCs, mean age = 19.77 (SD = 1.06), average BMI = 21.62 (SD = 3.03); healthy individuals at risk of developing eating disorders, mean age = 20.36 (SD = 1.44), average BMI = 22.41 (SD = 4.79).
 
 Bayesian statistical analysis revealed no credible age differences among the four groups (AN, BN, HC, and RI). AN participants displayed a lower mean BMI than HC participants, while BN participants had a higher mean BMI than HC participants. No noteworthy difference in BMI was observed between HC and RI participants. Furthermore, there is credible evidence that the Rosenberg Self-Esteem Scale scores of all three groups (AN, BN, and RI) are smaller than those of the HC group. We also found credible evidence that individuals with AN, BN, and RI exhibited higher levels of dissatisfaction with their body shape, as measured by the BSQ-14 questionnaire, when compared to the HCs.
-Individuals with AN displayed higher stress, anxiety, and depression levels (as measured by the DASS-21) than HCs. Additionally, individuals with AN showed credibly higher levels of social interaction anxiety (as measured by the SIAS) than HCs. All three AN, BN, and RI groups exhibited higher levels of Concerns over mistakes and doubts scores of the MPS scale compared to HCs. Individuals with AN also showed higher levels of Personal standard scores of the MPS scale compared to HCs. Moreover, individuals with AN displayed higher values on all three subscales of the EAT-26 questionnaire relative to HCs. 
+Individuals with AN displayed higher stress, anxiety, and depression levels (as measured by the DASS-21) than HCs. Additionally, individuals with AN showed credibly higher levels of social interaction anxiety (as measured by the SIAS) than HCs. All three AN, BN, and RI groups exhibited higher levels of Concerns over mistakes and doubts scores of the MPS scale compared to HCs. Individuals with AN also showed higher levels of Personal standard scores of the MPS scale compared to HCs. Moreover, individuals with AN displayed higher values on all three subscales of the EAT-26 questionnaire [@garner_eating_1982] relative to HCs. 
 
 Sixteen individuals with R-AN were diagnosed with a comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
+
+## Psychometric questionnaires
+
+The *Eating Attitude Test-26* [EAT-26, @garner_eating_1982] consists of 26 items assessing levels and types of eating disturbances in the past three mouths. The EAT-26 is characterized by three subscales: the Dieting Scale, the Bulimia and Food Preoccupation Scale and the Oral Control Scale. Scores $\ge 20$ point out the presence of an eating disorder. Respondents are required to rate intensity associated with the items on a 6-point Likert scale (0 = never, rarely, sometimes; 3 = always).
+The Italian version of the EAT-26 demonstrated good psychometric properties [@dottiandlazzari1998]. In fact, Cronbach’s alpha was high in an undergraduate sample for the Dieting scale (.87), for Bulimia and Food Preoccupation scale (.70), for Oral Control Scale (.62). Cronbach’s alpha for the total scores was 0.86. 
+
+The *Body Shape Questionnaire-14* [BSQ-14; @DowsonandHenderson2001] is a 14-item self-report scale assessing the global body satisfaction in the past two weeks. Respondents are required to rate intensity of concerns about own appearance associated with the items on a 6-point Likert scale (1 = never, 6 = always).  The Italian version of the BSQ-14 demonstrated good psychometric properties [@Matera2013]. In the present sample, $\omega$ = 0.978. For the 40-item BSQ, a score below 80 is considered "no concern", a score of 80 to 110 is considered "slight concern", a score of 111 to 140 is considered "moderate concern", and a score above 140 is considered "marked concern".
+
+The *Social Interaction Anxiety Scale* [SIAS; @MattickandClarke1998] is a 20-item self-report questionnaire assessing social interaction anxiety. Respondents are required to rate intensity associated with the items on a 4-point Likert scale from 0 (not at all true) to 4 (extremely true). Higher scores denote greater social interaction anxiety levels. Both original version and the Italian version [@sicasocialfobia2007] show acceptable psychometric properties (in the present sample $\omega$ = 0.938). @heimberg1992assessment have suggested a cut-off of 34 on the 20-item SIAS to denote a clinical level of social anxiety (32.3 for the Italian 19 item version). 
+
+The *Depression Anxiety Stress Scale-21* [DASS-21; @Lovibond1995] is a 21-item self-report measure assessing depression, anxiety, and stress over the previous week. Items are rated on a 4-point scale ranging from 0 (did not apply to me at all) to 3 (applied to me very much). Both the original and the Italian version [@bottesi2015] demonstrate adequate reliability. In the present sample $\omega_{\text{anxiety}}$ = 0.875, $\omega_{\text{depression}}$ = 0.914, $\omega_{\text{stress}}$ = 0.899; for the total scale, $\omega$ = 0.945.
+
+The *Rosenberg Self-Esteem Scale* [RSES; @Rosenberg1965] is a 10-item scale designed to assess person’s overall self-esteem. It comprises five straightforwardly worded and five reverse-worded items each rated on a 4-point Likert scale ranging from 4 (strongly agree) to 1 (strongly disagree). Increased values indicate increased self-esteem. In the present sample, $\omega$ = 0.949.
+
+The *Multidimensional Perfectionism Scale* [MPS-F; @frost1990dimensions] is a 35-item assessing perfectionism tendencies. According to @stober1998frost, MPS-F is composed of four underlying factors: Concerns over Mistakes and Doubts (CMD), Parental Expectations and Criticism (PEC), Personal Standards (PS), and Organization (O). Both the original MPS-F and the Italian version [@lombardo2008adattamento] demonstrate adequate reliability. In the present sample, $\omega_{\text{CMD}}$ = 0.919,  $\omega_{\text{PS}}$ = 0.851,  $\omega_{\text{PEPC}}$ = 0.946, $\omega_{\text{OR}}$ = 0.931; for the total scale, $\omega$ = 0.932.
 
 \pagebreak
 
@@ -124,11 +139,11 @@ Sixteen individuals with R-AN were diagnosed with a comorbid anxiety disorder, 8
 
 ## Additional Task Information
 
-Participants were introduced to the study as a way to evaluate their cognitive functions using a computer-based "game" and additional questionnaires. Their goal in the PRL task was to maximize their earnings, which were shown at the end of each trial block. When participants felt uncertain, they were instructed to rely on their instincts. During the PRL task, feedback was provided in a probabilistic manner. The correct image was rewarded in 70% of the trials, while negative feedback was given in the remaining 30% of the trials. Each block of the task consisted of four epochs, with 40 trials in each epoch where the same image was considered correct. Within each block, there were three rule changes known as reversal phases. Participants were aware that the stimulus-reward contingencies would change, but they were not provided with specific details about when or how these changes would occur. Prior to the actual experiment, participants underwent a training block consisting of 20 trials. The PRL tasks were programmed using the Psychtoolbox extensions in MATLAB (MathWorks) (Brainard, 1997).
+Participants were introduced to the study as a way to evaluate their cognitive functions using a computer-based "game" and additional questionnaires. Their goal in the PRL task was to maximize their earnings, which were shown at the end of each trial block. When participants felt uncertain, they were instructed to rely on their instincts. During the PRL task, feedback was provided in a probabilistic manner. The correct image was rewarded in 70% of the trials, while negative feedback was given in the remaining 30% of the trials. Each block of the task consisted of four epochs, with 40 trials in each epoch where the same image was considered correct. Within each block, there were three rule changes known as reversal phases. Participants were aware that the stimulus-reward contingencies would change, but they were not provided with specific details about when or how these changes would occur. Prior to the actual experiment, participants underwent a training block consisting of 20 trials. The PRL tasks were programmed using the Psychtoolbox extensions in MATLAB (MathWorks) [@brainard1997psychophysics].
 
 ## Stimuli
 
-The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS #7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS #7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS #5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS #7010, 7020, 7034, 7056, 7170). (for details, see the SI).
+The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS #7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS #7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS #5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS #7010, 7020, 7034, 7056, 7170) -- for details, see the SI.
 
 \pagebreak
 
@@ -160,7 +175,7 @@ In the RLDDM, instead, this second component of decision-making is replaced by a
 
 ## Estimation
 
-The RLDDM is the most advanced method for analyzing performance in the probabilistic reversal learning (PRL) task. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013). Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [e.g., @gershman2016empirical; @van2021hierarchical]. 
+The RLDDM is the most advanced method for analyzing performance in the probabilistic reversal learning (PRL) task. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package [@fengler2021likelihood; @wiecki2013hddm]. Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [e.g., @gershman2016empirical; @van2021hierarchical]. 
 
 The posterior distribution of group and individual parameters of the RLHDDM model were estimated in a hierarchical Bayesian framework using the "HDDMrl" module of the "HDDM" (version 0.9.8) Python package [for a detailed description of the model, see @pedersen2020simultaneous; @wiecki2013hddm].
 
@@ -202,9 +217,58 @@ m8.find_starting_values()
 m8.sample(15000, burn=5000, dbname="models/ddm8_final.db", db="pickle")
 ```
 
+\pagebreak
+
 ## Additional figures
 
+### Within-group comparisons
 
+```{r, echo=FALSE, fig.align = "center", out.width="50%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\alpha^{-}$ ($\\alpha^{-}_{food} - \\alpha^{-}_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "within_group", "negalpha_param.pdf")
+)
+```
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="60%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\nu$ ($\\nu_{food} - \\nu_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "within_group", "v_param.pdf")
+)
+```
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="60%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $t$ ($t_{food} - t_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "within_group", "t_param.pdf")
+)
+```
+
+\pagebreak
+
+### Between-group comparisons
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\alpha^{-}$ ($\\alpha^{-}_{food} - \\alpha^{-}_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "between_group", "alpha_neg_param.pdf")
+)
+```
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\nu$ ($\\nu_{food} - \\nu_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "between_group", "v_param.pdf")
+)
+```
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $t$ ($t_{food} - t_{neutral}$) across the three groups of participants."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "between_group", "t_param.pdf")
+)
+```
+
+\pagebreak
 
 ## Collinearity check
 
@@ -216,16 +280,59 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
 
 ## Posterior predictive checks
 
 To assess model validity, we performed posterior predictive checks. This involved simulating data using estimated parameters and comparing observed and simulated results. We generated the simulated dataset by repeating the simulation process 500 times for each subject in a sample dataset.
 
-PPC for learning rate To evaluate the choice proportion for the best option across learning in both observed and simulated data, we binned the trials and plotted the 90% highest density intervals of the mean responses. The following figures illustrate the rate of selecting the best option during learning. The 90% highest density interval of the means across simulated datasets captures the uncertainty present in the generated data.
+### PPC for learning rate 
 
-## Reaction times
+To evaluate the choice proportion for the best option across learning in both observed and simulated data, we binned the trials and plotted the 90% highest density intervals of the mean responses. The following figures illustrate the rate of selecting the best option during learning. The 90% highest density interval of the means across simulated datasets captures the uncertainty present in the generated data.
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: R-AN group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPClearningrate_an.pdf")
+)
+```
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: HC group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPClearningrate_hc.pdf")
+)
+```
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: RI group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPClearningrate_ri.pdf")
+)
+```
+
+\pagebreak
+
+### PPC for reaction times
 
 The density plots of observed and predicted reaction time across conditions are presented in the following figures. To distinguish upper and lower bound responses, reaction times for lower boundary choices (i.e., worst option choices) were set to be negative (0-RT). There is a good agreement between the observed and predicted values.
+
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: R-AN group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPCrt_an.pdf")
+)
+```
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: HC group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPCrt_hc.pdf")
+)
+```
+
+```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: RI group."}
+knitr::include_graphics(
+  here::here("reports", "img", "sup_mat", "pp_check", "PPCrt_ri.pdf")
+)
+```
 
 \pagebreak
 
@@ -348,7 +455,7 @@ knitr::include_graphics(here::here("reports", "img", "shahar_02.pdf"))
 
 The figure shows the probability of choosing the same image at trial $n$ + 1, depending on the outcome (rewarded vs. unrewarded) and mapping (flipped vs. same). Results indicate a tendency to repeat image selection after a rewarded trial. Notably, a stronger effect of reward was observed when the image was mapped to the same response key, compared to the alternative key. Error bars represent 95% credibility intervals.
 
-In conclusion, our study successfully replicated the findings reported by @shahar2019credit and @ben2022working, providing evidence that the effects of reward extend not only to the relevant image but also to the outcome-irrelevant response key. This highlights the impact of outcome-irrelevant factors, such as contextual effects in our study and spatial-motor mapping in the study of @shahar2019credit (and in our study), on reinforcement learning in a PRL task.
+In conclusion, our study successfully replicated the findings reported by @shahar2019credit and @ben2022working, providing evidence that the effects of reward extend not only to the relevant image but also to the outcome-irrelevant response key. This highlights the impact of outcome-irrelevant factors, such as contextual effects in our study and spatial-motor mapping in the study of @shahar2019credit, on reinforcement learning in a PRL task.
 
 \pagebreak
 

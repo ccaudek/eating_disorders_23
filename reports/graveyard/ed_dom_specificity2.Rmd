@@ -1,0 +1,301 @@
+---
+title             : "Anorexia Nervosa: Symptom-Related Information Alters Decision-Making Policy Despite Outcome Irrelevance"
+shorttitle        : "Title"
+
+author: 
+  - name          : "Corrado Caudek"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - "Conceptualization"
+      - "Writing - Original Draft Preparation"
+      - "Writing - Review & Editing"
+      - "Statistical analyses"
+      - "Supervision"
+  - name          : "Ilaria Colpizzi"
+    affiliation   : "2"
+    role:
+      - "Writing - Review & Editing"
+      - "Data Collection"
+      - "Statistical analyses"
+  - name: "Luisa Guidi"
+    affiliation: "3"
+    role: 
+      - "Conceptualization"
+      - "Data Collection"
+      - "Writing - Review & Editing"
+  - name: "Sara Danti"
+    affiliation: "3"
+    role: 
+      - "Conceptualization"
+      - "Data Collection"
+      - "Writing - Review & Editing"
+  - name: "Chiara Mazzoni"
+    affiliation: "4"
+    role: 
+      - "Conceptualization"
+      - "Data Collection"
+      - "Writing - Review & Editing"
+  - name: "Romana Schumann"
+    affiliation: "4"
+    role: 
+      - "Conceptualization"
+      - "Data Collection"
+      - "Writing - Review & Editing"
+  - name: "Claudio Sica"
+    affiliation: "2"
+    role: 
+      - "Conceptualization"
+      - "Writing - Review & Editing"
+
+affiliation:
+  - id: "1"
+    institution: "Department NEUROFARBA, University of Florence, Italy"
+  - id: "2"
+    institution: "Heath Sciences Department, University of Florence, Italy"
+  - id: "3"
+    institution: "Istituto Specchidacqua, Frida Onlus Montecatini, Italy"
+  - id: "4"
+    institution: "Centro Gruber, Bologna, Italy"
+  - id: "5"
+    institution: "Neomesia, Villa dei Pini, Firenze, Italy"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : "ed.bib"
+
+floatsintext      : yes
+linenumbers       : yes
+draft             : no
+mask              : no
+
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+# Introduction
+
+Eating disorders (EDs) are serious mental illnesses that commonly affect adolescents and young adults, with up to 15% of young women and 5% of young men being affected. These disorders have a significant impact on physical health and disrupt normal social functioning. Individuals with EDs are at a significantly higher risk of attempting suicide, with the risk being up to five-to-six-fold higher compared to those without EDs [@udo2019suicide]. Furthermore, the mortality rate for those with anorexia nervosa (AN) can be as high as 5–20% [@qian2022update]. Despite the severity of EDs, they are notoriously difficult to treat, making it imperative to gain a deeper understanding of the underlying mechanisms involved.
+
+Research suggests that dysfunctional executive processes may contribute to the development and maintenance of eating disorders. Impairments in cognitive inflexibility [@wu2014set], decision-making [@guillaume2015impaired], and inhibitory control [@bartholdy2016systematic] have all been linked to EDs. Of these, cognitive inflexibility has been the most extensively studied, particularly through the use of a reinforcement learning (RL) paradigm. While the hypothesis of maladaptive associative learning is theoretically compelling, as it offers potential for treatment, the evidence supporting it is inconsistent [for a recent discussion, see @caudek2021susceptibility].
+
+This study aims to contribute to existing research by examining whether individuals with eating disorders exhibit impaired decision-making despite possessing normal cognitive decision-making skills. Specifically, the study explores the hypothesis that impaired performance in reinforcement learning (RL) tasks in individuals with anorexia nervosa (AN) is not due to compromised learning mechanisms, but rather, to the influence of external factors that affect the learning process [@caudek2021susceptibility;  @haynos2022beyond; @haynos2022learned]. The study will investigate whether outcome-irrelevant food-related information affects decision-making in EDs, which may indicate that external factors, such as long-term goals and personality traits, may have a strong impact on their choices, regardless of their immediate consequences [@haynos2020moving]. These findings could have significant implications for understanding the underlying mechanisms of EDs and developing more effective treatment approaches.
+
+<!-- The aim of this study is to add to the existing research by investigating if individuals with eating disorders can display impaired decision-making despite having normal cognitive decision-making skills. In other words, we will explore the hypothesis that impaired performance in reinforcement learning (RL) tasks in individuals with anorexia nervosa (AN) may not be due to compromised learning mechanisms but, rather, to the influence of external factors that disturb the learning process. Specifically, we will explore whether *task-irrelevant* symptom-related information negatively impacts decision-making in EDs, suggesting that external factors, such as long-term goals and personality traits, may affect their choices. If this hypothesis is supported, it could have significant implications for understanding the underlying mechanisms of EDs and potentially lead to more effective treatment approaches. -->
+
+## Influence of outcome-irrilevant variables on RL
+
+RL refers to the capacity to deduce causal connections between actions and outcomes through a trial-and-error process. In laboratory studies, learning the consequences of past actions is typically examined using a 2-armed bandit task, which presents a decision maker with two options. One of these options has a higher likelihood of resulting in a reward. The goal is for the participant to learn which choice leads to the highest reward. Importantly, the optimal strategy for maximizing long-term rewards in the 2-armed bandit task is based solely on the history of previous actions and outcomes.
+
+Recent research has shown, however, that human RL can be impacted by features unrelated to the outcomes. For instance, a study by @shahar2019credit explored the impact of spatial-motor associations on participant reinforcement learning. Optimal decision making should prioritize the reward regardless of any spatial-motor associations (such as the choice of response key in the previous trial). Instead, @shahar2019credit found that rewards had a greater impact on the probability of selecting one of two images presented in each trial when the chosen image was linked to the same response key in both the $n$ - 1 and $n$ trials. This finding indicates that decision making in the general population can be impacted by features that are unrelated to the outcomes [also see @ben2022working]. Furthermore, in a previous study conducted by our laboratory, we observed that female undergraduate students exhibited a slower rate of learning in a two-armed bandit task that used food images instead of neutral images. This finding was particularly evident among participants who were otherwise healthy but at risk of developing an eating disorder [@caudek2021susceptibility].
+<!-- in a prior study performed by our laboratory, we noted that female undergraduate students displayed a slower learning rate in a two-armed bandit task that involved food images rather than neutral images. This result was more pronounced for those participants who were at risk of developing an ED, but otherwise healthy [@caudek2021susceptibility]. -->
+
+The evidence that outcome-irrelevant factors impact action value-updating raises the possibility of reevaluating prior RL results in EDs. We posit that suboptimal decision-making in EDs may be associated with external disruptive factors, rather than being exclusively due to a deficiency in the underlying RL mechanism. This disruptive  influence of factors that are irrelevant to the RL, but that can disrupt performance, could partially explain the incongruent outcomes observed in some ED studies on abnormal decision-making, while not in others [for an in-depth analysis, see @caudek2021susceptibility].
+<!-- In other words, we propose that subpar decision-making in eating disorders may be linked to the influence of external "disturbing" factors, rather than being solely due to a deficit of an underlying RL mechanism. This external disruptive influence could partially account for the inconsistent findings of abnormal decision-making reported in some ED studies but not in others [for a more detailed analysis, refer to @caudek2021susceptibility]. -->
+
+The present study is motivated by a hypothesis that AN patients, who adhere to strict weight control behaviors and prioritize long-term thinness, as well as BN patients, who tend to be impulsive, will experience interference in their decision-making when presented with a two-armed bandit task involving a food or non-food item. This implies that long-term goals in AN or temperamental traits in BN can impact their decision-making process when food is present in the task but outcome-irrelevant, even in the absence of any deficits in decision-making [also see @haynos2022beyond].
+
+<!-- Specifically, the hypothesis that motivates the present study is that AN patients, due to their strict weight control behavior and emphasis on long-term thinness, and BN patients, due to their impulsivity, will be impacted by interference in their decision-making when faced with a two-armed bandit task between a food or non-food item. This would suggest that long-term goals in AN or temperamental factors in BN can influence their decision-making process when food is present in the task but outcome-irrelevant, even in the absence of any decision-making deficits [see also @haynos2022beyond].  -->
+
+We anticipate that individuals with AN would exhibit conservative learning behavior when faced with a two-bandit task involving a choice between food and non-food items. Specifically, we expect them to update their expectations more slowly in response to feedback from their previous choices. Consequently, this cognitive rigidity may make them less likely to alter their habits.
+
+<!-- This context-driven conservative learning (due to the influence of outcome-irrelevant features) is consistent with prior research that has shown differences in attention and cognitive control for food and non-food information in other tasks. [*e.g.*, @caudek2021susceptibility; @schiff2021expectancy].  -->
+
+According to the context-dependent conservative learning hypothesis, we can make several predictions regarding the impact of outcome-irrelevant features on PRL (probabilistic reinforcement learning) performance. We expect that both individuals with ED (eating disorders) and healthy controls will approach food information more cautiously than neutral information, which is consistent with previous studies indicating differences in attention and cognitive control for food and non-food information in other tasks (@caudek2021susceptibility; @schiff2021expectancy). In terms of the subsequent computational modeling, this prediction can be operationalized in terms of (H1) an increase in the amount of evidence required to commit to a decision. 
+
+More importantly, the context-dependent conservative learning hypothesis predicts (H2) lower learning rates from positive or negative feedback for individuals with AN compared to HCs, but only in the presence of outcome-irrelevant food information, and (H3) an increase in the amount of evidence required to commit to a decision relative to HCs, but only in the presence of outcome-irrelevant food information. Further evidence in support of the context-dependent conservative learning hypothesis would be provided by (H4) a lower learning rate in the food condition compared to the neutral condition for individuals with AN but not for HCs, and (H5) a higher amount of evidence required to commit to a decision in the food condition compared to the neutral condition for individuals with AN but not for HCs. Moreover, (H6) we anticipate that this context-dependent conservative learning will be specific to individuals with AN, not only compared to HCs but also HCs at risk of developing eating disorders, and relative to individuals with BN. 
+
+
+<!-- (H1) an increase of the amount of evidence required to commit to a decision, and (H2) a decrease in the learning rate. Importantly, we predict that (H3) the effects of disruptive outcome-irrelevant information will be greater for AN patiens than for healthy controls (HCs).  -->
+<!-- (the domain-specific cognitive load hypothesis, H1). This predicted result aligns with prior research that has shown differences in attention and cognitive control for food and non-food information in other tasks. [*e.g.*, @schiff2021expectancy]. Secondly and more significantly, we expect a decline in the learning rate due to symptom-related interference caused by disease-specific information that is outcome-irrelevant (the domain-specific policy hypothesis, H2). -->
+
+# Methods
+
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+The study included 69 females (AN N = 40, AN N = 10, BN N = 13, BN = 6) and 222 healthy female controls (HCs) who were receiving outpatient treatment at three different facilities in Italy: the Specchidacqua Institute in Montecatini, the Villa dei Pini Institute in Firenze, and the Gruber Residence in Bologna. Psychiatric diagnoses were made based on the Diagnostic and Statistical Manual of Mental Disorders-5 (DSM-5) criteria by specialized psychiatrists and psychologists at the institutes. Those with AN and BN were assessed approximately 6 months ($\pm$ 1 month) after beginning treatment for eating disorders at one of the participating facilities.
+
+The AN (mean age = 20.5 years, *SD* = 1.13) and BN (mean age = 23.15 years, *SD* = 1.87). The XX% of AN patients and the XX% of BN patients were taking antidepressant medications (selective serotonin reuptake inhibitors). 
+
+The psychiatrists and psychologists at the participating institutes diagnosed a number of AN and BN patients with anxiety and depressive disorders, which are frequently comorbid with AN and BN. 
+
+Mean Body Mass Index was considerable lower for acAN patients (BMI mean = 18.29kg/m2 ) then acBN (BMI mean = 24.84kg/m2). Recovered outpatients were recruited from the Gruber Residence, Bologna (BO), Italy. To be included in the recovered group, recAN (mean age = 24.1 years, *SD* = 1.8) and recBN (mean age = 29.3 years, *SD* = 2.5) outpatients had to (a) not being seriously underweight ($BMI \ge 18.5$ kg/m2), (b) not engage in dysfunctional eating behaviors (*e.g.*, restrictive diet or binging/purging) for at least 6 months, and (c) being adherent to the psychological treatment. 
+
+The HC group was recruited via social media or university advertisements, and participants had to meet specific inclusion criteria: normal BMI (mean BMI = 21.29 kg/m2), no history of psychiatric illness, and an EAT-26 score below 20. However, 28 out of the 222 participants exceeded the EAT-26 cut-off, indicating a tendency towards eating symptoms, and were therefore classified as at-risk participants. The final HC group consisted of 194 participants (mean age = 21.5 years, SD = 0.23), while the at-risk participants had a mean age of 21.28 years (SD = 0.55). Eligibility criteria were assessed through psychologist interviews, and exclusion criteria included neurological illness, suicidal ideation, drug or alcohol addiction, and psychosis. All participants were Caucasian, right-handed, and unaware of the study's objectives.
+
+
+## Material
+
+### Clinical and Demographic Measurements
+
+The *Eating Attitude Test-26* [EAT-26, @garner_eating_1982] consists of 26 items assessing levels and types of eating disturbances in the past three mouths. The EAT-26 is characterized by three subscales: the Dieting Scale, the Bulimia and Food Preoccupation Scale and the Oral Control Scale. Scores $\ge 20$ point out the presence of an eating disorder. Respondents are required to rate intensity associated with the items on a 6-point Likert scale (0 = never, rarely, sometimes; 3 = always).
+The Italian version of the EAT-26 demonstrated good psychometric properties [@dottiandlazzari1998]. In fact, Cronbach’s alpha was high in an undergraduate sample for the Dieting scale (.87), for Bulimia and Food Preoccupation scale (.70), for Oral Control Scale (.62). Cronbach’s alpha for the total scores was 0.86. 
+
+The *Body Shape Questionnaire-14* [BSQ-14; @DowsonandHenderson2001] is a 14-item self-report scale assessing the global body satisfaction in the past two weeks. Respondents are required to rate intensity of concerns about own appearance associated with the items on a 6-point Likert scale (1 = never, 6 = always).  The Italian version of the BSQ-14 demonstrated good psychometric properties [@Matera2013]. In the present sample, $\omega$ = 0.978. For the 40-item BSQ, a score below 80 is considered "no concern", a score of 80 to 110 is considered "slight concern", a score of 111 to 140 is considered "moderate concern", and a score above 140 is considered "marked concern".
+
+The *Social Interaction Anxiety Scale* [SIAS; @MattickandClarke1998] is a 20-item self-report questionnaire assessing social interaction anxiety. Respondents are required to rate intensity associated with the items on a 4-point Likert scale from 0 (not at all true) to 4 (extremely true). Higher scores denote greater social interaction anxiety levels. Both original version and the Italian version [@sicasocialfobia2007] show acceptable psychometric properties (in the present sample $\omega$ = 0.938). @heimberg1992assessment have suggested a cut-off of 34 on the 20-item SIAS to denote a clinical level of social anxiety (32.3 for the Italian 19 item version). 
+
+The *Depression Anxiety Stress Scale-21* [DASS-21; @Lovibond1995] is a 21-item self-report measure assessing depression, anxiety, and stress over the previous week. Items are rated on a 4-point scale ranging from 0 (did not apply to me at all) to 3 (applied to me very much). Both the original and the Italian version [@bottesi2015] demonstrate adequate reliability. In the present sample $\omega_{\text{anxiety}}$ = 0.875, $\omega_{\text{depression}}$ = 0.914, $\omega_{\text{stress}}$ = 0.899; for the total scale, $\omega$ = 0.945.
+
+The *Rosenberg Self-Esteem Scale* [RSES; @Rosenberg1965] is a 10-item scale designed to assess person’s overall self-esteem. It comprises five straightforwardly worded and five reverse-worded items each rated on a 4-point Likert scale ranging from 4 (strongly agree) to 1 (strongly disagree). Increased values indicate increased self-esteem. In the present sample, $\omega$ = 0.949.
+
+The *Multidimensional Perfectionism Scale* [MPS-F; @frost1990dimensions] is a 35-item assessing perfectionism tendencies. According to @stober1998frost, MPS-F is composed of four underlying factors: Concerns over Mistakes and Doubts (CMD), Parental Expectations and Criticism (PEC), Personal Standards (PS), and Organization (O). Both the original MPS-F and the Italian version [@lombardo2008adattamento] demonstrate adequate reliability. In the present sample, $\omega_{\text{CMD}}$ = 0.919,  $\omega_{\text{PS}}$ = 0.851,  $\omega_{\text{PEPC}}$ = 0.946, $\omega_{\text{OR}}$ = 0.931; for the total scale, $\omega$ = 0.932.
+
+## Procedure
+
+The study, which adhered to the Declaration of Helsinki, was approved by the University of Florence's Ethical Committee. All eligible participants provided informed consent and agreed to participate. 
+
+Participants' height was determined using a wall-mounted stadiometer, and their weight was measured using a beam balance scale. To evaluate general cognitive functioning, participants completed Raven's Colored Progressive Matrices test [@raven2003raven]. In addition to the cognitive assessments, participants completed the six psychometric tests listed above and a Probabilistic Reversal Learning (PRL) task, which were administered over two sessions.
+
+The PRL task consisted of two blocks of 160 trials each. One block aimed to test the domain-specificity hypothesis by presenting a food-related image (e.g., a piece of cake) alongside a food-unrelated image (e.g., a lamp), while the other block included only food-unrelated images as a control task. In each trial, an image was randomly sampled from the food-related (cake, cheeseburger, pancakes, french fries, sausages, chocolate candy, fried chicken, potato chips, deep-dish cheese pizza, fried bacon) and food-unrelated (wall lamp, fountain pen, book, watch, umbrella, chess board, guitar, flashlight, microphone, candle) categories. In the control task, the two food-unrelated images were different. Participants were presented with two stimuli simultaneously on the left and right side of the screen and had to make a selection within a 3-second time-frame. A euro coin image served as a reward, while a strike-through image of a euro coin was used as a punishment. Feedback was given for 2 seconds following each trial. The PRL task included four epochs of 40 trials each, with the same image considered correct in each epoch. Feedback was probabilistic, with the correct image being rewarded in 70% of cases per epoch, and negative feedback given in the remaining 30% of trials. Both blocks included three rule changes in the form of a reversal phase. Participants' objective was to maximize their earnings, and they were aware that stimulus-reward contingencies would change, but not the specifics of how or when this would occur. The total reward earned was displayed at the end of each block. Psychtoolbox was used to control the experiment  [@brainard1997psychophysics].
+
+## Data analysis
+
+Credible effects were revealed by 95% credible intervals or by 97.5% of posterior samples falling above or below 0 when computing proportion of posterior in direction of effect. 
+<!-- , we qualified results in 85–97.4% range as weaker evidence for an effect [see @mcelreath2020statistical for a discussion on the arbitrariness of significance levels]. -->
+
+# Results
+
+## Quality Control
+
+Trials were excluded for extreme RTs (<150 ms, >2500 ms), or if the remaining (log transformed) RT exceeded the participant's mean ± 3S.D. Participants’ datasets were excluded if, in any block, there were more than 20 RT outliers, fewer than 24 rich or 7 lean rewards, a rich-to-lean reward ratio lower than 2.5, or lower than 40% correct accuracy. In Study 1, 258 depressed adults and 36 controls passed the QC criteria. Study 2 data are from participants who passed these QC checks. TODO
+
+## Demographic and Psychopathology Measures
+
+TODO
+
+## Estimating outcome-irrelevant learning
+
+### Spatial-motor associations
+
+We start by examining the presence of spatial-motor connections in the participants' choices. We successfully replicated the findings of @shahar2019credit and @ben2022working. Our results showed robust evidence for spatial-motor outcome-irrelevant learning: the probability of choosing 'stay' was higher for 'same' (.427) compared to 'flipped' (.218) response/key mapping when comparing previously rewarded versus unrewarded responses (posterior $\beta$ = 0.93, *SE* = 0.06, $\text{HDI}_{.95}$ =  [0.81, 1.06];  probability of direction (pd) 1.0; 0% in ROPE (-0.10, 0.10) and Bayes Factor (BF) of $>$ 100 against the null; Fig. 1).  There was no group (HC, AN, BN, RI) $\times$ previous outcome $\times$ mapping interaction (see Supplementary Materials). 
+
+
+## Reinforcement learning and drift diffusion modeling
+
+Computational modeling of the two-choice decision over time in the PRL task was performed with a hierarchical reinforcement learning drift diffusion model (RLDDM) [see @pedersen2017drift, @pedersen2020simultaneous]. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013). By breaking down decision-making task performance into its component processes through cognitive modeling analysis, it becomes possible to identify any deviances in the underlying mechanisms that may not be reflected in the overall task outcome. RLDDM has six basic parameters: positive learning rate ($alpha^+$), negative learning rate ($alpha^-$), drift rate ($v$), decision threshold ($a$), non-decision time ($t$), and starting point bias ($z$) parameters. The $\alpha$ parameter quantifies the learning rate in the Rescorla-Wagner delta learning rule [@rescorla1972theory]; a higher learning rate results in rapid adaptation to reward expectations, while a lower learning rate results in slow adaptation. The parameter $\alpha^+$ is computed from reinforcements, whereas $\alpha^+$ is computed from punishments. The drift rate $v$ is the average speed of evidence accumulation toward one decision. The decision boundary is the distance between two decision thresholds; an increase of $a$ increases the evidence needed to make a decision. The increase of $a$ leads to a slower but more accurate decision; a decrease in $a$ results in a faster but error-prone decision. The non-decision time $t$ is the time spent for stimuli encoding or motor execution (*i.e.*, time not used for evidence accumulation). The starting point parameter $z$ captures a potential initial bias toward one or the other boundary in absence of any stimulus evidence. 
+
+The RLDDM utilized priors aligned with established literature findings and the Markov Chain Monte Carlo method to fit the model to the data, estimating the joint posterior distribution for all parameters. To test the interference of disease-related information on the decision process, we compared several RLDDMs in which we conditioned either none, each or all model's parameters on diagnostic category (group) and image category (neutral, symptom-related). For each model, we computed the Deviance Information Criterion (DIC) and we selected the model with the best trade-off between the fit quality and model complexity (*i.e.*, the model with the lowest DIC). The following models were examined. Model M1 is a standard RLDDM. Model M2 extends M1 by incorporating separate learning rates for positive and negative reinforcements. In Model M3, the $\alpha^+$ and $\alpha^-$ parameters are based on the diagnostic group. In Model M4, the $\alpha^+$ and $\alpha^-$ parameters of M3 are conditioned on both diagnostic group and image category (two neutral images, or one neutral and one symptom-related image). Model M5 expands upon M4 by considering that the $a$ parameter may be influenced by both diagnostic group and image category. Model M6 extends M5 by taking into account the possible influence of diagnostic group and image category on the $v$ parameter. Model M7 builds upon M6 by considering that the $t$ parameter may depend on both diagnostic group and image category. Finally, Model M8 adds to Model M7 the estimation of a potential bias in the $z$ parameter. The winning RLDDM (with lowest DIC) is M7. In the Model M7, the parameters $\alpha^+$, $\alpha^-$, $a$, $v$, $t$ (but not $z$) are conditioned on both diagnostic group and image category.
+
+| Model |    DIC     |
+| :---: | :-------:  |  
+| M1    | 103209.264 |
+| M2    | 101590.157 |
+| M3    | 101613.877 |
+| M4    | 99133.675 |
+| M5    | 96150.581 |
+| M6    | 95434.070 |
+| M7    | 92808.856 |
+| M8    | 93157.611 |
+
+From the posterior distribution, we drew 13,000 samples and discarded the initial 3000 'burn-in' samples [@kruschke2014doing]. To evaluate convergence, we first examined trace and autocorrelation plots. Then, convergence of Bayesian model parameters was assessed via the Gelman-Rubin statistic. All parameters had $\hat{R}$ below 1.1 (max = 1.071, mean = 1.002), which does not suggest convergence issues. Model validity was assessed through posterior predictive checks (for details, see Supplementary Materials). We considered a credible difference less than 5% overlap of the parameters' posterior distributions.
+
+To gauge the impact of outcome-irrelevant image category on decision-making, we contrasted the difference in posterior estimates of the RLDDM parameters between the neutral and symptom-related image conditions within each diagnostic group. As predicted by Hypothesis H1, the decision threshold ($a$) was found to be greater for food information than for neutral information: HC, $p(a_\text{food} < a_\text{neutral})$ = .0002; AN, $p(a_\text{food} < a_\text{neutral})$ = .0026; BN, $p(a_\text{food} < a_\text{neutral})$ = .0140; RI, $p(a_\text{food} < a_\text{neutral})$ = .0139]. Posterior parameters estimates, standard deviation, and 95% credibility intervals are shown in the following table.
+
+| Parameter       | Posterior estimate ($SD$)| 95% CI         |
+| --------------- | ----------------------- | --------------- |
+| a(AN food)      |     1.415  (0.039)      |    1.339, 1.491 |
+| a(AN neutral)   |      1.260  (0.038)     |    1.186, 1.334 |
+| a(BN food)      |     1.440  (0.066)      |    1.309, 1.567 |
+| a(BN neutral)   |      1.229  (0.072)     |    1.086, 1.368 |
+| a(HC food)      |     1.340  (0.016)      |    1.308, 1.371 |
+| a(HC neutral)   |     1.258  (0.016)      |    1.226, 1.291 |
+| a(RI food)      |     1.389  (0.039)      |    1.312, 1.463 |
+| a(RI neutral)   |     1.264  (0.042)      |    1.183, 1.345 |
+
+As expected by Hypothesis H2, our findings indicate that compared to neutral outcome-irrelevant information, decision-making regarding food information resulted in a lower estimate of the learning rate, but only for the AN group when evaluating reward-based learning, $\alpha^+$ = 0.144 ($SD$ = 0.092), $\alpha^+$ = 0.759 ($SD$ = 0.142), $p(\alpha^+_\text{food} > \alpha^+_\text{neutral})$ = 0.0013, $\Delta$ score on a logit scale = 2.939, 95% CI [0.870, 4.975]. No other credible differences were found regarding Hypothesis H2 (see the Supplementary Material for details).
+
+<!-- evidence threshold and accumulation rate, we computed the difference between music conditions (averaged over task, for threshold). While the main prediction of the timing hypothesis (H1) was to observe increasingly higher evidence- accumulation rates with faster music, relative to silence (without changes in evidence threshold), the main prediction of the policy hypotheses was either a tempo-dependent (H2a) or tempo-independent (H2b) reduction of the evidence threshold –which indexes the decision policy-, relative to silence (without changes in the accumulation rate) -->
+
+## Biased choices
+
+To determine if the subpar performance of AN patients in the RL task was due to a bias towards non-food choices (independent of past action-outcome history), we examined the frequency of food choices in the PRL blocks where a food image was paired with a neutral image. As anticipated based on Hypothesis H1, a bias against the food image was observed: proportion of food choices = 0.484, 95% CI [0.477, 0.492]. However, no group-specific bias was detected, as evidenced by the following three comparisons: AN - HC: prop = -0.002,  95% CI [-0.029,  0.026]; BN - HC: prop = 0.015, 95% CI [-0.029, 0.056]; BN - AN: prop = 0.017, 95% CI [-0.035,  0.064]; RI- HC: prop = -0.007, 95% CI [-0.031,  0.016].
+
+
+## Comorbidity
+
+Individuals with eating disorders often have comorbid psychiatric conditions, including depression (up to 75%), bipolar disorder (10%), anxiety disorders, obsessive-compulsive disorder (40%), panic disorder (11%), social anxiety disorder/social phobia, post-traumatic stress disorder (prevalence varies with eating disorder), and substance abuse (15-40%) -- see @woodside2006management for further details. In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 patients in the AN group were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP; in the BN group, 4 patients were diagnosed with mood disorder and 1 with OCD. Comorbid diagnoses were determined using the DSM-V criteria during psychiatric evaluations spanning a minimum of one year, while the absence of comorbidities was evaluated using the same methods within a comparable timeframe. To determine if the lower learning rate observed in the AN group could be due to comorbidity, we utilized model M7 on the patient data by separating patients into groups with and without comorbid conditions. No credible differences were identified in the parameters of the models between patients with and without comorbid conditions (see Supplementary Materials for additional information).
+
+# Discussion
+
+All our hypotheses are confirmed, with some caveats.
+
+- Hypothesis 1: The inclusion of outcome-irrelevant food-related information, in contrast to outcome-irrelevant food-unrelated information, increased the evidence required for decision-making in a two-armed bandit task across all participant groups ($a$ parameter in the RLDDM).
+- Hypothesis 2: Individuals with AN have lower learning rates for food-related decisions, but not for neutral decisions, compared to HCs ($\alpha^+$ and $\alpha^-$ parameters of the RLDDM).
+- Hypothesis 3: Individuals with AN have higher decision thresholds than HCs, but only when outcome-irrelevant food-related information is present ($a$ parameter in the RLDDM).
+- Hypothesis 4: In comparison to healthy controls, individuals with AN display diminished learning rates for outcome-irrelevant food-related decisions in contrast to food-unrelated decisions. Importantly, this effect is specific to reward-based learning and does not manifest in punishment-based learning. While no a priori hypothesis was made regarding the difference in learning rates between rewards and punishments, the findings suggest that the negative impact of outcome-irrelevant information on learning rates is more pronounced in individuals with AN during reward-based learning than in punishment-based learning.
+- Hypothesis 5: Individuals with AN have more conservative decision criteria for food-related decisions compared to food-unrelated decisions, whereas HCs do not show a difference.
+- Hypothesis 6: Individuals with BN and HCs at risk for eating disorders show similar results to HCs and different results from individuals with AN across all comparisons.
+
+<!-- When presented with outcome-irrelevant food-related information, individuals with AN demonstrated a reduced learning rate from both rewards ($\alpha^+$) and punishments ($\alpha^-$) compared to healthy controls. However, no significant difference in learning rate was observed between AN patients and HC when presented with neutral outcome-irrelevant information. -->
+<!-- 2. Information unrelated to outcomes regarding food reduced the learning rate for all participant groups. However, this effect was more pronounced in AN patients than in healthy controls, and in healthy controls, it was only present for learning rate from rewards, not punishments. -->
+<!-- 3. When food-related information was included in the PRL task, heightened caution was observed across all participant groups in the $a$ parameter of the RLDDM (decision threshold). However, this effect was more prominent in AN patients than in healthy controls. -->
+
+<!-- All three findings are in line with the study's hypotheses. -->
+
+An unexpected finding pertained to the evidence accumulation rate in the drift-diffusion process (parameter $v$ of the RLDDM). Specifically, individuals with AN displayed a lower evidence accumulation rate than HCs when presented with food-unrelated outcome-irrelevant information, while no difference was observed when presented with food-related outcome-irrelevant information. These results align with a similar investigation [@alfei2023hoarding] that examined hoarding patients and healthy controls in a two-armed bandit task, where disease-related outcome-irrelevant information improved patient performance relative to a disease-unrelated condition, where their performance was inferior to that of healthy controls. In both cases, it appears that external information that holds personal significance activates additional cognitive resources that may not be utilized in other conditions.
+
+The findings of this study underscore the significance of outcome-irrelevant extraneous information in shaping decision-making within the context of reinforcement learning. Importantly, all participants exhibited a more cautious decision-making style (as indicated by parameter $a$) when presented with outcome-irrelevant food information in a two-armed bandit task. However, only those with AN demonstrated alterations in their learning rates in response to such information. These outcomes provide support for the proposed hypothesis that exposure to outcome-irrelevant food-related cues contributes to prompt a shift towards conservative learning in individuals with AN, despite the absence of such effects in non-food-related decision-making scenarios. Notably, our investigation revealed that both AN patients with comorbid clinical diagnoses (such as depression, anxiety, and obsessive-compulsive disorder) and those without such diagnoses exhibited similar conservative reinforcement learning patterns.
+
+Individuals with eating disorders are known to manifest not only eating-related pathologies, but also other comorbidities, such as mood and anxiety disorders. In the current study, we deliberately included individuals with comorbidities in order to ensure that our sample was more representative of the general population of AN patients. Crucially, our findings indicate that both AN patients with comorbid clinical diagnoses (such as depression, anxiety, and obsessive-compulsive disorder) and those without such diagnoses displayed similar conservative reinforcement learning patterns.
+
+The present study's results replicate and expand on previous research demonstrating how outcome-irrelevant information can impair reward learning. Specifically, we replicated the findings of @shahar2019credit, which demonstrated that image/effector response mapping influences associative learning in a PRL task when only image identity predicts the reward. Additionally, we demonstrated that the impact of outcome-irrelevant information on reinforcement learning is specific to certain groups. In particular, extraneous food-related information can cause individuals with AN to become slow learners, whereas this effect is not observed in healthy controls, individuals with BN, or healthy controls at risk of developing eating disorders. Our results concerning the comparison between individuals with AN and BN replicate previous reports that AN and BN patients exhibit divergent anomalies in decision making [*e.g.*, @chan2014differential], but also emphasize that these variations are more pronounced when considering the processing of information related to the condition.
+
+The results of the study suggest that learning in individuals with AN may be domain-specific, as defined by @spunt2017new, who suggested that higher-order beliefs and goals could dynamically modulate the internal operations of a module, such as reinforcement learning, through context and attention. The findings of the study support this proposal, as individuals with AN performed similarly to healthy controls in reinforcement learning tasks involving food-unrelated contexts but exhibited more conservative learning behavior when presented with food-related information, as indicated by their lower learning rates.
+
+The present findings are consistent with the emerging consensus that the reward and punishment processes in AN are not a generic process, but rather influenced by the complex interplay between various stimulus properties and contextual factors, such as the type of reward/punishment cue, long-term objectives, personality traits, temperamental dispositions, and physiological states like hunger. A recent review by @haynos2020moving provided a comprehensive overview of how patients with AN perceive their experiences as rewarding or punishing, indicating that the degree of predictability, controllability, immediacy, and effort significantly influence the reward and punishment processing in AN. For instance, behaviors that are predictable, controllable, and immediate (such as calorie counting or purging) may be perceived as rewarding, providing the individual with a sense of control and accomplishment. Conversely, unpredictable and uncontrollable behaviors (such as social outcomes) may be perceived as punishing, leading to increased anxiety and distress.
+
+The present results are relevant for the current debate on the role of maladaptive reward and punishment processing in AN. Current theories propose that AN is characterized by a combination of reduced sensitivity to reward and increased sensitivity to punishment, leading to an imbalance in reward processing. This imbalance is thought to result in decreased interest in food rewards and increased control over food intake, contributing to the persistence of AN symptoms. Additionally, heightened punishment sensitivity may contribute to AN by promoting avoidance of food and weight gain, which may be perceived as aversive. However, as @haynos2020moving points out, such characterization of AN as having distorted reward and punishment processing, which is a domain-general description, is inadequate because it does not consider the differences in response depending on the particular characteristics of the cues involved. In their literature review, @haynos2020moving show that current evidence does not indicate a universal shortfall in AN reward and punishment processing. Rather, there seem to be an inappropriate interpretation of what constitutes a reward or punishment in various contexts and for different stimuli and decisions. Behaviors that initially may not be considered rewards or punishments can eventually become associated with either positive or negative reactions, leading them to serve as a form of reward or punishment. For instance, @haynos2020moving posits that restrictive eating cues, a precursor of AN, can be linked to reward responses in AN. This hypothesis is supported by ecological momentary assessment (EMA) studies that examine affective patterns in relation to disordered eating. These studies have shown higher positive affect and lower negative affect before, during, and after restrictive eating episodes in AN compared to normal meals (Fitzsimmons-Craft et al., 2015) and subsequent reductions in guilt in AN and increased self-assurance for individuals with AN-R (Haynos et al., 2017). These findings indicate that restrictive eating is linked to desirable emotional outcomes in AN and, thus, can be understood as rewarding. Although decreased sensitivity to reward in AN has been documented in some contexts, such as individuals with AN scoring lower on sensation-seeking measures that gauge reactions to immediate novel rewards compared to healthy individuals and those with bulimia nervosa (BN) or binge eating disorder (BED; Matton, Goossens, Vervaet, & Braet, 2015; Rotella et al., 2018), this does not indicate that a reduced sensitivity to reward is evident across all contexts. For instance, the rewarding nature of restrictive eating is not reflected in this reduced sensitivity. The review by @haynos2020moving offers several additional examples of cues, contexts, or decisions that may only be associated with reward or punishment if they are viewed in the context of the ultimate objectives of AN (i.e., thinness). This way of thinking is very much in line with the present results. What the present study adds to this previous theoretical proposal is that previous evidence of domain-specificity of reward and punishment processing in AN have  been provided in an indirect form, that is, in terms of the re-interpretation of cues and consequences of actions in the context of an overarching long-term goal. In other words, these previous studies have primarily examined the subjective value assigned by AN patients to various experiences, which may be perceived as rewarding or punishing, despite not inherently having these properties. In contrast, the current study, for the first time, investigates the effect of contextual factors on the learning process in which reward and punishment are direct consequences of choices. 
+
+Other recent studies have examined the issue of the domain-specificity of maladaptive associative learning in eating disorders. One task that has been specifically devised for this purpose is the two-step Markov decision task, which differentiates between automatic or habitual (model-free) and controlled or goal-directed (model-based) learning. For example, @foerde2021deficient and @onysk2022effect both conducted similar experiments using this task, with @foerde2021deficient comparing a monetary two-step task and a food two-step task, and @onysk2022effect using stimuli unrelated to food or body images (pirate ships and treasure chests) with rewards associated with body image dissatisfaction. The results of these experiments showed that individuals with AN displayed a stronger preference for habitual control over goal-directed control across domains compared to healthy controls, but there were no differences in the learning rate. However, the primary aim of the two-step experiments was to determine whether the participants' decision-making strategy was influenced by the context or solely based on the previous feedback received, regardless of the context. The results showed that AN patients had difficulty adapting to changing contexts compared to healthy controls (HCs). Furthermore, the experiments did not reveal any differences in the impact of the context (food-related or neutral) on decision making in AN. More importantly, the two-step task did not uncover any difference in the learning rate of AN patients compared to healthy controls (HCs), as a function of the context. In contrast, by using a different method (TODO: add reference with criticism to the two-step method), our results indicate that the learning process itself, particularly the rate at which values are updated, is influenced by information related to the disease, even when such information is not relevant to the outcome.
+
+From a translational perspective, our results suggest that individuals with AN exhibit a conservative approach to learning and processing the consequences of their food choices at the examined disease stage. These findings indicate that clinical interventions aimed at addressing any putative associative learning dysfunction may not be effective at this stage. Rather, interventions should target factors that impede the performance of intact associative learning abilities.
+
+There remain many questions for future research. (1) For example, we used images of a one euro coin or a barred representation of a one euro coin to symbolize rewards and punishments, respectively. But such rewards and punishments are only symbolic and the question remains as to what happens when the rewards and punishments are concrete and not symbolic. Moreover, the subjective value of one euro, or the loss of one euro, is not constant for all participants. Determining the equivalence of subjective values for real (not symbolic) rewards and punishments could be a worthwhile objective for future studies. (2) Our study only included AN patients who were not in the most severe stage of the illness, as they were recruited from a center for individuals seeking voluntary medical and psychological support. We did not consider AN patients who are hospitalized due to the life-threatening nature of their illness. It is possible that at the later stage of the illness, the associative learning abilities, which were shown to be preserved in the present sample under neutral conditions, may become impaired. (3) Our findings indicate that AN patients displayed no difference in their choice behavior, as assessed by the relative frequency of image selections, when presented with a choice between a food-related and a food-unrelated image (although the inclusion of food-related outcome-irrelevant information had a negative impact on their learning rate). While the relative frequency of image selections failed to detect whether there are differences in the relative "salience" of food-related / food-unrelated images in the PRL task, other measures such as fixation length or number of fixations may provide better insights in this regard. Therefore, future studies could investigate these alternative measures to better capture differences in salience between food-related and food-unrelated images in AN patients. (4) The notion that domain-specificity can be construed as a flexible modulation of a cognitive mechanism across contexts and time [@spunt2017new], in conjunction with our current observation that individuals with AN exhibit slow learning only in the domain of food-related decision-making, raises the prospect of utilizing the present domain-specificity findings as an evaluative tool. Specifically, a reduction in this effect could serve as a marker for the effectiveness of treatment. This promising avenue could be explored in future investigations. (5) In our study, we excluded women under the age of 18. However, this age range is a critical period, as the onset of AN during this stage may have a more profound impact on associative learning, given that cognitive development is ongoing and protective factors are less developed. Future studies should take this into consideration.
+
+\newpage
+
+# References
+
+::: {#refs custom-style="Bibliography"}
+:::
