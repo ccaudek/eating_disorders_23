@@ -66,13 +66,11 @@ options(width = 100)
 
 \pagebreak
 
-# Supplementary Methods
+# Supplementary Information about Participants
 
-## Participants
+To ensure the relevance of our findings to the broader psychiatric population, we included individuals with R-AN who had comorbid psychiatric conditions. The presence of comorbidities was assessed by specialized psychiatrists and psychologists at the Specchidacqua Institute (Montecatini, Pistoia) and the Gruber Center, Outpatient Clinic (Bologna). Among the 40 individuals with R-AN, comorbidities included anxiety disorder (n=16), obsessive-compulsive disorder (OCD) (n=8), social phobia (n=1), and depressive and anxiety disorders (n=1). Some R-AN patients were also taking medication, including anxiolytic antidepressants (n=10), Selective Serotonin Reuptake Inhibitors (SSRIs) (n=6), benzodiazepines (n=1), and mood stabilizers (lithium) (n=1).
 
-To ensure the relevance of our findings to the broader psychiatric population, individuals with R-AN who had comorbid psychiatric conditions were included in the study. The presence of comorbidities was determined by specialized psychiatrists and psychologists using a semi-structured interview based on the Mini International Neuropsychiatric Interview (MINI). Among the 40 individuals with R-AN, comorbidities included anxiety disorder (n=16), obsessive-compulsive disorder (OCD) (n=8), social phobia (n=1), and depressive and anxiety disorders (n=1). Some R-AN patients were also taking medication, including anxiolytic antidepressants (n=10), Selective Serotonin Reuptake Inhibitors (SSRIs) (n=6), benzodiazepines (n=1), and mood stabilizers (lithium) (n=1).
-
-To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test [@raven2000raven]. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
+To be eligible for participation, individuals needed to be proficient in spoken and written Italian. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test [@raven2000raven]. The eligibility criteria for all participants were evaluated through psychologist interviews. Body mass index (BMI) values were determined in the laboratory.
 
 The study included a predominantly Caucasian sample, with 97.7% of the participants identifying as Caucasian. A smaller proportion of participants identified as Asian-Italian (1.7%) and African-Italian (0.6%). Additionally, all selected participants were right-handed and were unaware of the specific objectives of the study, ensuring a blind study design.
 
@@ -104,10 +102,9 @@ We used the `HDDMrl` function of the `hddm` module to estimate the RLDDM paramet
 
 A parameter recovery study and a frequentist power analysis are two distinct approaches. However, since Bayesian methods prioritize estimation over hypothesis testing, it is comforting to see that with the current number of participants and trials, the RLDDM model can detect an effect size similar to the one found in a separate study with a different group of participants but with a similar experimental manipulation.
 
+\pagebreak
 
 # Demographic and psychopathology measures
-
-## Demographic information
 
 Mean age and Body Mass Index (BMI) for each group of participant were as follows: patients with AN, mean age = 21.18 (SD = 2.41), average Body Mass Index (BMI) = 16.88 (SD = 1.55); patients with BN, mean age = 20.39 (SD = 1.88), average BMI = 30.09 (SD = 5.47); HCs, mean age = 19.77 (SD = 1.06), average BMI = 21.62 (SD = 3.03); healthy individuals at risk of developing eating disorders, mean age = 20.36 (SD = 1.44), average BMI = 22.41 (SD = 4.79).
 
@@ -116,7 +113,9 @@ Individuals with AN displayed higher stress, anxiety, and depression levels (as 
 
 Sixteen individuals with R-AN were diagnosed with a comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
 
-## Psychometric questionnaires
+\pagebreak
+
+# Psychometric questionnaires
 
 The *Eating Attitude Test-26* [EAT-26, @garner_eating_1982] consists of 26 items assessing levels and types of eating disturbances in the past three mouths. The EAT-26 is characterized by three subscales: the Dieting Scale, the Bulimia and Food Preoccupation Scale and the Oral Control Scale. Scores $\ge 20$ point out the presence of an eating disorder. Respondents are required to rate intensity associated with the items on a 6-point Likert scale (0 = never, rarely, sometimes; 3 = always).
 The Italian version of the EAT-26 demonstrated good psychometric properties [@dottiandlazzari1998]. In fact, Cronbach’s alpha was high in an undergraduate sample for the Dieting scale (.87), for Bulimia and Food Preoccupation scale (.70), for Oral Control Scale (.62). Cronbach’s alpha for the total scores was 0.86. 
@@ -133,16 +132,31 @@ The *Multidimensional Perfectionism Scale* [MPS-F; @frost1990dimensions] is a 35
 
 \pagebreak
 
-
-# Task design
-
-## Additional Task Information
+# Additional Information about the Task
 
 Participants were introduced to the study as a way to evaluate their cognitive functions using a computer-based "game" and additional questionnaires. Their goal in the PRL task was to maximize their earnings, which were shown at the end of each trial block. When participants felt uncertain, they were instructed to rely on their instincts. During the PRL task, feedback was provided in a probabilistic manner. The correct image was rewarded in 70% of the trials, while negative feedback was given in the remaining 30% of the trials. Each block of the task consisted of four epochs, with 40 trials in each epoch where the same image was considered correct. Within each block, there were three rule changes known as reversal phases. Participants were aware that the stimulus-reward contingencies would change, but they were not provided with specific details about when or how these changes would occur. Prior to the actual experiment, participants underwent a training block consisting of 20 trials. The PRL tasks were programmed using the Psychtoolbox extensions in MATLAB (MathWorks) [@brainard1997psychophysics].
 
-## Stimuli
+\pagebreak
+
+# Additional Information about the Stimuli
 
 The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS #7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS #7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS #5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS #7010, 7020, 7034, 7056, 7170) -- for details, see the SI.
+
+\pagebreak
+
+# Statistical Methods
+
+We analyzed our data using R-Studio (R version 4.4.0) and Python, employing Bayesian statistics to prioritize estimation over Null Hypothesis Significance Testing (NHST). This approach offers several advantages that enhance interpretability and flexibility, making it particularly appropriate for our study:
+
+1. **Emphasis on Estimation**: Bayesian methods focus on estimating the parameters of interest directly, providing a richer understanding of the data than the binary outcomes of null hypothesis testing. This approach aligns with our goal of understanding the underlying mechanisms rather than merely testing for the presence or absence of a statistical effect.
+
+2. **Credible Intervals**: Bayesian credible intervals offer a more intuitive interpretation compared to frequentist confidence intervals [@gelman2021regression]. An 89% credible interval, for instance, directly reflects the probability that the parameter lies within this range, given the data. This is more informative than a confidence interval, which does not offer a direct probability statement about the parameter.
+
+3. **Accommodation of Non-Gaussian Models**: Bayesian methods easily accommodate non-Gaussian statistical models, allowing us to better capture the complexities of the data without being constrained by assumptions of normality. This flexibility is crucial in accurately modeling the diverse and often non-normal distributions encountered in psychological data (as in the present case).
+
+4. **Hierarchical Models**: Bayesian hierarchical models provide a robust framework for analyzing data with nested structures [@gelman1995bayesian]. This approach allows for the inclusion of multiple levels of variability and provides more accurate parameter estimates by borrowing strength across different levels of the hierarchy, which is particularly beneficial in the present study for better estimation of the DDMRL model. Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [@gershman2016empirical; @van2021hierarchical].
+
+Given these advantages, we selected 89% credible intervals rather than the conventional 95% to emphasize our estimation approach [@mcelreath2020statistical].
 
 \pagebreak
 
@@ -186,33 +200,44 @@ The RLDDM encompasses six key parameters:
 
 ## Estimation
 
-The RLDDM is the most advanced method for analyzing performance in the probabilistic reversal learning (PRL) task. The RLDDM was estimated in a hierarchical Bayesian framework using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package [@fengler2021likelihood; @wiecki2013hddm]. Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods [e.g., @gershman2016empirical; @van2021hierarchical]. 
-
-The posterior distribution of group and individual parameters of the RLHDDM model were estimated in a hierarchical Bayesian framework using the "HDDMrl" module of the "HDDM" (version 0.9.8) Python package [for a detailed description of the model, see @pedersen2020simultaneous; @wiecki2013hddm].
-
+The RLDDM is the most advanced method for analyzing performance in the probabilistic reversal learning (PRL) task. We estimated the RLDDM using a hierarchical Bayesian framework with the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.7) Python package [@fengler2021likelihood; @wiecki2013hddm]. The posterior distribution of group and individual parameters was also estimated using the $\texttt{HDDMrl}$ module of the $\texttt{HDDM}$ (version 0.9.8) Python package. For a detailed description of the model, refer to [@pedersen2020simultaneous; @wiecki2013hddm].
 
 ## Priors
 
-The Bayesian posterior estimations of the RLDDM rely on informative priors obtained from a prior meta-analysis [@wiecki2013hddm] for the DDM aspect of the model. On the other hand, non-informative broad normal distributions, centered at 0.5 after transformation, are used for the learning rate parameters (positive and negative).
+The Bayesian posterior estimations of the RLDDM rely on informative priors for the DDM component, obtained from a prior meta-analysis [@wiecki2013hddm]. For the learning rate parameters (positive and negative), we used non-informative broad normal distributions, centered at 0.5 after transformation.
 
 \pagebreak
 
 # Data analysis
 
-## Quality control
+## Quality Control
 
-To ensure the quality of the data, we excluded participants who performed below chance level in the probabilistic reversal learning (PRL) task. Chance level in the PRL task is 50%, so participants who scored below 50% were excluded [e.g., @geisler_increased_2017]. Additionally, we excluded two participants with R-AN who had convergence problems, which are indicated by a large R-hat convergence diagnostic. As a result, the final sample for subsequent analyses consisted of 117 participants who met the quality control criterion. This sample included 36 individuals with R-AN, 45 healthy controls (HC), and 36 healthy controls at risk of developing eating disorders (RI).
+To ensure data quality, we excluded participants who performed below chance level (50%) in the probabilistic reversal learning (PRL) task [e.g., @geisler_increased_2017]. Additionally, two participants with R-AN who exhibited convergence problems, indicated by a large R-hat diagnostic, were excluded. Consequently, the final sample for subsequent analyses consisted of 117 participants: 36 individuals with R-AN, 45 healthy controls (HC), and 36 healthy controls at risk of developing eating disorders (RI).
 
-## Models comparison
 
-The study utilized the Rescorla-Wagner model as a foundation for developing new RLDDM models. In these new models, all parameters were allowed to vary by condition (i.e., food-related vs. food-unrelated information) and group, given the lack of prior evidence indicating specific parameter effects or group variations related to food information.
+## Model Comparison
 
-Markov chain Monte Carlo (MCMC) sampling was employed to estimate these models, with 2000 traces sampled following a 500-trace burn-in period. The Deviance Information Criterion (DIC) was calculated for each model, and the model with the lowest DIC was selected. The selected model was then re-estimated using 15,000 traces with a 5,000-trace burn-in period [@kruschke_bayesian_2018].
+The study used the Rescorla-Wagner model as a foundation to develop new RLDDM models. In these models, all parameters were allowed to vary by condition (i.e., food-related vs. food-unrelated information) and group due to the absence of prior evidence indicating specific parameter effects or group variations related to food information.
 
-```
+Markov chain Monte Carlo (MCMC) sampling was employed to estimate these models. Initially, 2000 traces were sampled following a 500-trace burn-in period. The Deviance Information Criterion (DIC) was calculated for each model, and the model with the lowest DIC was selected. The selected model was then re-estimated using 15,000 traces with a 5,000-trace burn-in period [@kruschke_bayesian_2018].
+
+The Rescorla-Wagner and the following RLDDM models were examined:
+
+- Model M0: Standard Rescorla-Wagner model. DIC = 39506.552.
+- Model M1: RLDDM without conditioning. DIC = 39879.444.
+- Model M2: Separate learning rates for positive and negative reinforcements. DIC = 39124.890.
+- Model M3: Group-based $\alpha^+$ and $\alpha^-$ parameters. DIC = 39194.763.
+- Model M4: Group and stimulus-based $\alpha^+$ and $\alpha^-$ parameters. DIC = 38197.467.
+- Model M5: Group and stimulus-based $\alpha^+$, $\alpha^-$, and decision threshold (a) parameters. DIC = 36427.448.
+- Model M6: Group and stimulus-based $\alpha^+$, $\alpha^-$, $a$, and drift rate (v) parameters. DIC = 36185.146.
+- Model M7: Group and stimulus-based $\alpha^+$, $\alpha^-$, $a$, $v$, and non-decision time ($t$) parameters. DIC = 34904.053.
+- Model M8: Group and stimulus-based $\alpha^+$, $\alpha^-$, $a$, $v$, $t$, and starting point ($z$) parameters. DIC = 34917.762.
+
+The following code snippet illustrates the estimation process for Model M7:
+
+```python
 m7 = hddm.HDDMrl(
     data,
-    # bias=True,
     depends_on={
         "a": ["group", "stim"],
         "v": ["group", "stim"],
@@ -230,32 +255,16 @@ m8.find_starting_values()
 m8.sample(15000, burn=5000, dbname="models/ddm8_final.db", db="pickle")
 ```
 
-\pagebreak
+By comparing the DIC values, Model M7 was identified as the best-fitting model, capturing the complexity of group and stimulus-based variations in the learning parameters.
 
-## Models selection
 
-The Rescorla-Wagner and the following RLDDM models were examined:
+## Model Evaluation and Hypothesis Testing
 
-- Model M0: Standard Rescorla-Wagner model. DIC = 39506.552.
-- Model M1: RLDDM without conditioning. DIC = 39879.444.
-- Model M2: Separate learning rates for positive and negative reinforcements. DIC = 39124.890.
-- Model M3: Group-based  $\alpha^+$ and $\alpha^-$ parameters. DIC = 39194.763.
-- Model M4: Group and stimulus-based  $\alpha^+$ and $\alpha^-$ parameters. DIC = 38197.467.
-- Model M5: Group and stimulus-based $\alpha^+$, $\alpha^-$, and decision threshold (a) parameters. DIC = 36427.448.
-- Model M6: Group and stimulus-based $\alpha^+$, $\alpha^-$, $a$, and drift rate (v) parameters. DIC = 36185.146.
-- Model M7: Group and stimulus-based  $\alpha^+$, $\alpha^-$, $a$, $v$, and non-decision time ($t$) parameters. DIC = 34904.053.
-- Model M8: Group and stimulus-based $\alpha^+$, $\alpha^-$, $a$, $v$, $t$, and starting point ($z$) parameters. DIC = 34917.762.
-
+Convergence was assessed using the Gelman-Rubin statistic, with $\hat{R}$ values for all parameters in Model M7 below 1.05, indicating good convergence. Collinearity and posterior predictive checks were also conducted to ensure model validity. To examine the impact of disorder-related versus neutral stimuli on reinforcement learning, we compared the posterior estimates of Model M7's RLDDM parameters between the two conditions.
 
 \pagebreak
 
-## Model Estimation and Hypothesis Testing
-
-Model M7 was estimated with 15,000 iterations, including a 5,000 iterations burn-in. Convergence was assessed using the Gelman-Rubin statistic, with $ \hat{R} $ values for all parameters in Model M7 below 1.05, indicating good convergence. Collinearity and posterior predictive checks were also conducted for model validity. To examine the impact of disorder-related versus neutral stimuli on RL, we compared Model M7's RLDDM parameter posterior estimates between the two conditions.
-
-\pagebreak
-
-## Additional table
+# Additional table
 
 Table S1. Posterior Parameter Estimates of RLDDM Comparison Between R-AN Participants with and without Diagnosed Comorbid Conditions, Separated by Food-Related and Food-Unrelated Conditions.
 
@@ -268,9 +277,11 @@ Table S1. Posterior Parameter Estimates of RLDDM Comparison Between R-AN Partici
 | $\alpha^+$  | -0.635, 95% CI (-4.301, 2.449)                            | -1.739, 95% CI (-6.184, 1.654)                             |
 
 
-## Additional figures
+\pagebreak
 
-### Within-group comparisons
+# Additional figures
+
+## Within-group comparisons
 
 ```{r, echo=FALSE, fig.align = "center", out.width="50%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\alpha^{-}$ ($\\alpha^{-}_{food} - \\alpha^{-}_{neutral}$) across the three groups of participants."}
 knitr::include_graphics(
@@ -278,6 +289,7 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
 
 ```{r, echo=FALSE, fig.align = "center", out.width="60%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\nu$ ($\\nu_{food} - \\nu_{neutral}$) across the three groups of participants."}
 knitr::include_graphics(
@@ -285,6 +297,7 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
 
 ```{r, echo=FALSE, fig.align = "center", out.width="60%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $t$ ($t_{food} - t_{neutral}$) across the three groups of participants."}
 knitr::include_graphics(
@@ -294,7 +307,7 @@ knitr::include_graphics(
 
 \pagebreak
 
-### Between-group comparisons
+## Between-group comparisons
 
 
 ```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\alpha^{-}$ ($\\alpha^{-}_{food} - \\alpha^{-}_{neutral}$) across the three groups of participants."}
@@ -303,12 +316,16 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
+
 
 ```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $\\nu$ ($\\nu_{food} - \\nu_{neutral}$) across the three groups of participants."}
 knitr::include_graphics(
   here::here("reports", "img", "sup_mat", "between_group", "v_param.pdf")
 )
 ```
+
+\pagebreak
 
 
 ```{r, echo=FALSE, fig.align = "center", out.width="110%", fig.cap = "Plots of the posterior distribution of the within-group effects of parameter $t$ ($t_{food} - t_{neutral}$) across the three groups of participants."}
@@ -319,7 +336,7 @@ knitr::include_graphics(
 
 \pagebreak
 
-## Collinearity check
+# Collinearity check
 
 As shown in the following figure, for all three groups the correlation between the parameters is generally low.
 
@@ -331,13 +348,13 @@ knitr::include_graphics(
 
 \pagebreak
 
-## Posterior predictive checks
+# Posterior predictive checks
 
 To assess model validity, we performed posterior predictive checks. This involved simulating data using estimated parameters and comparing observed and simulated results. We generated the simulated dataset by repeating the simulation process 500 times for each subject in a sample dataset.
 
-### PPC for learning rate 
+## PPC for learning rate 
 
-To evaluate the choice proportion for the best option across learning in both observed and simulated data, we binned the trials and plotted the 90% highest density intervals of the mean responses. The following figures illustrate the rate of selecting the best option during learning. The 90% highest density interval of the means across simulated datasets captures the uncertainty present in the generated data.
+To evaluate the choice proportion for the best option across learning in both observed and simulated data, we binned the trials and plotted the 89% highest density intervals of the mean responses. The figures below illustrate the rate of selecting the best option during learning. The 89% highest density interval of the means across simulated datasets captures the uncertainty present in the generated data.
 
 
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: R-AN group."}
@@ -346,11 +363,15 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
+
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: HC group."}
 knitr::include_graphics(
   here::here("reports", "img", "sup_mat", "pp_check", "PPClearningrate_hc.pdf")
 )
 ```
+
+\pagebreak
 
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted learning rates across conditions: RI group."}
 knitr::include_graphics(
@@ -360,10 +381,9 @@ knitr::include_graphics(
 
 \pagebreak
 
-### PPC for reaction times
+## PPC for reaction times
 
-The density plots of observed and predicted reaction time across conditions are presented in the following figures. To distinguish upper and lower bound responses, reaction times for lower boundary choices (i.e., worst option choices) were set to be negative (0-RT). There is a good agreement between the observed and predicted values.
-
+The density plots of observed and predicted reaction times across conditions are presented in the following figures. To distinguish upper and lower bound responses, reaction times for lower boundary choices (i.e., worst option choices) were set to be negative (0-RT). The observed and predicted values show good agreement, indicating the model's accuracy in capturing the reaction time distributions.
 
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: R-AN group."}
 knitr::include_graphics(
@@ -371,11 +391,15 @@ knitr::include_graphics(
 )
 ```
 
+\pagebreak
+
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: HC group."}
 knitr::include_graphics(
   here::here("reports", "img", "sup_mat", "pp_check", "PPCrt_hc.pdf")
 )
 ```
+
+\pagebreak
 
 ```{r, echo=FALSE, fig.align = "center", out.width="99%", fig.cap = "Observed and predicted reaction times across conditions: RI group."}
 knitr::include_graphics(
@@ -387,13 +411,13 @@ knitr::include_graphics(
 
 # Comorbidity
 
-Individuals with eating disorders often have comorbid psychiatric conditions, including depression (up to 75%), bipolar disorder (10%), anxiety disorders, obsessive-compulsive disorder (40%), panic disorder (11%), social anxiety disorder/social phobia, post-traumatic stress disorder (prevalence varies with eating disorder), and substance abuse (15-40%) – see @woodside2006management.
+Individuals with eating disorders often have comorbid psychiatric conditions, including depression (up to 75%), bipolar disorder (10%), anxiety disorders, obsessive-compulsive disorder (40%), panic disorder (11%), social anxiety disorder/social phobia, post-traumatic stress disorder (prevalence varies with eating disorder), and substance abuse (15-40%) [@woodside2006management].
 
-In this study, we included patients with comorbidities in our sample in order to increase the generalizability of our findings to the broader psychiatric population: 16 individuals with R-AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
+In this study, we included patients with comorbidities to increase the generalizability of our findings to the broader psychiatric population. Specifically, 16 individuals with R-AN were diagnosed with comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
 
-Here, we present the results of applying a modified version of model M7 to the R-AN data, where patients were categorized into two groups based on the presence or absence of comorbidities. The potential effects of comorbidities were evaluated using the following model.
+We applied a modified version of model M7 to the R-AN data, categorizing patients into two groups based on the presence or absence of comorbidities. The potential effects of comorbidities were evaluated using the following model:
 
-```
+```python
 m = hddm.HDDMrl(
     data,
     depends_on={
@@ -409,29 +433,28 @@ m = hddm.HDDMrl(
 )
 ```
 
-The results show no credible differences in the posterior estimates of the model parameters between the group with comorbidities and those without comorbidities. Specifically, for disorder-related choices, the difference in the $a$ parameter was -0.034 (95% CI [-0.188, 0.124]), for $v$ it was 0.230 (95% CI [-1.203, 1.586]), for $t$ it was 0.002 (95% CI [-0.050, 0.055]), for $\alpha^-$ it was 2.614 (95% CI [-3.173, 8.364]), and for $\alpha^+$ it was -0.635 (95% CI [-4.301, 2.449]). For disorder-unrelated choices, the differences in the respective parameters were -0.126 (95% CI [-0.281, 0.025]) for $a$, 0.744 (95% CI [-0.452, 1.885]) for $v$, -0.003 (95% CI [-0.057, 0.052]) for $t$, -0.768 (95% CI [-6.570, 4.401]) for $\alpha^-$, and -1.739 (95% CI [-6.184, 1.654]) for $\alpha^+$.
+The results show no credible differences in the posterior estimates of the model parameters between the group with comorbidities and those without comorbidities. Specifically, for disorder-related choices, the difference in the $a$ parameter was -0.034 (89% CI [-0.188, 0.124]), for $v$ it was 0.230 (89% CI [-1.203, 1.586]), for $t$ it was 0.002 (89% CI [-0.050, 0.055]), for $\alpha^-$ it was 2.614 (89% CI [-3.173, 8.364]), and for $\alpha^+$ it was -0.635 (89% CI [-4.301, 2.449]). For disorder-unrelated choices, the differences in the respective parameters were -0.126 (89% CI [-0.281, 0.025]) for $a$, 0.744 (89% CI [-0.452, 1.885]) for $v$, -0.003 (89% CI [-0.057, 0.052]) for $t$, -0.768 (89% CI [-6.570, 4.401]) for $\alpha^-$, and -1.739 (89% CI [-6.184, 1.654]) for $\alpha^+$.
 
-The 95% credibility intervals of these parameter differences encompass zero, suggesting a lack of credible evidence for any substantial difference in the RLDDM parameters between patients with and without comorbid diagnoses. These findings indicate that the conservative RL patterns observed for disorder-related choices are not attributable to the presence of comorbidities in individuals with R-AN.
+The 89% credible intervals of these parameter differences encompass zero, suggesting a lack of credible evidence for any substantial difference in the RLDDM parameters between patients with and without comorbid diagnoses. These findings indicate that the conservative RL patterns observed for disorder-related choices are not attributable to the presence of comorbidities in individuals with R-AN.
 
-\pagebreak
 
 # Medication
 
 A similar statistical analysis to the previous section was conducted, categorizing individuals with R-AN into two groups based on the presence or absence of medication.
 
-The results show no credible differences in the posterior estimates of the model parameters between the group with medication and those without medication. Specifically, for disorder-related choices, the difference in the $a$ parameter was -0.074 (95% CI [-0.233, 0.078]), for $v$ it was 0.370 (95% CI [-0.952, 1.701]), for $t$ it was 0.005 (95% CI [-0.048, 0.059]), for $\alpha^-$ it was 1.010 (95% CI [-4.506, 6.468]), and for $\alpha^+$ it was -0.440 (95% CI [-3.705, 2.547]). For disorder-unrelated choices, the differences in the respective parameters were -0.056 (95% CI [-0.208, 0.100]) for $a$, 0.837 (95% CI [-0.360, 2.031]) for $v$, -0.007 (95% CI [-0.066, 0.047]) for $t$, -1.843 (95% CI [-7.674, 3.351]) for $\alpha^-$, and -3.346 (95% CI [-7.475, 0.241]) for $\alpha^+$.
+The results show no credible differences in the posterior estimates of the model parameters between the group with medication and those without. Specifically, for disorder-related choices, the difference in the $a$ parameter was -0.074 (89% CI [-0.233, 0.078]), for $v$ it was 0.370 (89% CI [-0.952, 1.701]), for $t$ it was 0.005 (89% CI [-0.048, 0.059]), for $\alpha^-$ it was 1.010 (89% CI [-4.506, 6.468]), and for $\alpha^+$ it was -0.440 (89% CI [-3.705, 2.547]). For disorder-unrelated choices, the differences in the respective parameters were -0.056 (89% CI [-0.208, 0.100]) for $a$, 0.837 (89% CI [-0.360, 2.031]) for $v$, -0.007 (89% CI [-0.066, 0.047]) for $t$, -1.843 (89% CI [-7.674, 3.351]) for $\alpha^-$, and -3.346 (89% CI [-7.475, 0.241]) for $\alpha^+$.
 
-The 95% credibility intervals of these parameter differences encompass zero, suggesting a lack of credible evidence for any substantial difference in the RLDDM parameters between patients with and without medication. These findings indicate that the conservative RL patterns observed for disorder-related choices are not attributable to the presence of medication in individuals with R-AN.
+The 89% credible intervals of these parameter differences encompass zero, suggesting a lack of credible evidence for any substantial differences in the RLDDM parameters between patients with and without medication. These findings indicate that the conservative RL patterns observed for disorder-related choices are not attributable to the presence of medication in individuals with R-AN.
 
 \pagebreak
 
-# Biased choices
+# Biased Choices
 
-To investigate whether the conservative learning behavior seen in patients with R-AN  during the PRL task, when making choices relevant to their disorder, could be due to a general preference for non-food-related images regardless of their past action-outcome history, we conducted a specific analysis. Our focus was on the frequency of food-related choices in the PRL blocks. More precisely, we examined the PRL blocks where participants were presented with a choice between a food image and a neutral image. We asked whether individuals with R-AN tended to choose the food image less frequently compared to the other control groups.
+To investigate whether the conservative learning behavior observed in patients with R-AN during the PRL task, particularly when making disorder-relevant choices, could be due to a general preference for non-food-related images regardless of their past action-outcome history, we conducted a specific analysis. We focused on the frequency of food-related choices in the PRL blocks where participants chose between a food image and a neutral image. We aimed to determine if individuals with R-AN tended to choose the food image less frequently compared to the control groups.
 
-We focused on specific PRL blocks where participants had to select between a food image and a non-food image. We calculated the percentage of times each participant chose the food image. This percentage was then used as the dependent variable in a robust Bayesian regression model.
+We calculated the percentage of times each participant chose the food image in these specific PRL blocks and used this percentage as the dependent variable in a robust Bayesian regression model.
 
-```
+```r
 priors <- c(
   set_prior("student_t(4, 0, 1.0)", class = "b")
 )
@@ -453,28 +476,28 @@ bmod <- brm(
 )
 ```
 
-In the R-AN group, the proportion of food choices was 0.48, with a 95% credible interval ranging from 0.46 to 0.51. Since the 95% CI includes the value of 0.5, the data do not provide credible evidence of a bias in the R-AN group away from food choices.
+In the R-AN group, the proportion of food choices was 0.48, with an 89% credible interval ranging from 0.46 to 0.51. Since the 89% credible interval includes the value of 0.5, the data do not provide credible evidence of a bias away from food choices in the R-AN group.
 
-The comparisons between the R-AN group and the two control groups are given by the following contrasts.
+The comparisons between the R-AN group and the two control groups are given by the following contrasts:
 
- | contrast  | estimate | lower.HPD | upper.HPD |
- | --------- | -------- | --------- | --------- |
- | R-AN - HC | -0.010   |  -0.041   | 0.021     |
- | R-AN - RI | 0.012    | -0.020    | 0.045     |
+| Contrast  | Estimate | Lower HPD | Upper HPD |
+| --------- | -------- | --------- | --------- |
+| R-AN - HC | -0.010   | -0.041    | 0.021     |
+| R-AN - RI |  0.012   | -0.020    | 0.045     |
 
-In both cases, the 95% credibility interval is inclusive of 0, indicating no credible difference between the R-AN group and the other two groups in the likelihood of selecting the food image compared to the neutral image. 
+In both cases, the 89% credibility interval includes zero, indicating no credible difference between the R-AN group and the control groups in the likelihood of selecting the food image compared to the neutral image.
 
 \pagebreak
 
-# Outcome-irrelevant learning: spatial-motor associations
+# Outcome-irrelevant Learning: Spatial-Motor Associations
 
-@shahar2019credit investigated the impact of spatial-motor associations on participants’ RL. Optimal decision-making prioritizes rewards regardless of spatial-motor associations, such as the choice of response key in the previous trial. @shahar2019credit found that rewards had a greater impact on the probability of choosing between two images presented in each trial when the chosen image was linked to the same response key in both the n-1 and n trials.
+@shahar2019credit investigated the impact of spatial-motor associations on reinforcement learning (RL). Optimal decision-making should prioritize rewards, irrespective of spatial-motor associations, such as the choice of response key in previous trials. @shahar2019credit found that rewards had a greater impact on the probability of choosing between two images when the chosen image was linked to the same response key in both the n-1 and n trials.
 
-In order to investigate whether the likelihood of selecting ‘stay’ was greater for ‘same’ versus ‘flipped’ response/key mapping in our data, when contrasting rewarded and unrewarded responses, we reproduced the statistical analyses conducted by @shahar2019credit and @ben2022working.
+To investigate whether the likelihood of selecting ‘stay’ (choosing the same image) was greater for ‘same’ versus ‘flipped’ response/key mapping in our data, we replicated the statistical analyses conducted by @shahar2019credit and @ben2022working. We focused on contrasting rewarded and unrewarded responses in our probabilistic reversal learning (PRL) task.
 
-We performed two Bayesian multilevel regression models using the `brm` function from the brms package in R, which utilizes Stan on the back-end. One model included a group effect, while the other did not.
+We performed two Bayesian multilevel regression models using the `brm` function from the brms package in R, which utilizes Stan on the back-end. One model included a group effect (HC, RI, R-AN), while the other did not.
 
-```
+```r
 priors_0 <- c(
   set_prior("student_t(3, 0, 0.2)", class = "b", coef = "Intercept"),
   set_prior("student_t(3, 0, 0.2)", class = "b"),
@@ -496,15 +519,15 @@ mod_0 <- brm(
 )
 ```
 
-We observed no credible effect of group (HC, RI, R-AN) or a credible interaction between group, previous outcome, and mapping (ELPD difference = -4.5, SE = 2.8). The simpler model used `stay` as the dependent variable (1 if the same response key was chosen in trial $i$ as in trial $i-1$, 0 otherwise), with `mapping` (repeated or flipped image-to-key mapping), `feedback` (reward, punishment), and their interaction as fixed-effects, and `subj_idx` as a random variable. The marginal effects of the `mapping` $\times$ `feedback` interaction ($\beta$ = 0.93, 95% CI [0.81, 1.06]) are shown in the following figure.
+We observed no credible effect of group (HC, RI, R-AN) or a credible interaction between group, previous outcome, and mapping (ELPD difference = -4.5, SE = 2.8). The simpler model used `stay` as the dependent variable (1 if the same response key was chosen in trial $i$ as in trial $i-1$, 0 otherwise), with `mapping` (repeated or flipped image-to-key mapping), `feedback` (reward, punishment), and their interaction as fixed effects, and `subj_idx` as a random effect. The marginal effects of the `mapping` $\times` `feedback` interaction ($\beta$ = 0.93, 95% CI [0.81, 1.06]) are shown in the following figure.
 
 ```{r prl-task, fig.align = "center", echo=F}
 knitr::include_graphics(here::here("reports", "img", "shahar_02.pdf"))
 ```
 
-The figure shows the probability of choosing the same image at trial $n$ + 1, depending on the outcome (rewarded vs. unrewarded) and mapping (flipped vs. same). Results indicate a tendency to repeat image selection after a rewarded trial. Notably, a stronger effect of reward was observed when the image was mapped to the same response key, compared to the alternative key. Error bars represent 95% credibility intervals.
+The figure shows the probability of choosing the same image at trial $n$ + 1, depending on the outcome (rewarded vs. unrewarded) and mapping (flipped vs. same). Results indicate a tendency to repeat image selection after a rewarded trial. Notably, a stronger effect of reward was observed when the image was mapped to the same response key compared to the alternative key. Error bars represent 95% credibility intervals.
 
-In conclusion, our study successfully replicated the findings reported by @shahar2019credit and @ben2022working, providing evidence that the effects of reward extend not only to the relevant image but also to the outcome-irrelevant response key. This highlights the impact of outcome-irrelevant factors, such as contextual effects in our study and spatial-motor mapping in the study of @shahar2019credit, on reinforcement learning in a PRL task.
+In conclusion, our study successfully replicated the findings reported by @shahar2019credit and @ben2022working, providing evidence that the effects of reward extend not only to the relevant image but also to the outcome-irrelevant response key. This highlights the impact of outcome-irrelevant factors, such as contextual effects in our study and spatial-motor mapping in @shahar2019credit, on reinforcement learning in a PRL task.
 
 \pagebreak
 

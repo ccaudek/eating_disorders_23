@@ -1,0 +1,728 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  man,floatsintext]{apa6}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{english}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+% Manuscript styling
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+% Table formatting
+\usepackage{longtable}
+\usepackage{lscape}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
+
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\centering\begin{threeparttable}}
+%   {\end{threeparttable}\end{landscape}}
+\newenvironment{lltable}{\begin{landscape}\centering\begin{ThreePartTable}}{\end{ThreePartTable}\end{landscape}}
+
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
+
+% Overwrite redefinition of paragraph and subparagraph by the default LaTeX template
+% See https://github.com/crsh/papaja/issues/292
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\parindent}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries\itshape\typesectitle}}
+
+\renewcommand{\subparagraph}[1]{\@startsection{subparagraph}{5}{1em}%
+  {0\baselineskip \@plus 0.2ex \@minus 0.2ex}%
+  {-\z@\relax}%
+  {\normalfont\normalsize\itshape\hspace{\parindent}{#1}\textit{\addperi}}{\relax}}
+\makeatother
+
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+
+\usepackage{xpatch}
+\makeatletter
+\xapptocmd\appendix
+  {\xapptocmd\section
+    {\addcontentsline{toc}{section}{\appendixname\ifoneappendix\else~\theappendix\fi\\: #1}}
+    {}{\InnerPatchFailed}%
+  }
+{}{\PatchFailed}
+\keywords{keywords\newline\indent Word count: X}
+\usepackage{lineno}
+
+\linenumbers
+\usepackage{csquotes}
+\usepackage{amsmath, xcolor, hyperref, svg, url, array, tabularx, booktabs, caption, float, resizegather, verbatim,threeparttable, caption, soul, pdflscape, longtable,  setspace, adjustbox, threeparttable, booktabs, longtable, makecell, rotating, afterpage, tabularx}
+\newcommand{\comm}[1]{\ignorespaces}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Contextual influence of reinforcement learning performance in Anorexia Nervosa},
+  pdfauthor={Corrado Caudek1 \& Ernst-August Doelle1,2},
+  pdflang={en-EN},
+  pdfkeywords={keywords},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Contextual influence of reinforcement learning performance in Anorexia Nervosa}
+\author{Corrado Caudek\textsuperscript{1} \& Ernst-August Doelle\textsuperscript{1,2}}
+\date{}
+
+
+\shorttitle{CONTEXTUAL LEARNING IN AN}
+
+\authornote{
+
+Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+Enter author note here.
+
+The authors made the following contributions. Corrado Caudek: Conceptualization, Writing - Original Draft Preparation, Writing - Review \& Editing; Ernst-August Doelle: Writing - Review \& Editing, Supervision.
+
+Correspondence concerning this article should be addressed to Corrado Caudek, Postal address. E-mail: \href{mailto:my@email.com}{\nolinkurl{my@email.com}}
+
+}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Wilhelm-Wundt-University\\\textsuperscript{2} Konstanz Business School}
+
+\abstract{%
+\textbf{Objective:} This study utilized a within-subject design to examine whether individuals with restrictive anorexia nervosa (R-AN; \emph{n} = 40) perform similarly to healthy controls (HCs; \emph{n} = 45) and healthy controls at risk of eating disorders (RI; \emph{n} = 36) in a reinforcement learning (RL) tasks. Specifically, we aimed to determine if RL performance is comparable between groups for disorder-unrelated choices, but significantly impaired for disorder-related choices. \textbf{Method:} RL performance was assessed using a Probabilistic Reversal Learning (PRL) task, where participants were asked to perform disorder-related choices or disorder-unrelated choices. \textbf{Results:} R-AN individuals demonstrated lower learning rates for disorder-related decisions, while their performance on neutral decisions was comparable to participants with Bulimia Nervosa, Healthy Controls (HCs), and HCs at risk of eating disorders. Additionally, only AN patients exhibited reduced learning rates for outcome-irrelevant food-related decisions in reward-based learning, as opposed to food-unrelated decisions. \textbf{Discussion:} Impaired RL task performance in individuals with AN may be attributed to external factors rather than compromised learning mechanisms. These findings indicate that AN may significantly impact the cognitive processing of food-related information, even when AN patients do not show learning rate disadvantages compared to HCs in decision-making involving food-unrelated information. This study provides valuable insights into the reinforcement learning processes of individuals with AN and emphasizes the need to consider the influence of food-related information on cognitive functioning in this patient population. The findings have potential implications for the development of interventions targeting decision- making processes in individuals with AN
+}
+
+
+
+\begin{document}
+\maketitle
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+Anorexia Nervosa (AN) is one of the most common eating disorders characterized by distorted body perception and pathological weight loss, particularly in its restricting type (R-AN) (American Psychiatric Association, 2022). Lifetime prevalence for AN has been reported at 1.4\% for women and 0.2\% for men (Galmiche, Déchelotte, Lambert, \& Tavolacci, 2019; Smink, Hoeken, \& Hoek, 2013), with a mortality rate that can be as high as 5-20\% (Qian et al., 2022). Treating AN is extremely challenging (Atwood \& Friedman, 2020; Linardon, Fairburn, Fitzsimmons-Craft, Wilfley, \& Brennan, 2017), highlighting the importance of gaining a deeper understanding of its underlying mechanisms (Chang, Delgadillo, \& Waller, 2021).
+
+Executive functions have gained significant attention in the research on understanding the mechanisms underlying Anorexia Nervosa (AN). Impairments in executive processes, such as cognitive inflexibility, decision-making difficulties, and inhibitory control problems, have been identified as potential risk and perpetuating factors in AN (Bartholdy, Dalton, O'Daly, Campbell, \& Schmidt, 2016; Guillaume et al., 2015; Wu et al., 2014). Within this domain, Reinforcement Learning (RL) in the context of associative learning has received considerable interest. In fact, the presence of persistent maladaptive eating behaviors in individuals with AN, despite experiencing negative consequences, along with indications of altered reward and punishment sensitivity, has led to the proposal of abnormal reward responsiveness and reward learning in AN (Schaefer \& Steinglass, 2021). While there is strong evidence supporting the presence of anomalies in reward responsiveness in individuals with AN, our current understanding of potential abnormalities in AN-related reward learning remains limited.
+
+In relation to the dysfunctions observed in reward responsiveness among individuals with AN, research has revealed that the intense levels of dietary restriction and physical activity characteristic of AN can indeed activate reward pathways (Keating, 2010; Keating, Tilbrook, Rossell, Enticott, \& Fitzgerald, 2012; Selby \& Coniglio, 2020). Additionally, individuals with AN may exhibit diminished reward responses specifically towards food (Wierenga et al., 2014). In a broader sense, research has shown that AN is associated with reduced subjective reward sensitivity and decreased neural response to rewarding stimuli. Moreover, individuals with AN may experience disruptions in processing aversive stimuli, leading to heightened harm avoidance, intolerance of uncertainty, increased anxiety, and oversensitivity to punishment (Fladung, Schulze, Schöll, Bauer, \& Groen, 2013; Jappe et al., 2011; Keating et al., 2012; O'Hara, Campbell, \& Schmidt, 2015). These factors contribute to an altered response to negative feedback and a tendency to avoid aversive outcomes (Jonker, Glashouwer, \& Jong, 2022; Matton, Goossens, Braet, \& Vervaet, 2013). Neuroimaging studies have further supported these findings by revealing neural dysfunction in AN's response to loss and aversive taste (Bischoff-Grethe et al., 2013; Monteleone et al., 2017; Wagner et al., 2007).
+
+Given the critical role of reinforcement learning (RL) in learning from experience, numerous attempts have been made to investigate RL deficits in individuals with Anorexia Nervosa (AN) in order to gain insights into the underlying mechanisms responsible for their maladaptive eating behaviors (Bischoff-Grethe et al., 2013; Glashouwer, Bloot, Veenstra, Franken, \& Jong, 2014; Harrison, Genders, Davies, Treasure, \& Tchanturia, 2011; Jappe et al., 2011; Matton et al., 2013). However, results have been mixed. For example, Ritschel et al.~(2017) reported impaired RL performance in recovered AN patients compared to healthy controls (HCs) using a probabilistic reversal learning (PRL) task, particularly in response to negative feedback. In contrast, Bernardoni et al.~(2018) observed a higher learning rate from punishment in AN patients compared to HCs. Similarly, Sarrar et al.~(2015) found no differences in task performance between individuals with acute AN and HCs using the Probabilistic Object Reversal Task (pORT) with neutral stimuli. Geisler et al.~(2018) also found no group differences in a PRL task with neutral stimuli and monetary feedback.
+
+To clarify RL deficits in AN, some studies incorporated food-related feedback into the PRL paradigm. For example, Zang et al.~(2014) demonstrated that patients with binge-eating disorder performed worse when exposed to food-related feedback, indicating vulnerability to food-related cues. However, attempts to replicate these findings in AN have produced conflicting results. Hildebrandt et al.~(2015) reported increased rigidity in AN individuals using a PRL task with food-related feedback, while Hildebrandt et al.~(2018) found no differences in PRL performance between AN patients and HCs using the same paradigm.
+
+We speculate that the inconsistent findings in behavioral experiments about RL in AN may be partially attributed to the predominant use of general stimuli instead of disorder-relevant stimuli (see also Schaefer \& Steinglass, 2021). Furthermore, when disorder-related information is incorporated, it is typically limited to the feedback provided after the participant's choice, while the stimuli during the decision-making process are unrelated to the disorder. This manipulation primarily highlights the consequences of the choices rather than the contextual factors surrounding the decision-making process.
+
+This methodological choice of previous studies stems from the assumption that any potential RL impairment in AN can be attributed to deficits in a singular, underlying RL mechanism {[}ref{]}. However, an alternative perspective proposes that the atypical RL behavior observed in individuals R-AN may be better explained by contextual learning processes (Haynos, Widge, Anderson, \& Redish, 2022). This hypothesis posits that contextual factors, such as individual characteristics, long-term goals, and situational influences, can have a detrimental impact on RL performance, even when the underlying RL mechanisms remain intact. In other words, it suggests that the deficits in RL performance observed in R-AN may be the result of contextual factors influencing the learning process, rather than a fundamental impairment in the RL mechanism itself.
+
+To examine the proposed hypothesis, we conducted a study utilizing a modified version of the standard PRL task. In contrast to previous studies that utilized general stimuli (Schaefer \& Steinglass, 2021), we incorporated two distinct contexts in our task. One context involved choices between a stimulus related to the disorder (e.g., a caloric food) and a stimulus unrelated to the disorder (e.g., a lamp), while the other context involved choices between two stimuli unrelated to the disorder (i.e., flower vs objects).
+
+Considering the heightened susceptibility of individuals with R-AN to symptom-related information, such as food, body weight, and social pressure {[}ref{]}, we anticipated that their learning abilities would diminish when making decisions between a food item and a non-food item. Conversely, we expected no learning anomaly in individuals with R-AN when making choices between two non-food items in a Probabilistic Reversal Learning (PRL) task.
+
+We tested the hypothesized learning asymmetry in PRL performance among three groups: individuals with DSM-5 restricting-type Anorexia Nervosa (AN), healthy controls (HCs), and individuals at risk of developing eating disorders (RIs). The main objective of this study was to employ computational models of reinforcement learning to analyze and compare the learning outcomes within two distinct contextual conditions: decision-making involving disorder-relevant information and decision-making without disorder-relevant information.
+
+The hypothesis of contextual maladaptive RL in individuals with R-AN has significant implications for treatment strategies. Current efforts aim to improve cognitive flexibility in individuals with R-AN to address their maladaptive eating behavior. However, existing interventions have predominantly concentrated on fostering adaptive behavioral choices in contexts unrelated to the disorder (e.g., Tchanturia, Davies, Reeder, \& Wykes, 2010). Establishing evidence that maladaptive RL is context-dependent would necessitate a redirection of intervention approaches.
+
+\begin{landscape}
+   
+        \setlength{\LTleft}{0pt}
+        \setlength{\LTright}{0pt}
+        \setlength\LTcapwidth{\linewidth}
+        \setlength\tabcolsep{0pt}
+        \renewcommand{\arraystretch}{0.3}
+        \begin{longtable}{@{\extracolsep{\fill}} cc cc cc cc c}
+        \caption{Annualized continuum and emission-line flux variability characteristics of Mrk 335.      \label{annual_335}   }\\ 
+            \toprule
+            \makecell{ $\lambda_{o}$  \\} (\AA \space) / Line
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (min)}  %Spectrum ID.   & 
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (max)}
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (avg)} 
+            & EW (\AA \space)
+            &   \makecell{R$_{max}$    $\pm\ \Delta$R$_{max}$ }
+            &   \makecell{F$_{var}$    $\pm\ \Delta$F$_{var}$ }
+            &   \makecell{$\Delta$T \\ (days)}
+            &  N         \\ 
+            \midrule
+            \endfirsthead        
+            \toprule
+            \makecell{ $\lambda_{o}$ } (\AA \space) / Line
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (min)}  %Spectrum ID.   & 
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (max)}
+            &   \makecell{F$_\lambda$ $\pm\ \Delta$F$_\lambda$ \\ (avg)} 
+            & EW (\AA \space)
+            &   \makecell{R$_{max}$    $\pm\ \Delta$R$_{max}$ }
+            &   \makecell{F$_{var}$   $\pm\ \Delta$F$_{var}$ }
+            &   \makecell{$\Delta$T \\ (days)}
+            &  N         \\
+            \midrule
+            \endhead   
+            \midrule     
+            \multicolumn{9}{r}{\small\textit{Continued on the next page}}
+            \endfoot
+            \bottomrule 
+            \endlastfoot   
+    &               &               &                   &   \textbf{1981}               &               &       &       \\      
+    
+    2625    &   4.59    $\pm$   0.02    &   5.19    $\pm$   0.02    &   4.89    $\pm$   0.02    &   -   &   1.33    $\pm$   0.01    &   12.68   $\pm$   0.24    &   267 &   4   \\  
+    
+    2687    &   4.43    $\pm$   0.04    &   4.88    $\pm$   0.04    &   4.66    $\pm$   0.04    &   -   &   1.45    $\pm$   0.02    &   16.25   $\pm$   0.55    &   267 &   4   \\  
+    
+    2875    &   4.19    $\pm$   0.02    &   4.6 $\pm$   0.02    &   4.4 $\pm$   0.02    &   -   &   1.37    $\pm$   0.01    &   13.65   $\pm$   0.24    &   267 &   4   \\  \hline
+    
+    Si IV   &   1.99    $\pm$   0.1 &   1.53    $\pm$   0.08    &   1.76    $\pm$   0.09    &   19.24   &   1.3 $\pm$   0.09    &   14.21   $\pm$   3.04    &   267 &   3   \\  
+    C IV    &   6.13    $\pm$   0.1 &   6.41    $\pm$   0.06    &   6.27    $\pm$   0.08    &   73.39   &   1.05    $\pm$   0.02    &   2.34    $\pm$   0.85    &   267 &   3   \\  
+    
+    C III]  &   1.85    $\pm$   0.07    &   6.38    $\pm$   0.06    &   4.12    $\pm$   0.07    &   40.66   &   0.52    $\pm$   0.19    &   70.91   $\pm$   1.1 &   0.26    &   6   \\  
+    
+    Mg II   &   0.98    $\pm$   0.05    &   0.79    $\pm$   0.05    &   0.89    $\pm$   0.05    &   16.42   &   1.45    $\pm$   0.12    &   19.02   $\pm$   3.57    &   63  &   3   \\  \hline\hline
+    
+    &               &               &                   &   \textbf{1982}               &               &       &       \\      
+    
+    1350    &   10.57   $\pm$   0.03    &   10.58   $\pm$   0.04    &   10.58   $\pm$   0.04    &   -   &   1.06    $\pm$   0.01    &   3.49    $\pm$   0.21    &   0.26    &   3   \\  
+    
+    1450    &   9.32    $\pm$   0.06    &   8.93    $\pm$   0.07    &   9.13    $\pm$   0.07    &   -   &   1.16    $\pm$   0.01    &   7.41    $\pm$   0.43    &   0.26    &   3   \\  
+                                                                                                                    
+    1605    &   10.46   $\pm$   0.06    &   9.98    $\pm$   0.06    &   10.22   $\pm$   0.06    &   -   &   1.18    $\pm$   0.01    &   8.29    $\pm$   0.32    &   0.26    &   3   \\  
+                                                                                                                
+    1675    &   9.26    $\pm$   0.03    &   8.31    $\pm$   0.04    &   8.79    $\pm$   0.04    &   -   &   0.9 $\pm$   0.01    &   10.97   $\pm$   0.26    &   0.26    &   3   \\  
+                                                                                        
+    1812    &   7.71    $\pm$   0.03    &   7.2 $\pm$   0.02    &   7.46    $\pm$   0.03    &   -   &   1.13    $\pm$   0.01    &   6.16    $\pm$   0.23    &   0.26    &   3   \\  
+                                                                                                                
+    Si IV   &   2.38    $\pm$   0.09    &   1.97    $\pm$   0.08    &   2.18    $\pm$   0.09    &   24.88   &   1.21    $\pm$   0.07    &   9.72    $\pm$   2.32    &   0.14    &   3   \\  
+                                                                                                                    
+    C IV    &   6.73    $\pm$   0.08    &   6.37    $\pm$   0.07    &   6.55    $\pm$   0.08    &   87.18   &   1.16    $\pm$   0.02    &   7.79    $\pm$   0.66    &   0.14    &   3   \\  
+                                                                                                                    
+    He II   &   2.39    $\pm$   0.07    &   2.65    $\pm$   0.08    &   2.52    $\pm$   0.08    &   37.91   &   1.34    $\pm$   0.06    &   15.11   $\pm$   1.54    &   0.14    &   3   \\  
+                                                                                                                    
+    C III]  &   3.29    $\pm$   0.06    &   1.08    $\pm$   0.07    &   2.19    $\pm$   0.07    &   25.5    &   3.14    $\pm$   0.22    &   60.26   $\pm$   2.12    &   0.07    &   4   \\  \hline\hline
+                                                                                                                    
+                                                                                                                    
+    &       $\pm$       &       $\pm$       &                   &   \textbf{1985}       &       &       $\pm$       &       &       \\      
+                                                                                                                    
+    C III]  &   2.3 $\pm$   0.05    &   7.58    $\pm$   0.04    &   4.94    $\pm$   0.05    &   81.88   &   4.78    $\pm$   0.11    &   85.59   $\pm$   0.95    &   174 &   3   \\  
+                                                                                                                    
+    C IV    &   7   $\pm$   0.06    &   10.81   $\pm$   0.05    &   8.91    $\pm$   0.06    &   153.07  &   1.54    $\pm$   0.01    &   23.7    $\pm$   0.41    &   174 &   3   \\  \hline \hline
+                                                                                                                    
+    &               &               &                   &   \textbf{1989}               &               &       &       \\      
+                                                                                                                    
+    1350    &   12.03   $\pm$   0.03    &   9.24    $\pm$   0.02    &   10.64   $\pm$   0.03    &   -   &   1.49    $\pm$   0.01    &   15.27   $\pm$   0.11    &   182 &   10  \\  
+    1450    &   10.91   $\pm$   0.06    &   9.5 $\pm$   0.05    &   10.21   $\pm$   0.06    &   -   &   1.39    $\pm$   0.01    &   11.16   $\pm$   0.22    &   182 &   7   \\  
+    1605    &   12.29   $\pm$   0.05    &   9   $\pm$   0.04    &   10.65   $\pm$   0.05    &   -   &   1.53    $\pm$   0.01    &   13.27   $\pm$   0.14    &   182 &   10  \\  
+    1675    &   10.15   $\pm$   0.04    &   8.33    $\pm$   0.03    &   9.24    $\pm$   0.04    &   -   &   0.82    $\pm$   0   &   12.89   $\pm$   0.12    &   182 &   11  \\  
+                                                                                                                    
+    1812    &   9.87    $\pm$   0.05    &   7.44    $\pm$   0.03    &   8.66    $\pm$   0.04    &   -   &   1.63    $\pm$   0.01    &   14.18   $\pm$   0.13    &   182 &   11  \\  
+                                                                                                                    
+    2475    &   6.51    $\pm$   0.02    &   5.38    $\pm$   0.01    &   5.95    $\pm$   0.02    &   -   &   1.31    $\pm$   0.01    &   11.32   $\pm$   0.14    &   182 &   6   \\  
+                                                                                                                    
+    2625    &   5.72    $\pm$   0.02    &   4.88    $\pm$   0.01    &   5.3 $\pm$   0.02    &   -   &   1.24    $\pm$   0.01    &   8.91    $\pm$   0.12    &   182 &   6   \\  
+                                                                                                                    
+    2875    &   5.04    $\pm$   0.01    &   4.18    $\pm$   0.01    &   4.61    $\pm$   0.01    &   -   &   1.29    $\pm$   0   &   11.12   $\pm$   0.25    &   182 &   6   \\  \hline
+                                                                                                                    
+    Ly$\alpha$  &   14.37   $\pm$   0.04    &   13.2    $\pm$   0.1 &   13.79   $\pm$   0.07    &   176.69  &   1.43    $\pm$   0.01    &   11.4    $\pm$   0.22    &   182 &   9   \\  
+                                                                                                                    
+    Si IV   &   1.82    $\pm$   0.08    &   3.08    $\pm$   0.07    &   2.45    $\pm$   0.08    &   24.36   &   2.12    $\pm$   0.1 &   26.58   $\pm$   1.63    &   29  &   7   \\  
+                                                                                                                    
+    C IV    &   6.32    $\pm$   0.06    &   6.26    $\pm$   0.09    &   6.29    $\pm$   0.08    &   93.79   &   1.33    $\pm$   0.02    &   9.79    $\pm$   0.38    &   58  &   9   \\  
+                                                                                                                    
+    He II   &   3.16    $\pm$   0.08    &   4.1 $\pm$   0.05    &   3.63    $\pm$   0.07    &   42.14   &   2.24    $\pm$   0.06    &   28.59   $\pm$   0.95    &   29  &   7   \\  
+            
+    C III]  &   3.96    $\pm$   0.06    &   1.19    $\pm$   0.09    &   2.58    $\pm$   0.08    &   19.66   &   5.49    $\pm$   0.43    &   71.22   $\pm$   1.87    &   54  &   9   \\  
+            
+    Mg II   &   2.55    $\pm$   0.04    &   1.2 $\pm$   0.04    &   1.88    $\pm$   0.04    &   31.24   &   3.03    $\pm$   0.11    &   42.57   $\pm$   1.25    &   54  &   7   \\  \hline\hline
+    
+        \end{longtable} 
+
+    \end{landscape}
+
+\hypertarget{methods}{%
+\section{Methods}\label{methods}}
+
+The study, which adhered to the Declaration of Helsinki, was approved by the University of Florence's Ethical Committee (Prot. n.~0178082). All eligible participants provided informed consent and willingly agreed to participate in the study.
+
+\hypertarget{participants}{%
+\subsection{Participants}\label{participants}}
+
+The study recruited a total of 40 individuals meeting criteria for DSM-5 restricting-type AN and 310 healty volunteers. Individuals with R-AN were recruited from three facilities in Italy, namely the Specchidacqua Institute in Montecatini (Pisa), the Villa dei Pini Institute in Firenze, and the Gruber Center, Outpatient Clinic in Bologna. The treatment approach consisted of Cognitive Behavioral Therapy and family-based treatment. Patients received treatment for 2 to 6 hours per day, 2 days per week. The treatment program included various components, such as individual therapy, family therapy, group therapy, nutritional counseling, psychiatric care, and medical monitoring. AN diagnosis was determined by semi-structured interview performed by specialized psychiatrists and psychologists at treatment admission according to the Diagnostic and Statistical Manual of Mental Disorders-5 (DSM-5) criteria. Individuals diagnosed with R-AN (Restrictive Anorexia Nervosa) were included in the study approximately 6 months (± 1 month) after starting treatment for eating disorders at one of the participating facilities.
+
+To ensure the broader applicability of our findings to the psychiatric population (Woodside \& Staab, 2006), we included individuals with R-AN who also had comorbid psychiatric conditions. The presence of psychiatric co-morbidities was determined by specialized psychiatrists and psychologists at the treatment centers using a semi-structured interview based on the Mini International Neuropsychiatric Interview {[}MINI; Sheehan et al. (1998){]}. Among the 40 individuals with R-AN in our study, comorbidities included anxiety disorder (n=16), OCD (n=8), social phobia (n=1), and DAP (n=1). Eighteen R-AN patients were undertaking medication (anxiolytic antidepressants = 10; Selective Serotonin Reuptake Inhibitors (SSRIs) = 6; benzodiazepines = 1; mood stabilizers (lithium) = 1).
+
+The control group consisted of 310 adolescent or young-adult females recruited through social media or university advertisements. All participants completed the Eating Attitudes Test-26 (EAT-26; Garner et al., 1982) screening tool. Females who scored higher than 20 on the EAT-26 (Dotti \& Lazzari, 1998) and did not report any current treatment for eating disorders were classified as ``at-risk'' for the study's purposes and assigned to the RI (reference/independent) group, resulting in a total of 36 ``at-risk'' females. From the remaining participants who scored lower than 20 on the EAT-26 and did not report any current treatment for eating disorders, a random sample of 45 females was selected and assigned to the HC group. It was a requirement for both the HC and RI groups that participants have a normal Body Mass Index.
+
+To be eligible for participation, individuals needed to demonstrate proficient command over both spoken and written Italian language. Exclusion criteria for all participants included a history of alcohol or drug abuse or dependence, neurological disorders, past or present psychiatric diagnosis, and intellectual or developmental disability. Cognitive function within the normal range was assessed using the Raven's Standard Progressive Matrices test (Raven et al., 2000). The eligibility criteria for all participants were evaluated through psychologist interviews by trained psychologists. Body mass index (BMI) values were determined in the laboratory.
+
+The study included a predominantly Caucasian sample, with 97.7\% of the participants identifying as Caucasian. A smaller proportion of participants identified as Asian-Italian (1.7\%) and African-Italian (0.6\%). Additionally, all selected participants were right-handed and were unaware of the study's specific objectives, ensuring a blind study design.
+
+\hypertarget{procedure}{%
+\subsection{Procedure}\label{procedure}}
+
+During the initial session, participants underwent a clinical interview to determine their eligibility for the study. Those who met the criteria and were selected proceeded to anthropometric measurements and were asked to complete the psychometric scales listed below. In a subsequent session, participants completed the PRL task and were subsequently provided with a debriefing. The study was presented to participants as an evaluation of cognitive functions through a computer-based ``game'' accompanied by additional questionnaires.
+
+We compared the characteristics of the clinical sample with the controls by administering the following scales: the EAT-26, the Body Shape Questionnaire-14 (BSQ-14; Dowson \& Henderson, 2001), the Social Interaction Anxiety Scale (SIAS; Mattick \& Clarke, 1998), the Depression Anxiety Stress Scale-21 (DASS-21; Lovibond \& Lovibond, 1995), the Rosenberg Self-Esteem Scale (RSES; Rosenberg, 1965), the Multidimensional Perfectionism Scale (MPS-F; Frost et al., 1990), and the Raven's Standard Progressive Matrices (Raven et al., 2000). The results of these statistical analyses are provided in the Supplementary Information (SI).
+
+The participants were told they were going to play a simple computer game with the objective of accumulating as many ``virtual euro'' as possible. During the Probabilistic Reversal Learning (PRL) task, participants were presented with two stimuli simultaneously on a screen and were instructed to select one within a 2.5-second time limit by pressing a key. Trials were presented in an interleaved manner, with a randomly drawn inter-trial interval ranging from 0.5 to 1.5 seconds. Following each trial, a euro coin image was displayed as a reward for correct responses, while a strike-through image of a euro coin served as a punishment for incorrect responses. Feedback was provided for 2 seconds after each trial.
+
+The PRL task consisted of two blocks, each containing 160 trials. One block included pairs of food-related and food-unrelated images, while the other block exclusively used food-unrelated images. The images were selected randomly from sets of food-related and food-unrelated categories.
+
+All images used in the study were obtained from the International Affective Picture System (IAPS) database (Lang et al., 2005). The food-related category consisted of images of french fries, cake, pancake, cheeseburger, and cupcake (IAPS \#7461, 7260, 7470, 7451, 7405), while the food-unrelated category included images of a lamp, book, umbrella, basket, and clothespin (IAPS \#7175, 7090, 7150, 7041, 7052). For the control task, five images were used for each of the two food-unrelated categories, i.e., five images of flowers (IAPS \#5000, 5001, 5020, 5030, 5202) and five images of objects (IAPS \#7010, 7020, 7034, 7056, 7170).
+
+The PRL task comprised four epochs, each consisting of 40 trials where the same image was considered correct. Feedback during the task was probabilistic, with the correct image being rewarded in 70\% of the trials, while negative feedback was provided in the remaining 30\% of the trials. Both blocks of the task included three rule changes in the form of reversal phases. Participants were informed that stimulus-reward contingencies would change, but not the specifics of how or when this would occur. The objective of the participants was to maximize their earnings, which were displayed at the end of each block. Participants underwent a training block consisting of 20 trials prior to the start of the actual experiment. Participants were instructed to rely on their instincts when uncertain. The Psychtoolbox extensions in MATLAB (MathWorks) were used to program the tasks (Brainard, 1997).
+
+\hypertarget{transparency-openness}{%
+\subsection{Transparency Openness}\label{transparency-openness}}
+
+We report all data exclusion criteria and how the sample size was determined. Data and analysis code are available upon request to the corresponding author. Data were analyzed using Python and R version 4.3.1. The study was not preregistered.
+
+\hypertarget{data-analysis}{%
+\subsection{Data analysis}\label{data-analysis}}
+
+To analyze the temporal dynamics of the two-choice decision-making in the PRL task, we employed a hierarchical reinforcement learning drift diffusion model (RLDDM), as described in Pedersen, Frank, and Biele (2017) and Pedersen and Frank (2020). This algorithm represent the state-of-the-art approach for examining performance in the PRL task. The RLDDM was estimated in a hierarchical Bayesian framework using the \(\texttt{HDDMrl}\) module of the \(\texttt{HDDM}\) (version 0.9.7) Python package (Fengler et al., 2021; Wiecki et al., 2013). Hierarchical modeling of reinforcement learning tasks has been demonstrated to yield superior predictive accuracy compared to alternative methods (Geen \& Gerraty, 2021; e.g., Gershman, 2016).
+
+We employed a Bayesian approach in our study because estimating RLDDM models is currently limited to Markov Chain Monte Carlo (MCMC) procedures. Moreover, by prioritizing estimation over hypothesis testing, the Bayesian approach overcomes the binary nature of decision-making inherent in null hypothesis significance testing (NHST) (Kruschke \& Liddell, 2018). We determined credible effects by examining 95\% credible intervals or assessing the proportion of posterior samples (97.5\%) indicating the direction of the effect.
+
+Cognitive modeling analysis allows us to deconstruct decision-making task performance into its component processes. This approach enables the identification of deviations in the underlying mechanisms that may not be evident in the overall task outcome. The RLDDM consists of two key components: one describes how reward feedback is employed to update value expectations and the other describes how an agent uses these expectations to arrive at a decision.
+
+The model assumes that subjective option values (Q values) are learned through reward prediction errors (PEs), which measure the disparity between expected and obtained outcomes (Sutton \& Barto, 2018). The update of subjective option values follows a delta learning rule (Rescorla \& Wagner, 1972):
+
+\[
+Q_{a, i} = Q_{a, i-1} + \alpha (I_{a, i-1} - Q_{a, i-1}),
+\]
+
+\noindent
+where \(Q\) refers to the expected values for option \(a\) on trial \(i\), \(I\) represents the reward (with values 1 or 0), and \(\alpha\) is the leaning rate, which scales the difference between the expected and actual rewards. A higher learning rate results in rapid adaptation to reward expectations, while a lower learning rate results in slow adaptation. We included in the model different learning rates for positive and negative prediction errors: The parameter \(\alpha^+\) is computed from reinforcements, whereas \(\alpha^+\) is computed from punishments.
+
+The second component describes the selection rule for reinforced options. Typically, a softmax function is used, where the probability of selecting option \(a\) depends on its expected value relative to other options \(n\), scaled by the inverse temperature parameter \(\beta\):
+
+\[
+p_{a,i} = \frac{e^{\beta Q_{a,i}}}{\sum_{j=1}^n e^{\beta Q_{j,i}}}.
+\]
+
+In the RLDDM, instead, this second component of decision-making is replaced by a Drift-Diffusion Model {[}DDM; Ratcliff and McKoon (2008){]} which assumes a stochastic accumulation of evidence on each trial. The DDM includes four parameters: A drift rate parameter (\(v\)), which describes the rate of (noisy) evidence accumulation; a decision threshold parameter (\(a\)), which represents the amount of evidence needed to make a decision; a non-decision time parameter (\(t\)), which accounts for the time devoted to sensory processing, motor preparation, and motor output, and a starting point parameter (\(z\)), which accounts for any predispositions in the initial decision variable towards either boundary.
+
+To assess the presence of context-dependent learning, we conditioned the model's parameters on two specific contexts: disorder-related choices and disorder-unrelated choices. This allowed us to examine how the model's parameters varied in response to these different contextual conditions.
+
+\hypertarget{results}{%
+\section{Results}\label{results}}
+
+\hypertarget{demographic-and-psychopathology-measures}{%
+\subsection{Demographic and Psychopathology Measures}\label{demographic-and-psychopathology-measures}}
+
+TODO
+
+Mean age and Body Mass Index (BMI) for each group of participant were as follows: patients with AN, mean age = 21.18 (SD = 2.41), average Body Mass Index (BMI) = 16.88 (SD = 1.55); patients with BN, mean age = 20.39 (SD = 1.88), average BMI = 30.09 (SD = 5.47); HCs, mean age = 19.77 (SD = 1.06), average BMI = 21.62 (SD = 3.03); healthy individuals at risk of developing eating disorders, mean age = 20.36 (SD = 1.44), average BMI = 22.41 (SD = 4.79).
+Bayesian statistical analysis revealed no credible age differences among the four groups (AN, BN, HC, and RI). AN participants displayed a lower mean BMI than HC participants, while BN participants had a higher mean BMI than HC participants. No noteworthy difference in BMI was observed between HC and RI participants. Furthermore, there is credible evidence that the Rosenberg Self-Esteem Scale scores of all three groups (AN, BN, and RI) are smaller than those of the HC group. We also found credible evidence that individuals with AN, BN, and RI exhibited higher levels of dissatisfaction with their body shape, as measured by the BSQ-14 questionnaire, when compared to the HCs.
+Individuals with AN displayed higher stress, anxiety, and depression levels (as measured by the DASS-21) than HCs. Additionally, individuals with AN showed credibly higher levels of social interaction anxiety (as measured by the SIAS) than HCs. All three AN, BN, and RI groups exhibited higher levels of Concerns over mistakes and doubts scores of the MPS scale compared to HCs. Individuals with AN also showed higher levels of Personal standard scores of the MPS scale compared to HCs. Moreover, individuals with AN displayed higher values on all three subscales of the EAT-26 questionnaire relative to HCs. For more detailed information regarding these comparisons, please refer to the Supplementary Information (SI).
+
+Sixteen individuals with R-AN were diagnosed with a comorbid anxiety disorder, 8 with OCD, 1 with social phobia, and 1 with DAP.
+
+\hypertarget{models-selection}{%
+\subsection{Models selection}\label{models-selection}}
+
+To evaluate context-dependent learning, we compared several RLDDM models that varied in their conditioning of the model's parameters on the group (R-AN, HC, RI) and context (disorder-related choices and disorder-unrelated choices). We used the Deviance Information Criterion (DIC) to balance model fit and complexity, selecting the model with the lowest DIC as the best trade-off. The following RLDDM models were examined:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Model M1: Standard RLDDM without conditioning. DIC = 39879.444.
+\item
+  Model M2: Separate learning rates for positive and negative reinforcements. DIC = 39124.890
+\item
+  Model M3: Group-based \(\alpha^+\) and \(\alpha^-\) parameters. DIC = 39194.763.
+\item
+  Model M4: Group and context-based \(\alpha^+\) and \(\alpha^-\) parameters. DIC = 38197.467.
+\item
+  Model M5: Group and context-based \(\alpha^+\), \(\alpha^-\), and \(a\) parameters. DIC = 36427.448.
+\item
+  Model M6: Group and context-based \(\alpha^+\), \(\alpha^-\), \(a\), and drift rate (\(v\)) parameters. DIC = 36185.146.
+\item
+  Model M7: Group and context-based \(\alpha^+\), \(\alpha^-\), \(a\), \(v\), and non-decision time (\(t\)) parameters. DIC = 34904.053.
+\item
+  Model M8: Group and context-based \(\alpha^+\), \(\alpha^-\), \(a\), \(v\), \(t\), and starting point (\(z\)) parameters. DIC = 34917.762.
+\end{enumerate}
+
+All models were estimated using Bayesian methods with weakly informative priors. Among the evaluated models, Model M7 had the lowest DIC, indicating the best trade-off between goodness of fit and model complexity. In Model M7, the parameters \(\alpha^+\), \(\alpha^-\), \(a\), \(v\), and \(t\) (excluding \(z\)) were conditioned on both the group and the context.
+
+\hypertarget{modelling-results}{%
+\subsection{Modelling results}\label{modelling-results}}
+
+Model M7 was estimated using 15,000 iterations, with a burn-in period of 5,000 iterations. Convergence of the Bayesian estimation was evaluated using the Gelman-Rubin statistic. For all parameters in Model M7, the \(\hat{R}\) values were below 1.1 (maximum = 1.025, mean = 1.002), indicating no significant convergence issues. Collinearity and posterior predictive checks were also used to evaluate model validity (see SI).
+
+To investigate the impact of disorder-related versus disorder-unrelated information on RL learning, we compared the posterior estimates of the RLDDM parameters of M7 between the two conditions (see Table 1).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.0943}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1887}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2642}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.2075}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1132}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1321}}@{}}
+\caption{Posterior Parameter Estimates of DDMRL Model M7 by Group (R-AN, HC, RI) and Context of PRL Choice (disorder-related vs.~disorder-unrelated information). The learning rates (\(\alpha\)) are shown on a logit scale. The probability (\(p\)) describes the Bayesian test that the posterior estimate of the parameter in the disorder-related context is greater than the posterior estimate of the parameter in the disorder-unrelated context. Standard deviations are provided in parentheses.}\tabularnewline
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Group
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Par.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Neutral choice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Food choice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(p\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \(d\)
+\end{minipage} \\
+\midrule\noalign{}
+\endfirsthead
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Group
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Par.
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Neutral choice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Food choice
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(p\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Cohen's \(d\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+R-AN & a & 1.273 (0.039) & 1.442 (0.040) & 0.0013 & 0.802 \\
+R-AN & v & 1.403 (0.320) & 1.776 (0.342) & 0.7907 & 0.190 \\
+R-AN & t & 0.188 (0.011) & 0.174 (0.011) & 0.8311 & -0.253 \\
+R-AN & \(\alpha^-\) & 1.815 (1.081) & 0.738 (1.096) & 0.2349 & -0.432 \\
+R-AN & \(\alpha^+\) & 1.006 (0.899) & -1.786 (0.756) & 0.0098 & -1.206 \\
+HC & a & 1.222 (0.033) & 1.314 (0.034) & 0.0256 & 0.474 \\
+HC & v & 2.157 (0.265) & 1.790 (0.263) & 0.1606 & -0.358 \\
+HC & t & 0.183 (0.009) & 0.172 (0.009) & 0.8228 & -0.280 \\
+HC & \(\alpha^-\) & 2.780 (0.874) & 3.442 (0.980) & 0.6993 & 0.298 \\
+HC & \(\alpha^+\) & 1.198 (0.680) & 1.326 (0.700) & 0.5544 & 0.071 \\
+RI & a & 1.245 (0.041) & 1.316 (0.039) & 0.1026 & 0.403 \\
+RI & v & 2.197 (0.322) & 1.849 (0.307) & 0.2133 & -0.381 \\
+RI & t & 0.188 (0.011) & 0.186 (0.011) & 0.5462 & 0.166 \\
+RI & \(\alpha^-\) & 2.857 (1.067) & 2.904 (1.062) & 0.5101 & 0.015 \\
+RI & \(\alpha^+\) & 1.573 (0.847) & 0.739 (0.752) & 0.2247 & -0.438 \\
+\end{longtable}
+
+Let consider first the evidence of context-dependent learning from within-group comparisons. We found that, on average, individuals in the R-AN group demonstrate a reduced learning rate in response to positive prediction errors (PEs) for disorder-related choices, as compared to disorder-unrelated choices (Cohen's \(d\) = 1.206, \(p\) = 0.0098). In contrast, no substantial evidence was found indicating a difference in the learning rate between disorder-related and disorder-unrelated choices in the HC (\(p\) = 0.5544) and RI (\(p\) = 0.2247) groups. We found no credible difference in the learning rate from negative prediction errors between disorder-related and disorder-unrelated choices for any of the R-AN (\(p\) = 0.2349), HC (\(p\) = 0.6993), and RI (\(p\) = 0.5101) groups. Moreover, we found that both the R-AN (Cohen's \(d\) = 0.802, \(p\) = 0.0013) and HC (Cohen's \(d\) = 0.474, \(p\) = 0.0256) groups showed a higher decision threshold for disorder-related choices compared to disorder-unrelated choices.
+
+Further evidence of context-dependent learning emerges from between-groups comparisons. When making disorder-related choices, individuals with R-AN displayed a decreased learning rate following positive prediction errors (PEs) compared to both HC and RI. Specifically, the learning rate after positive PEs was lower for R-AN compared to HC, \(p\) = 0.0009, Cohen's \(d\) = 1.498. Similarly, R-AN exhibited a lower learning rate after positive PEs compared to RI (\(p\) = 0.0085, Cohen's \(d\) = 1.209). In contrast, no credible difference in the learning rate after positive PEs was found between R-AN and HC (\(p\) = 0.4325), as well as between R-AN and RI (\(p\) = 0.3232), for choices unrelated to disorder information. Concerning the learning rate after negative PEs, we found that R-AN showed a lower learning rate compared to HC, but only for disorder-related choices: (\(p\) = 0.0274, Cohen's \(d\) = 1.144). Individuals with R-AN showed a higher decision threshold for disorder-related choices compared to both HC (Cohen's \(d\) = 0.622, \(p\) = 0.0068) and RI (Cohen's \(d\) = 0.454, \(p\) = 0.0118) participants. No credible group differences were found for disorder-unrelated choices. Additionally, we observed that both HC (Cohen's \(d\) = 0.520, \(p\) = 0.0344) and RI (Cohen's \(d\) = 0.529, \(p\) = 0.0392) participants exhibited a faster accumulation of evidence and more confident decision-making, as indicated by a higher average drift rate parameter, compared to individuals with R-AN. This difference was only evident for disorder-unrelated choices. Finally, no credible differences were found, for both within-group and between-group comparisons, regarding the non-decision time parameter (\(t\)).
+
+\hypertarget{preferential-choices}{%
+\subsection{Preferential choices}\label{preferential-choices}}
+
+To investigate the presence of a bias against food choices in individuals with R-AN during the PRL task, regardless of their past action-outcome history, we analyzed the frequency of food choices in PRL blocks where a food image was paired with a neutral image. Our results show that the AN-R group did not exhibit a bias against the food image, with a proportion of food choices estimated at 0.49, 95\% CI {[}0.46, 0.51{]}. Furthermore, there were no credible differences in food choices between the R-AN group and the HC group (contrast R-AN - HC = -0.007, 95\% CI {[}-0.037, 0.024{]}) or between the R-AN group and the RI group (contrast R-AN - RI = 0.013, 95\% CI {[}-0.019, 0.046{]}).
+
+\hypertarget{comorbidity}{%
+\subsection{Comorbidity}\label{comorbidity}}
+
+We conducted a further statistical analysis to investigate whether the conservative learning behavior observed in individuals with R-AN could be explained by comorbid conditions. Using model M7, we categorized individuals with R-AN based on the presence or absence of diagnosed comorbidities. Our analysis revealed no credible differences in parameters between the two groups. Specifically, for the disorder-related context, the parameter differences were as follows: \(\Delta \alpha^-\) = 2.614, 95\% CI {[}-3.173, 8.364{]}; \(\Delta \alpha^+\) = -0.635, 95\% CI {[}-4.301, 2.449{]}; \(\Delta a\) = -0.034, 95\% CI {[}-0.188, 0.124{]}; \(\Delta v\) = 0.230, 95\% CI {[}-1.203, 1.586{]}; \(\Delta t\) = 0.002, 95\% CI {[}-0.050, 0.055{]}. For the disorder-unrelated context, the parameter differences were: \(\Delta \alpha^-\) = -0.768, 95\% CI {[}-6.570, 4.401{]}; \(\Delta \alpha^+\) = -1.739, 95\% CI {[}-6.184, 1.654{]}; \(\Delta a\) = -0.126, 95\% CI {[}-0.281, 0.025{]}; \(\Delta v\) = 0.744, 95\% CI {[}-0.453, 1.886{]}; \(\Delta t\) = -0.003, 95\% CI {[}-0.057, 0.052{]}.
+
+\hypertarget{discussion}{%
+\subsection{Discussion}\label{discussion}}
+
+Our findings reveal a context-dependent learning asymmetry in individuals with R-AN specifically in the positive learning rate. This asymmetry is observed when comparing the performance in the PRL task for disorder-related choices versus disorder-unrelated choices. Importantly, no similar difference is found in the two control groups.
+
+The presence of context-dependent learning asymmetry is also supported by group comparisons. Individuals with R-AN exhibited lower learning rates for both positive and negative prediction errors compared to the HC group, and specifically for positive prediction errors compared to the RI group, but these differences were observed only for disorder-related choices. In contrast, no substantial difference in learning rates was found between the R-AN group and the HC and RI groups for disorder-unrelated choices.
+
+Support for context-dependent learning in R-AN is also provided by the DDM parameters of the hDDMrl model. Specifically, we observed that the R-AN group exhibited a higher decision threshold (parameter ``a'' in the hDDMrl model) compared to the HC and RI groups, but this difference was only evident in the context of disorder-related choices. This suggests that individuals with R-AN displayed a more cautious or conservative decision-making behavior specifically in relation to disorder-related choices (see also Caudek, Sica, Cerea, Colpizzi, \& Stendardi, 2021; Schiff, Testa, Rusconi, Angeli, \& Mapelli, 2021).
+
+Further support of context-related learning in R-AN comes from the result which indicate that both healthy control (HC) and at-risk (RI) participants exhibited a faster accumulation of evidence and displayed more confident decision-making, as reflected by a higher average drift rate parameter, compared to individuals with restrictive anorexia nervosa (R-AN). However, this difference was specifically observed for disorder-unrelated choices. It is noteworthy that individuals with R-AN displayed slower evidence accumulation and less confident decision-making specifically in disorder-unrelated contexts, whereas this group difference was not observed for disorder-related choices. This finding further supports the notion of context-dependent learning in individuals with R-AN, particularly in the context of food-related information.
+
+Further evidence of context-related learning in R-AN comes from the analysis of the drift rate parameter. Individuals with R-AN exhibited slower evidence accumulation and less confident decision-making compared to the control groups, specifically in the context of disorder-unrelated choices. Conversely, no credible group differences were observed for food-related choices. These results suggest that individuals with R-AN may allocate greater cognitive resources to process salient information in the disorder-related context, which leads to similar evidence accumulation rates in decision-making compared to the control groups. In contrast, they exhibit a slower evidence accumulation rate when faced with less salient disorder-unrelated choices.
+
+The analysis of preferential choices supports the conclusion that the learning performance asymmetry observed in individuals with R-AN is not due to a preferential selection of the disorder-unrelated image during the learning task. Additionally, our analysis examining the relationship between the model's parameters and the presence of comorbidities indicates that the learning performance asymmetry in individuals with R-AN cannot be attributed to comorbid conditions.
+
+\hypertarget{geneeral-discussion}{%
+\section{Geneeral discussion}\label{geneeral-discussion}}
+
+In this study, we investigated reinforcement learning using a behavioral paradigm that included two distinct learning contexts: one involving choices related to food and the other involving choices unrelated to food. We compared the performance of patients with R-AN to age-, gender-, and education-matched healthy controls, as well as healthy controls at-risk of developing eating disorders. Consistent with our hypotheses, our findings revealed a reduced learning rate in the disorder-related context for patients with R-AN, whereas both healthy participants and at-risk individuals learned equally well in both contexts.
+
+In PRL tasks, a participant's performance can be influenced by two potential factors. First, there may be a learning impairment, where participants struggle to accurately update the value of the stimuli. Second, there may be a decision impairment, where participants may still select the wrong stimulus despite having intact learning processes. Our results provide evidence that individuals with R-AN may struggle with both accurately updating the value of disorder-related stimuli and making appropriate decisions based on this information. However, we did not observe similar impairments in decision making for disorder-unrelated choices. These findings provide evidence for context-dependent learning in individuals with R-AN, where the inclusion of disorder-related information negatively impacts their RL performance. It is important to note that this effect is specific to the disorder-related context and does not suggest a generalized RL deficit in individuals with R-AN. Thus, our results challenge the notion of a domain-general RL mechanism impairment in this population.
+
+Previous studies have demonstrated that reward and punishment processing in individuals with AN is influenced by stimulus properties and contextual factors (Haynos, Lavender, Nelson, Crow, \& Peterson, 2020). For instance, predictable and controllable behaviors such as calorie counting or purging are often perceived as rewarding, providing individuals with a sense of control and accomplishment. Conversely, unpredictable and uncontrollable situations, such as social outcomes, can be perceived as punishing, leading to heightened anxiety and distress. While these previous studies have primarily focused on the effect of context on the subjective value assigned to experiences in AN, our study extends the investigation by examining the impact of context on the learning process itself. We find that the context also affects the learning process itself (not only the subjective value), providing further insights into reward and punishment processing in AN.
+
+Other recent studies have focused on investigating context-specific learning in eating disorders. One task specifically designed for this purpose is the two-step Markov decision task, which distinguishes between automatic or habitual (model-free) learning and controlled or goal-directed (model-based) learning. For instance, studies conducted by Foerde et al. (2021) and Onysk and Seriès (2022) employed similar experiments using the two-step task paradigm. Foerde et al. (2021) compared a monetary two-step task and a food-related two-step task, while Onysk and Seriès (2022) utilized stimuli unrelated to food or body images (i.e., pirate ships and treasure chests) with rewards associated with body image dissatisfaction. The results of these studies consistently demonstrated that individuals with AN tend to exhibit a stronger inclination towards habitual control over goal-directed control across different domains compared to healthy controls. However, no significant differences were observed in learning rates as a function of context, nor between AN patients and healthy controls, according to these findings. In contrast, the present study reveals that, in individuals with R-AN, the learning process \emph{per se} can be influenced by contextual (disorder-related) information, even when such information is not directly relevant to the task outcome.
+
+The implications of the present findings, if replicated by future studies, are relevant to the treatment of AN. Current treatment practices address the issue of cognitive inflexibility in AN, with Cognitive Remediation Therapy (CRT) being proposed as an adjunct treatment targeting specific cognitive processes in AN and other eating disorders. CRT involves cognitive exercises and behavioral interventions aimed at improving central coherence abilities, reducing cognitive and behavioral inflexibility, and enhancing thinking style comprehension (Tchanturia et al., 2010). A key aspect of CRT is to avoid focusing on symptom-related themes and instead utilize neutral stimuli in cognitive and behavioral exercises. This approach aims to establish a therapeutic alliance and reduce drop-out rates, particularly among AN patients.
+
+However, recent evidence suggests that CRT may not consistently enhance central coherence abilities, cognitive flexibility, or symptoms associated with eating disorders (Hagan, Christensen, \& Forbush, 2020; Tchanturia, Giombini, Leppanen, \& Kinnaird, 2017). In response to this, Trapp, Heid, Röder, Wimmer, and Hajak (2022) have proposed improvements to address practical issues encountered in the application of CRT. They question the use of neutral stimuli and draw support from Beck's cognitive theory of depression (Beck \& Alford, 2009).
+
+The proposition presented by Trapp et al. (2022) aligns with the hypothesis of our study, which suggests that contextual factors play a crucial role in the maladaptive eating behavior observed in individuals with R-AN, extending beyond deficits in the underlying reinforcement learning mechanism alone. If abnormal reward learning is indeed identified as a significant anomaly among individuals with R-AN, particularly in relation to disorder-relevant choices, it would imply that treatments focused on enhancing cognitive flexibility and reinforcement learning processes specific to disorder-relevant stimuli could hold significant promise for this population.
+
+There are few important limitations and questions for future research. 1) One aspect to consider is the use of symbolic rewards and punishments in our study, represented by images of a one euro coin and a barred representation of a one euro coin, respectively. These rewards and punishments were merely symbolic, and it is unclear how the use of concrete, non-symbolic rewards and punishments would impact the findings. Additionally, the subjective value of one euro, or the loss of one euro, may vary among participants. Therefore, future studies could aim to determine the equivalence of subjective values for rewards and punishments to enhance the understanding of the underlying processes. 2) Our study only included individuals with R-AN who were not in the most severe stage of the illness, as they were recruited from a center for voluntary medical and psychological support. We did not examine R-AN patients who require hospitalization due to the life-threatening nature of their illness. It is possible that at the later stages of the illness, associative learning abilities, which were preserved in the present sample under neutral conditions, may become impaired. Therefore, investigating the impact of illness severity on context-dependent learning in R-AN patients is an important avenue for future research. 3) While we observed no difference in the choice behavior of R-AN patients, as measured by the relative frequency of image choices, when selecting between a neutral image and a food image, we did find a slower learning rate and lower decision threshold for R-AN patients compared to healthy controls in the RLDDM model when compared to choosing between two neutral images. It is possible that the higher ``salience'' of food images compared to neutral images could be better captured by other measures, such as fixation length or the number of fixations, rather than solely relying on the relative frequency of image choices. This warrants further exploration in future studies. 4) It is worth noting that our study excluded women under the age of 18. However, this age range is a critical period as the onset of AN during this stage may have a more profound impact on associative learning, given the ongoing cognitive development and less-developed protective factors. Therefore, future studies should take into consideration the inclusion of participants in this age range to better understand the influence of context-dependent learning in R-AN.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{1}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-dsm5tr}{}}%
+American Psychiatric Association. (2022). \emph{{Diagnostic and Statistical Manual of Mental Disorders}} (5th ed., Text Revision). Arlington, VA: {American Psychiatric Publishing}.
+
+\leavevmode\vadjust pre{\hypertarget{ref-atwood2020systematic}{}}%
+Atwood, M. E., \& Friedman, A. (2020). A systematic review of enhanced cognitive behavioral therapy (CBT-e) for eating disorders. \emph{International Journal of Eating Disorders}, \emph{53}(3), 311--330.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bartholdy2016systematic}{}}%
+Bartholdy, S., Dalton, B., O'Daly, O. G., Campbell, I. C., \& Schmidt, U. (2016). A systematic review of the relationship between eating, weight and inhibitory control using the stop signal task. \emph{Neuroscience \& Biobehavioral Reviews}, \emph{64}, 35--62.
+
+\leavevmode\vadjust pre{\hypertarget{ref-beck2009depression}{}}%
+Beck, A. T., \& Alford, B. A. (2009). \emph{Depression: Causes and treatment}. University of Pennsylvania Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bischoff2013altered}{}}%
+Bischoff-Grethe, A., McCurdy, D., Grenesko-Stevens, E., Irvine, L. E. Z., Wagner, A., Yau, W.-Y. W., et al.others. (2013). Altered brain response to reward and punishment in adolescents with anorexia nervosa. \emph{Psychiatry Research: Neuroimaging}, \emph{214}(3), 331--340.
+
+\leavevmode\vadjust pre{\hypertarget{ref-caudek2021susceptibility}{}}%
+Caudek, C., Sica, C., Cerea, S., Colpizzi, I., \& Stendardi, D. (2021). Susceptibility to eating disorders is associated with cognitive inflexibility in female university students. \emph{Journal of Behavioral and Cognitive Therapy}, \emph{31}(4), 317--328.
+
+\leavevmode\vadjust pre{\hypertarget{ref-chang2021early}{}}%
+Chang, P. G., Delgadillo, J., \& Waller, G. (2021). Early response to psychological treatment for eating disorders: A systematic review and meta-analysis. \emph{Clinical Psychology Review}, \emph{86}, 102032.
+
+\leavevmode\vadjust pre{\hypertarget{ref-fladung2013role}{}}%
+Fladung, A.-K., Schulze, U. M., Schöll, F., Bauer, K., \& Groen, G. (2013). Role of the ventral striatum in developing anorexia nervosa. \emph{Translational Psychiatry}, \emph{3}(10), e315--e315.
+
+\leavevmode\vadjust pre{\hypertarget{ref-foerde2021deficient}{}}%
+Foerde, K., Daw, N. D., Rufin, T., Walsh, B. T., Shohamy, D., \& Steinglass, J. E. (2021). Deficient goal-directed control in a population characterized by extreme goal pursuit. \emph{Journal of Cognitive Neuroscience}, \emph{33}(3), 463--481.
+
+\leavevmode\vadjust pre{\hypertarget{ref-galmiche2019prevalence}{}}%
+Galmiche, M., Déchelotte, P., Lambert, G., \& Tavolacci, M. P. (2019). Prevalence of eating disorders over the 2000--2018 period: A systematic literature review. \emph{The American Journal of Clinical Nutrition}, \emph{109}(5), 1402--1413.
+
+\leavevmode\vadjust pre{\hypertarget{ref-van2021hierarchical}{}}%
+Geen, C. van, \& Gerraty, R. T. (2021). Hierarchical bayesian models of reinforcement learning: Introduction and comparison to alternative methods. \emph{Journal of Mathematical Psychology}, \emph{105}, 102602.
+
+\leavevmode\vadjust pre{\hypertarget{ref-gershman2016empirical}{}}%
+Gershman, S. J. (2016). Empirical priors for reinforcement learning models. \emph{Journal of Mathematical Psychology}, \emph{71}, 1--6.
+
+\leavevmode\vadjust pre{\hypertarget{ref-glashouwer2014heightened}{}}%
+Glashouwer, K. A., Bloot, L., Veenstra, E. M., Franken, I. H., \& Jong, P. J. de. (2014). Heightened sensitivity to punishment and reward in anorexia nervosa. \emph{Appetite}, \emph{75}, 97--102.
+
+\leavevmode\vadjust pre{\hypertarget{ref-guillaume2015impaired}{}}%
+Guillaume, S., Gorwood, P., Jollant, F., Van den Eynde, F., Courtet, P., \& Richard-Devantoy, S. (2015). Impaired decision-making in symptomatic anorexia and bulimia nervosa patients: A meta-analysis. \emph{Psychological Medicine}, \emph{45}(16), 3377--3391.
+
+\leavevmode\vadjust pre{\hypertarget{ref-hagan2020preliminary}{}}%
+Hagan, K. E., Christensen, K. A., \& Forbush, K. T. (2020). A preliminary systematic review and meta-analysis of randomized-controlled trials of cognitive remediation therapy for anorexia nervosa. \emph{Eating Behaviors}, \emph{37}, 101391.
+
+\leavevmode\vadjust pre{\hypertarget{ref-harrison2011experimental}{}}%
+Harrison, A., Genders, R., Davies, H., Treasure, J., \& Tchanturia, K. (2011). Experimental measurement of the regulation of anger and aggression in women with anorexia nervosa. \emph{Clinical Psychology \& Psychotherapy}, \emph{18}(6), 445--452.
+
+\leavevmode\vadjust pre{\hypertarget{ref-haynos2020moving}{}}%
+Haynos, A. F., Lavender, J. M., Nelson, J., Crow, S. J., \& Peterson, C. B. (2020). Moving towards specificity: A systematic review of cue features associated with reward and punishment in anorexia nervosa. \emph{Clinical Psychology Review}, \emph{79}, 101872.
+
+\leavevmode\vadjust pre{\hypertarget{ref-haynos2022beyond}{}}%
+Haynos, A. F., Widge, A. S., Anderson, L. M., \& Redish, A. D. (2022). Beyond description and deficits: How computational psychiatry can enhance an understanding of decision-making in anorexia nervosa. \emph{Current Psychiatry Reports}, 1--11.
+
+\leavevmode\vadjust pre{\hypertarget{ref-jappe2011heightened}{}}%
+Jappe, L. M., Frank, G. K., Shott, M. E., Rollin, M. D., Pryor, T., Hagman, J. O., \ldots{} Davis, E. (2011). Heightened sensitivity to reward and punishment in anorexia nervosa. \emph{International Journal of Eating Disorders}, \emph{44}(4), 317--324.
+
+\leavevmode\vadjust pre{\hypertarget{ref-jonker2022punishment}{}}%
+Jonker, N. C., Glashouwer, K. A., \& Jong, P. J. de. (2022). Punishment sensitivity and the persistence of anorexia nervosa: High punishment sensitivity is related to a less favorable course of anorexia nervosa. \emph{International Journal of Eating Disorders}, \emph{55}(5), 697--702.
+
+\leavevmode\vadjust pre{\hypertarget{ref-keating2010theoretical}{}}%
+Keating, C. (2010). Theoretical perspective on anorexia nervosa: The conflict of reward. \emph{Neuroscience \& Biobehavioral Reviews}, \emph{34}(1), 73--79.
+
+\leavevmode\vadjust pre{\hypertarget{ref-keating2012reward}{}}%
+Keating, C., Tilbrook, A. J., Rossell, S. L., Enticott, P. G., \& Fitzgerald, P. B. (2012). Reward processing in anorexia nervosa. \emph{Neuropsychologia}, \emph{50}(5), 567--575.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kruschke_bayesian_2018}{}}%
+Kruschke, J. K., \& Liddell, T. M. (2018). Bayesian data analysis for newcomers. \emph{Psychonomic Bulletin \& Review}, \emph{25}(1), 155--177.
+
+\leavevmode\vadjust pre{\hypertarget{ref-linardon2017empirical}{}}%
+Linardon, J., Fairburn, C. G., Fitzsimmons-Craft, E. E., Wilfley, D. E., \& Brennan, L. (2017). The empirical status of the third-wave behaviour therapies for the treatment of eating disorders: A systematic review. \emph{Clinical Psychology Review}, \emph{58}, 125--140.
+
+\leavevmode\vadjust pre{\hypertarget{ref-matton2013punishment}{}}%
+Matton, A., Goossens, L., Braet, C., \& Vervaet, M. (2013). Punishment and reward sensitivity: Are naturally occurring clusters in these traits related to eating and weight problems in adolescents? \emph{European Eating Disorders Review}, \emph{21}(3), 184--194.
+
+\leavevmode\vadjust pre{\hypertarget{ref-monteleone2017altered}{}}%
+Monteleone, A. M., Monteleone, P., Esposito, F., Prinster, A., Volpe, U., Cantone, E., et al.others. (2017). Altered processing of rewarding and aversive basic taste stimuli in symptomatic women with anorexia nervosa and bulimia nervosa: An fMRI study. \emph{Journal of Psychiatric Research}, \emph{90}, 94--101.
+
+\leavevmode\vadjust pre{\hypertarget{ref-o2015reward}{}}%
+O'Hara, C. B., Campbell, I. C., \& Schmidt, U. (2015). A reward-centred model of anorexia nervosa: A focussed narrative review of the neurological and psychophysiological literature. \emph{Neuroscience \& Biobehavioral Reviews}, \emph{52}, 131--152.
+
+\leavevmode\vadjust pre{\hypertarget{ref-onysk2022effect}{}}%
+Onysk, J., \& Seriès, P. (2022). The effect of body image dissatisfaction on goal-directed decision making in a population marked by negative appearance beliefs and disordered eating. \emph{Plos One}, \emph{17}(11), e0276750.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pedersen2020simultaneous}{}}%
+Pedersen, M. L., \& Frank, M. J. (2020). Simultaneous hierarchical bayesian parameter estimation for reinforcement learning and drift diffusion models: A tutorial and links to neural data. \emph{Computational Brain \& Behavior}, \emph{3}, 458--471.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pedersen2017drift}{}}%
+Pedersen, M. L., Frank, M. J., \& Biele, G. (2017). The drift diffusion model as the choice rule in reinforcement learning. \emph{Psychonomic Bulletin \& Review}, \emph{24}, 1234--1251.
+
+\leavevmode\vadjust pre{\hypertarget{ref-qian2022update}{}}%
+Qian, J., Wu, Y., Liu, F., Zhu, Y., Jin, H., Zhang, H., \ldots{} Yu, D. (2022). An update on the prevalence of eating disorders in the general population: A systematic review and meta-analysis. \emph{Eating and Weight Disorders-Studies on Anorexia, Bulimia and Obesity}, \emph{27}(2), 415--428.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ratcliff2008diffusion}{}}%
+Ratcliff, R., \& McKoon, G. (2008). The diffusion decision model: Theory and data for two-choice decision tasks. \emph{Neural Computation}, \emph{20}(4), 873--922.
+
+\leavevmode\vadjust pre{\hypertarget{ref-rescorla1972theory}{}}%
+Rescorla, R. A., \& Wagner, A. R. (1972). A theory of pavlovian conditioning: Variations in the effectiveness of reinforcement and nonreinforcement. In A. H. Black \& W. F. Prokasy (Eds.), \emph{Classical conditioning II: Current research and theory} (pp. 64--69). New York, NY: Appleton-Century Crofts.
+
+\leavevmode\vadjust pre{\hypertarget{ref-schaefer2021reward}{}}%
+Schaefer, L. M., \& Steinglass, J. E. (2021). Reward learning through the lens of RDoC: A review of theory, assessment, and empirical findings in the eating disorders. \emph{Current Psychiatry Reports}, \emph{23}, 1--11.
+
+\leavevmode\vadjust pre{\hypertarget{ref-schiff2021expectancy}{}}%
+Schiff, S., Testa, G., Rusconi, M. L., Angeli, P., \& Mapelli, D. (2021). Expectancy to eat modulates cognitive control and attention toward irrelevant food and non-food images in healthy starving individuals. A behavioral study. \emph{Frontiers in Psychology}, \emph{11}, 3902.
+
+\leavevmode\vadjust pre{\hypertarget{ref-selby2020positive}{}}%
+Selby, E. A., \& Coniglio, K. A. (2020). Positive emotion and motivational dynamics in anorexia nervosa: A positive emotion amplification model (PE-AMP). \emph{Psychological Review}, \emph{127}(5), 853--890.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sheehan1998mini}{}}%
+Sheehan, D. V., Lecrubier, Y., Sheehan, K. H., Amorim, P., Janavs, J., Weiller, E., et al.others. (1998). The mini-international neuropsychiatric interview (MINI): The development and validation of a structured diagnostic psychiatric interview for DSM-IV and ICD-10. \emph{Journal of Clinical Psychiatry}, \emph{59}(20), 22--33.
+
+\leavevmode\vadjust pre{\hypertarget{ref-smink2013epidemiology}{}}%
+Smink, F. R., Hoeken, D. van, \& Hoek, H. W. (2013). Epidemiology, course, and outcome of eating disorders. \emph{Current Opinion in Psychiatry}, \emph{26}(6), 543--548.
+
+\leavevmode\vadjust pre{\hypertarget{ref-sutton2018reinforcement}{}}%
+Sutton, R. S., \& Barto, A. G. (2018). \emph{Reinforcement learning: An introduction}. Cambridge, MA: MIT Press.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tchanturia2010cognitive}{}}%
+Tchanturia, K., Davies, H., Reeder, C., \& Wykes, T. (2010). \emph{Cognitive remediation therapy for anorexia nervosa}. London: King's College London.
+
+\leavevmode\vadjust pre{\hypertarget{ref-tchanturia2017evidence}{}}%
+Tchanturia, K., Giombini, L., Leppanen, J., \& Kinnaird, E. (2017). Evidence for cognitive remediation therapy in young people with anorexia nervosa: Systematic review and meta-analysis of the literature. \emph{European Eating Disorders Review}, \emph{25}(4), 227--236.
+
+\leavevmode\vadjust pre{\hypertarget{ref-trapp2022cognitive}{}}%
+Trapp, W., Heid, A., Röder, S., Wimmer, F., \& Hajak, G. (2022). Cognitive remediation in psychiatric disorders: State of the evidence, future perspectives, and some bold ideas. \emph{Brain Sciences}, \emph{12}(6), 683.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wagner2007altered}{}}%
+Wagner, A., Aizenstein, H., Venkatraman, V. K., Fudge, J., May, J. C., Mazurkewicz, L., et al.others. (2007). Altered reward processing in women recovered from anorexia nervosa. \emph{American Journal of Psychiatry}, \emph{164}(12), 1842--1849.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wierenga2014extremes}{}}%
+Wierenga, C. E., Ely, A., Bischoff-Grethe, A., Bailer, U. F., Simmons, A. N., \& Kaye, W. H. (2014). Are extremes of consumption in eating disorders related to an altered balance between reward and inhibition? \emph{Frontiers in Behavioral Neuroscience}, \emph{8}, 410.
+
+\leavevmode\vadjust pre{\hypertarget{ref-woodside2006management}{}}%
+Woodside, B. D., \& Staab, R. (2006). Management of psychiatric comorbidity in anorexia nervosa and bulimia nervosa. \emph{CNS Drugs}, \emph{20}, 655--663.
+
+\leavevmode\vadjust pre{\hypertarget{ref-wu2014set}{}}%
+Wu, M., Brockmeyer, T., Hartmann, M., Skunde, M., Herzog, W., \& Friederich, H.-C. (2014). Set-shifting ability across the spectrum of eating disorders and in overweight and obesity: A systematic review and meta-analysis. \emph{Psychological Medicine}, \emph{44}(16), 3365--3385.
+
+\end{CSLReferences}
+
+
+\end{document}

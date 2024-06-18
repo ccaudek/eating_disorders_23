@@ -1,7 +1,0 @@
-\begin{figure*}[hbt]
-\ifnextchar[{\eatarg}{}
-
-\centering
-\includegraphics{img/biased_choices.pdf}
-\caption{This is the caption!}
-\end{figure*}
